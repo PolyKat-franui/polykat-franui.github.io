@@ -1251,7 +1251,7 @@ function htmlSlide(id, primera = false) {
   const fav = store.esFavorito(S, meta, id);
   const k = sesion.k++;
   return `
-    <article class="slide" data-id="${id}" data-k="${k}">
+    <article class="slide${primera ? ' activa' : ''}" data-id="${id}" data-k="${k}">
       <div class="tarjeta">
         <div class="tarjeta-top">
           ${insignia(niv)}
@@ -1448,6 +1448,7 @@ function alVerSlide(entries) {
     const todas = $$('#feed .slide');
     const i = todas.indexOf(e.target);
     sesion.actual = i;
+    todas.forEach((s) => s.classList.toggle('activa', s === e.target)); // la tarjeta a la vista se agranda y aclara
     // Pasar una tarjeta sin marcar cuenta como "repasar", pero recién al terminar:
     // así se puede volver atrás con el scroll y responderla.
     if (e.target.id === 'slide-fin') terminar();

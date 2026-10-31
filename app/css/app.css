@@ -1225,3 +1225,10 @@ body { background: var(--bg); --shadow: var(--sombra-suave); }
 .vacio-estado .cara-grande { image-rendering: pixelated; }
 .vacio-estado .aviso { text-align: center; }
 @media (prefers-reduced-motion: reduce) { .cargando-kitty, .cargando-puntos i { animation: none; opacity: 1; } }
+
+/* Paso suave entre tarjetas: la tarjeta a la vista crece y se aclara; las vecinas quedan chicas y tenues */
+.slide .tarjeta { transition: transform .45s cubic-bezier(.2, .9, .3, 1.2), box-shadow .3s, scale .6s var(--ease), opacity .6s var(--ease), border-color .4s var(--ease); }
+.slide .tarjeta.arrastrando { transition: none; }
+.slide .tarjeta.volando { transition: transform .42s cubic-bezier(.4, 0, .8, .6), opacity .42s; }
+.slide:not(.activa) .tarjeta:not(.volando) { scale: .92; opacity: .45; }
+@media (prefers-reduced-motion: reduce) { .slide .tarjeta { transition: none; } .slide:not(.activa) .tarjeta:not(.volando) { scale: 1; } }
