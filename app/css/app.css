@@ -1232,3 +1232,8 @@ body { background: var(--bg); --shadow: var(--sombra-suave); }
 .slide .tarjeta.volando { transition: transform .42s cubic-bezier(.4, 0, .8, .6), opacity .42s; }
 .slide:not(.activa) .tarjeta:not(.volando) { scale: .92; opacity: .45; }
 @media (prefers-reduced-motion: reduce) { .slide .tarjeta { transition: none; } .slide:not(.activa) .tarjeta:not(.volando) { scale: 1; } }
+
+/* El foco que la app pone en la vista al cambiar de pantalla no se dibuja (era una línea de color sobre la barra flotante) */
+#vista:focus { outline: none; }
+/* Círculo del idioma (raíz): el texto usa el color «sobre principal», legible también en las paletas oscuras */
+.raiz .neurona-pct { color: var(--on-primary); }
