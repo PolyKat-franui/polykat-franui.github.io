@@ -2,8 +2,8 @@
 
 | Archivo | Qué es |
 |---|---|
-| `banco_palabras_ingles.tsv` | Banco original de Francisca (5.000 filas, **cerrado**: no agregar ni quitar). |
-| `conceptos.tsv` | El mismo banco con un `id` estable por fila (`en0001` … `en5000`). |
+| `banco_palabras_ingles.tsv` | Banco original de Francisca (4.996 filas, **cerrado**: no agregar ni quitar; el 2026-10-31 Francisca quitó 4 expresiones universales: *oh, oh dear, wow, hooray*). |
+| `conceptos.tsv` | El mismo banco con un `id` estable por fila (`en0001` … `en5000`, con 4 ids sin usar: en2043, en3062, en3063, en4952). |
 | `traducciones/<idioma>.tsv` | Una fila por concepto traducido: `id, texto, ipa, estado, fuente`. |
 
 - `estado`: `borrador` (sin revisar) o `revisada` (confirmada por una persona).
@@ -46,5 +46,5 @@ conserva los `id` existentes (misma palabra + tipo), así no se pierden traducci
 
 ## Estado (2026-10-14)
 
-- Inglés, español, portugués, francés, italiano y alemán: 5.000 / 5.000 (traducciones en `borrador`).
+- Inglés, español, portugués, francés, italiano y alemán: 4.996 / 4.996 (traducciones en `borrador`).
 - Ejemplos: las 1.000 palabras más usadas en los 6 idiomas, en `borrador`.

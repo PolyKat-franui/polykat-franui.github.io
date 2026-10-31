@@ -13,7 +13,9 @@
   <link rel="apple-touch-icon" href="app/assets/app/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap">
+  <!-- Fuentes: se cargan sin bloquear el primer dibujo (mientras tanto se ve la letra del sistema) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap"></noscript>
   <link rel="stylesheet" href="app/css/tokens.css">
   <link rel="stylesheet" href="app/css/logo.css">
   <link rel="stylesheet" href="web.css">
@@ -23,7 +25,7 @@
   <a class="saltar" href="#contenido">Ir al contenido</a>
 
   <header class="nav" id="nav">
-    <a class="marca" href="#inicio" aria-label="Franui Polykat"><span class="logo"><span class="logo-b">Polykat</span> <span class="logo-a">Franui</span></span></a>
+    <a class="marca" href="#inicio" aria-label="Polykat Franui"><span class="logo"><span class="logo-b">Polykat</span> <span class="logo-a">Franui</span></span></a>
     <nav class="nav-links" aria-label="Secciones">
       <a href="#metodo">Método</a>
       <a href="#como">Cómo funciona</a>
@@ -112,7 +114,7 @@
 
     <!-- Cifras (estilo tablero de aeropuerto) -->
     <section class="cifras" aria-label="Franui Polykat en cifras">
-      <div class="cifra revelar"><span class="flap" data-valor="5000">5000</span><span class="cifra-txt">palabras y frases en el banco</span></div>
+      <div class="cifra revelar"><span class="flap" data-valor="4996">4996</span><span class="cifra-txt">palabras y frases en el banco</span></div>
       <div class="cifra revelar"><span class="flap" data-valor="6">6</span><span class="cifra-txt">idiomas para empezar</span></div>
       <div class="cifra revelar"><span class="flap" data-valor="13">13</span><span class="cifra-txt">grandes temas de la vida diaria</span></div>
       <div class="cifra revelar"><span class="flap" data-valor="10">10</span><span class="cifra-txt">tarjetas por sesión</span></div>
@@ -146,11 +148,11 @@
           <p class="kaizen-cifra"><span class="contador" data-hasta="37.8" data-dec="1">1</span>×</p>
           <p class="kaizen-nota">mejor en un año, mejorando un 1 % al día (1,01³⁶⁵)</p>
           <ol class="kaizen-dias">
-            <li style="--i:0"><img src="app/assets/flor-0.svg" alt="" width="46" height="46"><span>L</span></li>
-            <li style="--i:1"><img src="app/assets/flor-1.svg" alt="" width="46" height="46"><span>M</span></li>
-            <li style="--i:2"><img src="app/assets/flor-2.svg" alt="" width="46" height="46"><span>M</span></li>
-            <li style="--i:3"><img src="app/assets/flor-3.svg" alt="" width="46" height="46"><span>J</span></li>
-            <li style="--i:4"><img src="app/assets/sakura.svg" alt="" width="46" height="46"><span>V</span></li>
+            <li style="--i:0"><img loading="lazy" decoding="async" src="app/assets/flor-0.svg" alt="" width="46" height="46"><span>L</span></li>
+            <li style="--i:1"><img loading="lazy" decoding="async" src="app/assets/flor-1.svg" alt="" width="46" height="46"><span>M</span></li>
+            <li style="--i:2"><img loading="lazy" decoding="async" src="app/assets/flor-2.svg" alt="" width="46" height="46"><span>M</span></li>
+            <li style="--i:3"><img loading="lazy" decoding="async" src="app/assets/flor-3.svg" alt="" width="46" height="46"><span>J</span></li>
+            <li style="--i:4"><img loading="lazy" decoding="async" src="app/assets/sakura.svg" alt="" width="46" height="46"><span>V</span></li>
           </ol>
         </figure>
       </article>
@@ -170,7 +172,7 @@
             <li style="--i:0"><span class="bloque"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><small>Bloque 1</small></li>
             <li style="--i:1"><span class="bloque"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><small>Bloque 2</small></li>
             <li style="--i:2"><span class="bloque"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><small>Bloque 3</small></li>
-            <li style="--i:3" class="actual"><img class="kumon-kitty" src="app/assets/caras/feliz.svg" alt="" width="40" height="32"><span class="bloque"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><small>Bloque 4</small></li>
+            <li style="--i:3" class="actual"><img loading="lazy" decoding="async" class="kumon-kitty" src="app/assets/caras/feliz.svg" alt="" width="40" height="32"><span class="bloque"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><small>Bloque 4</small></li>
           </ol>
         </figure>
       </article>
@@ -205,14 +207,14 @@
         <h2 class="display">Desliza. Recuerda. <em>Repite.</em></h2>
       </header>
       <div class="trayecto" id="trayecto">
-        <div class="trayecto-riel" aria-hidden="true"><span class="trayecto-llena"></span><img class="trayecto-kitty" src="app/assets/caras/feliz.svg" alt="" width="40" height="32"></div>
+        <div class="trayecto-riel" aria-hidden="true"><span class="trayecto-llena"></span><img loading="lazy" decoding="async" class="trayecto-kitty" src="app/assets/caras/feliz.svg" alt="" width="40" height="32"></div>
         <ol class="trayecto-pasos">
           <li class="hito-paso revelar"><span class="hito-icono"><span class="monograma-mini">ES</span></span><div><span class="paso-num">01</span><h3>Elige tu idioma</h3><p>La app se muestra en tu idioma nativo y tú eliges el que quieres aprender: inglés, español, portugués, francés, italiano o alemán.</p></div></li>
-          <li class="hito-paso revelar"><span class="hito-icono"><img src="app/assets/trebol.svg" alt="" width="30" height="28"></span><div><span class="paso-num">02</span><h3>Elige un tema</h3><p>Saludos, comida, viajes, trabajo… Cada tema es una neurona de tu red y crece a medida que lo dominas.</p></div></li>
-          <li class="hito-paso revelar"><span class="hito-icono"><img src="app/assets/corazon.svg" alt="" width="26" height="24"></span><div><span class="paso-num">03</span><h3>Desliza tarjetas</h3><p>Toca para ver la traducción y escucha la pronunciación. Desliza a la derecha si la sabes y a la izquierda para repasar.</p></div></li>
-          <li class="hito-paso revelar"><span class="hito-icono"><img src="app/assets/sakura.svg" alt="" width="23" height="23"></span><div><span class="paso-num">04</span><h3>Cumple tu racha</h3><p>20 palabras al día encienden tu racha y Kitty baila de alegría. Cada tarjeta te da Kitty tokens.</p></div></li>
-          <li class="hito-paso revelar"><span class="hito-icono"><img src="app/assets/moneda.svg" alt="" width="24" height="24"></span><div><span class="paso-num">05</span><h3>Haz crecer tu jardín</h3><p>Con tus tokens compras abono y adornos en la tienda de Kitty. Tu sakura crece y abre nuevos espacios del mundo.</p></div></li>
-          <li class="hito-paso revelar"><span class="hito-icono"><img src="app/assets/diamante.svg" alt="" width="25" height="19"></span><div><span class="paso-num">06</span><h3>Atrapa diamantes</h3><p>Aparecen de sorpresa mientras estudias: tócalos a tiempo. Y compite cada semana en las ligas de flores.</p></div></li>
+          <li class="hito-paso revelar"><span class="hito-icono"><img loading="lazy" decoding="async" src="app/assets/trebol.svg" alt="" width="30" height="28"></span><div><span class="paso-num">02</span><h3>Elige un tema</h3><p>Saludos, comida, viajes, trabajo… Cada tema es una neurona de tu red y crece a medida que lo dominas.</p></div></li>
+          <li class="hito-paso revelar"><span class="hito-icono"><img loading="lazy" decoding="async" src="app/assets/corazon.svg" alt="" width="26" height="24"></span><div><span class="paso-num">03</span><h3>Desliza tarjetas</h3><p>Toca para ver la traducción y escucha la pronunciación. Desliza a la derecha si la sabes y a la izquierda para repasar.</p></div></li>
+          <li class="hito-paso revelar"><span class="hito-icono"><img loading="lazy" decoding="async" src="app/assets/sakura.svg" alt="" width="23" height="23"></span><div><span class="paso-num">04</span><h3>Cumple tu racha</h3><p>20 palabras al día encienden tu racha y Kitty baila de alegría. Cada tarjeta te da Kitty tokens.</p></div></li>
+          <li class="hito-paso revelar"><span class="hito-icono"><img loading="lazy" decoding="async" src="app/assets/moneda.svg" alt="" width="24" height="24"></span><div><span class="paso-num">05</span><h3>Haz crecer tu jardín</h3><p>Con tus tokens compras abono y adornos en la tienda de Kitty. Tu sakura crece y abre nuevos espacios del mundo.</p></div></li>
+          <li class="hito-paso revelar"><span class="hito-icono"><img loading="lazy" decoding="async" src="app/assets/diamante.svg" alt="" width="25" height="19"></span><div><span class="paso-num">06</span><h3>Atrapa diamantes</h3><p>Aparecen de sorpresa mientras estudias: tócalos a tiempo. Y compite cada semana en las ligas de flores.</p></div></li>
         </ol>
       </div>
       <div class="niveles revelar" aria-label="Íconos de dificultad">
@@ -233,7 +235,7 @@
       </header>
       <div class="prueba-juego revelar">
         <div class="prueba-idiomas" role="radiogroup" aria-label="Idioma para probar" id="prueba-idiomas"></div>
-        <div class="prueba-marcador" aria-live="polite"><img class="moneda" src="app/assets/moneda.svg" alt="" width="24" height="24"><span id="prueba-monedas">0</span> <span class="suave">Kitty tokens</span></div>
+        <div class="prueba-marcador" aria-live="polite"><img loading="lazy" decoding="async" class="moneda" src="app/assets/moneda.svg" alt="" width="24" height="24"><span id="prueba-monedas">0</span> <span class="suave">Kitty tokens</span></div>
         <div class="mazo" id="mazo"></div>
         <div class="prueba-botones">
           <button type="button" class="redondo no" id="prueba-no" aria-label="Repasar">✕</button>
@@ -270,7 +272,7 @@
     <section class="seccion kitty-seccion" id="kitty">
       <div class="kitty-arte revelar">
         <p class="kitty-dice" id="kitty-dice" aria-live="polite">¡Miau! Toca una de mis caras.</p>
-        <img id="kitty-grande" src="app/assets/caras/feliz.svg" alt="Kitty feliz, en pixel art" width="160" height="128">
+        <img loading="lazy" decoding="async" id="kitty-grande" src="app/assets/caras/feliz.svg" alt="Kitty feliz, en pixel art" width="160" height="128">
       </div>
       <div class="revelar">
         <p class="sobretitulo">Conoce a Kitty</p>
@@ -304,8 +306,8 @@
       </div>
       <div class="jardin-demo revelar">
         <div class="jardin-escena">
-          <img src="app/assets/jardin/fondo-atardecer.svg" alt="" width="288" height="288" class="jardin-fondo">
-          <img src="app/assets/jardin/arbol-0.svg" alt="Sakura, etapa 1 de 8" width="192" height="192" class="jardin-arbol" id="jardin-arbol">
+          <img loading="lazy" decoding="async" src="app/assets/jardin/fondo-atardecer.svg" alt="" width="288" height="288" class="jardin-fondo">
+          <img loading="lazy" decoding="async" src="app/assets/jardin/arbol-0.svg" alt="Sakura, etapa 1 de 8" width="192" height="192" class="jardin-arbol" id="jardin-arbol">
         </div>
         <button type="button" class="btn" id="jardin-regar"><span>Regar · etapa <span id="jardin-etapa">1</span> de 8</span></button>
       </div>
@@ -315,7 +317,7 @@
     <section class="seccion creadora" id="creadora">
       <!-- PENDIENTE (para después): foto de Francisca.
            Para usar una foto: guarda web/img/francisca.jpg y reemplaza el monograma por
-           <img class="retrato" src="img/francisca.jpg" alt="Francisca Sanhueza Flores"> -->
+           <img loading="lazy" decoding="async" class="retrato" src="img/francisca.jpg" alt="Francisca Sanhueza Flores"> -->
       <div class="retrato revelar" aria-hidden="true"><span>FS</span></div>
       <div class="revelar">
         <p class="sobretitulo">La creadora</p>
@@ -353,7 +355,7 @@
       <h2 class="display revelar">Tu primer minuto<br>empieza ahora.</h2>
       <div class="cta-botones revelar">
         <a class="btn primario grande" href="app/">Abrir Franui Polykat</a>
-        <a class="btn grande btn-descargar" href="app/#/instalar"><span class="icono-app-mini" aria-hidden="true"><img src="app/assets/app/icono-192.png" alt="" width="28" height="28"></span>Descargar la app</a>
+        <a class="btn grande btn-descargar" href="app/#/instalar"><span class="icono-app-mini" aria-hidden="true"><img loading="lazy" decoding="async" src="app/assets/app/icono-192.png" alt="" width="28" height="28"></span>Descargar la app</a>
       </div>
       <p class="cta-nota revelar">Android, iPhone y computador · gratis · funciona sin internet</p>
     </section>
@@ -373,11 +375,11 @@
 
   <!-- Kitty en la web: preguntas frecuentes -->
   <button class="kitty-fab" id="kitty-fab" type="button" aria-label="Preguntarle a Kitty">
-    <img src="app/assets/caras/feliz.svg" alt="" width="60" height="48">
+    <img loading="lazy" decoding="async" src="app/assets/caras/feliz.svg" alt="" width="60" height="48">
   </button>
   <dialog class="kitty-panel" id="kitty-panel" aria-labelledby="kitty-titulo">
     <header>
-      <img class="kitty-cara" id="kitty-cara" src="app/assets/caras/feliz.svg" alt="" width="40" height="32">
+      <img loading="lazy" decoding="async" class="kitty-cara" id="kitty-cara" src="app/assets/caras/feliz.svg" alt="" width="40" height="32">
       <h2 id="kitty-titulo">Kitty</h2>
       <button type="button" class="cerrar" id="kitty-cerrar" aria-label="Cerrar">✕</button>
     </header>

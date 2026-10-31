@@ -29,6 +29,15 @@
   --tap: 44px;              /* tamaño mínimo táctil */
   --ease: cubic-bezier(.2, .8, .2, 1);
 
+  /* Estética minimalista (2026-10-31): radios grandes, sombras casi invisibles, bordes finos y vidrio */
+  --r-card: 24px;
+  --r-xl: 36px;
+  --tracking-titulo: -0.03em;
+  --borde-fino: color-mix(in srgb, var(--line) 45%, transparent);
+  --vidrio: color-mix(in srgb, var(--surface) 72%, transparent);
+  --sombra-suave: 0 1px 2px rgba(90, 42, 48, .04), 0 12px 32px rgba(90, 42, 48, .07);
+  --sombra-acento: 0 12px 28px color-mix(in srgb, var(--primary) 28%, transparent);
+
   /* Paleta "Higo" (por defecto, modo claro) */
   --bg: #FBF6F3; --surface: #FFFFFF; --surface-2: #F5E4E0; --accent: #E8B4BC;
   --accent-soft: #F7D5DC; --line: #E3CCC6; --ink: #2A1715; --ink-soft: #6B4B45;
@@ -98,6 +107,7 @@
     --primary: #F4A3B5; --on-primary: #2B1B22; --enfasis: #F4A3B5; --gold: #F2C9A8;
     --sand: #B0506A;
     --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 14px 40px rgba(0, 0, 0, .4);
+    --sombra-suave: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 32px rgba(0, 0, 0, .35);
     --peligro: #FFB4B4;
     color-scheme: dark;
   }
@@ -108,6 +118,7 @@
   --primary: #F4A3B5; --on-primary: #2B1B22; --enfasis: #F4A3B5; --gold: #F2C9A8;
   --sand: #B0506A;
   --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 14px 40px rgba(0, 0, 0, .4);
+  --sombra-suave: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 32px rgba(0, 0, 0, .35);
   --peligro: #FFB4B4;
   color-scheme: dark;
 }

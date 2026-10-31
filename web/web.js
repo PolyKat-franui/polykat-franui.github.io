@@ -159,9 +159,9 @@ $$('.cifra').forEach((c, i) => c.addEventListener('pointerenter', (e) => {
 // ---------- Manifiesto: las palabras se encienden al hacer scroll ----------
 const manifiesto = $('#manifiesto');
 const palabras = manifiesto.textContent.trim().split(/\s+/);
-manifiesto.setAttribute('aria-label', manifiesto.textContent.trim());
-manifiesto.innerHTML = palabras.map((p) => `<span aria-hidden="true">${esc(p)} </span>`).join('');
-const spans = $$('span', manifiesto);
+// El texto completo queda para lectores de pantalla; las palabras animadas son solo visuales
+manifiesto.innerHTML = `<span class="sr-only">${esc(manifiesto.textContent.trim())}</span>` + palabras.map((p) => `<span aria-hidden="true">${esc(p)} </span>`).join('');
+const spans = $$('span[aria-hidden]', manifiesto);
 function encender() {
   const r = manifiesto.getBoundingClientRect();
   const avance = quieto ? 1 : Math.min(Math.max((innerHeight * 0.85 - r.top) / (r.height + innerHeight * 0.35), 0), 1);
@@ -269,7 +269,7 @@ function armarMazo() {
     <div class="carta carta-fin">
       <img src="app/assets/caras/celebrando.svg" alt="" width="80" height="64">
       <strong>¡Lo lograste!</strong>
-      <span>Ganaste <b id="prueba-total">0</b> Kitty tokens. En la app hay 5.000 palabras más.</span>
+      <span>Ganaste <b id="prueba-total">0</b> Kitty tokens. En la app hay casi 5.000 palabras más.</span>
       <a class="btn primario" href="app/">Seguir en la app</a>
       <button type="button" class="btn" id="prueba-otra">Otra ronda</button>
     </div>` + elegidas.map((f, i) => `

@@ -540,3 +540,59 @@ dialog::backdrop { background: color-mix(in srgb, var(--sombra-color) 40%, trans
   .kaizen-dias img, .bloque i, .curva-con, .curva-puntos circle { transition: none; } .kumon-kitty { animation: none; opacity: 1; transform: none; }
   .curva-con { stroke-dashoffset: 0; } .curva-puntos circle, .kaizen-dias img { opacity: 1; transform: none; }
 }
+
+/* ==========================================================
+   Estética minimalista (2026-10-31) — referencias de Francisca (Apple, Hush, apps de moda):
+   fondo limpio, una palabra gigante y tenue detrás de la portada, títulos grandes y apretados
+   con la segunda línea en gris, secciones numeradas 01 · 02 · 03, tarjetas blancas con bordes
+   finos y sombras casi invisibles. Misma paleta y mismo contenido. Va al final para ganar a lo anterior.
+   ========================================================== */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+body { --shadow: var(--sombra-suave); }
+.adornos { opacity: .45; }
+.display { letter-spacing: var(--tracking-titulo); }
+.display em { color: var(--ink-soft); }
+
+/* Botones: píldoras limpias */
+.btn { border-color: var(--borde-fino); font-weight: 600; }
+.btn.primario { box-shadow: var(--sombra-acento); }
+.btn:hover { box-shadow: var(--sombra-suave); }
+.btn.primario:hover { box-shadow: var(--sombra-acento); }
+
+/* Portada: sin manchas de color y con la marca gigante de fondo */
+.hero { position: relative; isolation: isolate; overflow: hidden; background: none; }
+.hero::before {
+  content: 'FRANUI'; position: absolute; z-index: -1; left: 0; right: 0; bottom: 4%;
+  font-family: var(--font-logo); font-weight: 600; font-size: clamp(110px, 24vw, 400px); line-height: .8; letter-spacing: .08em;
+  text-align: center; white-space: nowrap; color: color-mix(in srgb, var(--ink) 4%, transparent); pointer-events: none;
+}
+.hero-titulo { font-weight: 600; letter-spacing: -0.025em; }
+.hero-kitty { background: none; }
+
+/* Cifras: tablero fino */
+.cifras { background: var(--borde-fino); border-color: var(--borde-fino); }
+
+/* Secciones numeradas, como un catálogo: 01 — Método */
+main { counter-reset: seccion; }
+.seccion-cabeza { counter-increment: seccion; }
+.seccion-cabeza .sobretitulo::before { content: counter(seccion, decimal-leading-zero) '  —  '; color: var(--ink); letter-spacing: .12em; }
+
+/* Tarjetas: blancas, bordes finos, sin franjas de color */
+.pieza { border-top: 0; border: 1px solid var(--borde-fino); }
+.pieza:hover { background: var(--surface); box-shadow: var(--sombra-suave); }
+.pieza-num { width: auto; height: auto; border-radius: 0; background: none; color: var(--ink); font-family: var(--font-display); font-weight: 400; font-size: 44px; letter-spacing: -0.03em; line-height: 1; }
+.paso { border: 1px solid var(--borde-fino); box-shadow: var(--sombra-suave); }
+.capitulo { border: 1px solid var(--borde-fino); box-shadow: var(--sombra-suave); }
+.capitulo::before { display: none; }
+
+/* Llamado final: banda clara con botón píldora (en vez del degradado fuerte) */
+.cta-final { background: var(--surface-2); color: var(--ink); }
+.cta-final .btn.primario { background: var(--primary); color: var(--on-primary); }
+.cta-final .btn-descargar { background: var(--surface); color: var(--ink); border-color: var(--borde-fino); }
+/* Menú superior en una sola línea (en pantallas medianas se juntan un poco) */
+.nav-links a, .nav-cta { white-space: nowrap; }
+@media (min-width: 900px) and (max-width: 1360px) { .nav-links { gap: 0; } .nav-links a { padding-inline: 10px; letter-spacing: .14em; } }
+/* Velocidad: el título de la portada se ve desde el primer dibujo (solo sube suave, sin esperar al JavaScript) */
+.hero-titulo.revelar { opacity: 1; animation: subeSuave 1s var(--ease) both; }
+@keyframes subeSuave { from { transform: translateY(20px); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .hero-titulo.revelar { animation: none; transform: none; } }

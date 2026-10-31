@@ -65,7 +65,7 @@ Ya está armado así:
 - `npm run build` convierte los TSV en JSON livianos (~130 KB por idioma). La app
   descarga solo los dos idiomas que estás usando.
 - `npm test` valida que no falten ids, que no haya repetidos y que el banco inglés
-  siga cerrado en 5.000 filas.
+  siga cerrado en 4.996 filas.
 
 Automatización recomendada (siguiente bloque):
 - Un script que pida a Wiktionary + DeepL las filas vacías y las escriba como

@@ -86,7 +86,7 @@ try {
   await page.locator('.nodo:not(.raiz) .neurona').first().waitFor();
   assert.equal(await page.locator('.nodo:not(.raiz) .neurona').count(), 13);
   const conv = page.locator('.nodo:not(.raiz) .neurona', { hasText: 'Conversación y vida social' });
-  assert.match(await conv.innerText(), /269 tarjetas/);
+  assert.match(await conv.innerText(), /265 tarjetas/);
   await page.waitForTimeout(1200); // termina la animación de entrada
   await foto(page, '03-celular-temas');
   assert.ok(await page.locator('#empieza-aqui').isVisible(), 'persona nueva: «Empieza aquí» destacado');
@@ -94,7 +94,7 @@ try {
   paso('Inicio simple para principiantes: «Empieza aquí» y sin avisos');
   await sinScrollHorizontal(page, 'temas');
   assert.ok((await page.locator('#red .axon').count()) >= 13, 'la red dibuja sus conexiones');
-  paso('13 mega temas en red de neuronas; Conversación y vida social con 269 tarjetas');
+  paso('13 mega temas en red de neuronas; Conversación y vida social con 265 tarjetas');
 
   await conv.click();
   await page.waitForURL(/#\/tema\//);
