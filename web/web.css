@@ -592,3 +592,7 @@ main { counter-reset: seccion; }
 /* Menú superior en una sola línea (en pantallas medianas se juntan un poco) */
 .nav-links a, .nav-cta { white-space: nowrap; }
 @media (min-width: 900px) and (max-width: 1360px) { .nav-links { gap: 0; } .nav-links a { padding-inline: 10px; letter-spacing: .14em; } }
+/* Velocidad: el título de la portada se ve desde el primer dibujo (solo sube suave, sin esperar al JavaScript) */
+.hero-titulo.revelar { opacity: 1; animation: subeSuave 1s var(--ease) both; }
+@keyframes subeSuave { from { transform: translateY(20px); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .hero-titulo.revelar { animation: none; transform: none; } }
