@@ -1162,7 +1162,7 @@ body[data-ruta="estudiar"] .adornos { display: none; }
    bordes finos, títulos grandes y apretados, botones píldora y decoraciones más discretas.
    Misma paleta y mismo contenido: solo cambia la forma. Va al final para ganar a lo anterior.
    ========================================================== */
-body { background: var(--bg); }
+body { background: var(--bg); --shadow: var(--sombra-suave); }
 .adornos { opacity: .5; }
 .display { letter-spacing: var(--tracking-titulo); }
 

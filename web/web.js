@@ -159,9 +159,9 @@ $$('.cifra').forEach((c, i) => c.addEventListener('pointerenter', (e) => {
 // ---------- Manifiesto: las palabras se encienden al hacer scroll ----------
 const manifiesto = $('#manifiesto');
 const palabras = manifiesto.textContent.trim().split(/\s+/);
-manifiesto.setAttribute('aria-label', manifiesto.textContent.trim());
-manifiesto.innerHTML = palabras.map((p) => `<span aria-hidden="true">${esc(p)} </span>`).join('');
-const spans = $$('span', manifiesto);
+// El texto completo queda para lectores de pantalla; las palabras animadas son solo visuales
+manifiesto.innerHTML = `<span class="sr-only">${esc(manifiesto.textContent.trim())}</span>` + palabras.map((p) => `<span aria-hidden="true">${esc(p)} </span>`).join('');
+const spans = $$('span[aria-hidden]', manifiesto);
 function encender() {
   const r = manifiesto.getBoundingClientRect();
   const avance = quieto ? 1 : Math.min(Math.max((innerHeight * 0.85 - r.top) / (r.height + innerHeight * 0.35), 0), 1);
