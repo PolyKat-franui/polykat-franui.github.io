@@ -11,13 +11,13 @@ const R = (p) => new URL(`../${p}`, import.meta.url).pathname;
 
 test('el banco valida (ids, traducciones, estados)', () => {
   const out = execFileSync('node', [R('scripts/build-banco.mjs'), '--check'], { encoding: 'utf8' });
-  assert.match(out, /Banco válido: 5000 conceptos/);
+  assert.match(out, /Banco válido: 4996 conceptos/);
 });
 
-test('el banco de inglés sigue cerrado: mismas 5.000 palabras, mismo orden', () => {
+test('el banco de inglés sigue cerrado: mismas 4.996 palabras, mismo orden', () => {
   const original = readTsv(R('banco/banco_palabras_ingles.tsv')).map((r) => r.palabra);
   const repo = readTsv(R('banco/conceptos.tsv')).map((r) => r.palabra);
-  assert.equal(original.length, 5000);
+  assert.equal(original.length, 4996);
   assert.deepEqual(repo, original);
 });
 

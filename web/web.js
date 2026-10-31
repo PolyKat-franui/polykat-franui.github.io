@@ -269,7 +269,7 @@ function armarMazo() {
     <div class="carta carta-fin">
       <img src="app/assets/caras/celebrando.svg" alt="" width="80" height="64">
       <strong>¡Lo lograste!</strong>
-      <span>Ganaste <b id="prueba-total">0</b> Kitty tokens. En la app hay 5.000 palabras más.</span>
+      <span>Ganaste <b id="prueba-total">0</b> Kitty tokens. En la app hay casi 5.000 palabras más.</span>
       <a class="btn primario" href="app/">Seguir en la app</a>
       <button type="button" class="btn" id="prueba-otra">Otra ronda</button>
     </div>` + elegidas.map((f, i) => `

@@ -101,8 +101,8 @@ try {
   paso('Novedades compartidas con la app');
 
   const flaps = await page.locator('.flap').evaluateAll((els) => els.map((e) => e.textContent));
-  assert.deepEqual(flaps, ['5000', '6', '13', '10']);
-  paso('Cifras reales con efecto de tablero (5000 · 6 · 13 · 10)');
+  assert.deepEqual(flaps, ['4996', '6', '13', '10']);
+  paso('Cifras reales con efecto de tablero (4996 · 6 · 13 · 10)');
 
   await page.locator('#manifiesto').scrollIntoViewIfNeeded();
   await page.evaluate(() => scrollBy({ top: 400, behavior: 'instant' }));

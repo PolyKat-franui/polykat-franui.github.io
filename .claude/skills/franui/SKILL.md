@@ -34,7 +34,7 @@ Estados de un idioma (`app/data/idiomas.json`): `disponible`, `nuevo` (colorido 
 etiqueta "Nuevo"), `proximamente` (gris + etiqueta "Próximamente", no se puede abrir).
 
 ## 3. Banco de palabras [DECIDIDO]
-- Banco base en inglés: 5.000 filas cerradas (no agregar ni quitar).
+- Banco base en inglés: 4.996 filas cerradas (no agregar ni quitar; Francisca quitó el 2026-10-31 *oh, oh dear, wow, hooray* por ser expresiones universales).
   Columnas: palabra, tipo, mega_tema, tema, nivel, rango_1000, fuentes. "|" separa
   varios valores. Una palabra puede tener varios temas.
 - 13 mega temas: Conversación y vida social; Lenguaje, números y tiempo; Personas y
