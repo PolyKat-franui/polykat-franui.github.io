@@ -1209,3 +1209,9 @@ body { background: var(--bg); --shadow: var(--sombra-suave); }
 
 /* Avisos y paneles */
 .aviso-descarga { border-radius: var(--r-card); border-color: var(--borde-fino); box-shadow: var(--sombra-suave); background: var(--vidrio); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+
+/* Temas e idiomas: círculos planos (sin brillo 3D), con una sombra suave del mismo color */
+.neurona-soma { padding: 4px; box-shadow: 0 8px 22px color-mix(in srgb, var(--c) 20%, transparent); }
+.neurona-pct { box-shadow: none; font-weight: 600; }
+.neurona-txt { border-radius: var(--r-pill); }
+.nodo-idioma .monograma { box-shadow: 0 6px 16px color-mix(in srgb, var(--c) 20%, transparent); }
