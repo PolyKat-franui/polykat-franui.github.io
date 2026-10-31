@@ -1,7 +1,7 @@
 // Franui — interfaz. Rutas con # (funciona en cualquier hosting estático, p. ej. GitHub Pages).
 import { traspasado } from './traspaso.js'; // primero: puede traer el avance desde la dirección antigua
 import * as prueba from './prueba.js';
-import { t, tn, setIdiomaUI, tMega, tTipo, nombreIdioma, IDIOMAS_UI, MEGA_TEMAS } from './i18n.js';
+import { t, tn, setIdiomaUI, cargarIdiomaUI, idiomaCargado, tMega, tTipo, nombreIdioma, IDIOMAS_UI, MEGA_TEMAS } from './i18n.js';
 import * as store from './store.js';
 import { PALETAS } from './store.js';
 import { dificultad } from './srs.js';
@@ -158,6 +158,8 @@ function aplicarAjustes() {
   $('#capa-brillo').style.opacity = String(Math.max(0, 1 - a.brillo));
   root.lang = a.nativo;
   setIdiomaUI(a.nativo);
+  // Si los textos de ese idioma aún no están descargados (p. ej. llegó un avance de la nube), se bajan y se repinta.
+  if (!idiomaCargado(a.nativo)) cargarIdiomaUI(a.nativo).then(() => { if (idiomaCargado(a.nativo)) { setIdiomaUI(a.nativo); router(); } });
 }
 
 function nativoInicial() {
@@ -246,8 +248,9 @@ function pintarMarco(ruta) {
   $('#kitty-modo').textContent = t('kitty_modo');
 }
 
-function cambiarNativo(code) {
+async function cambiarNativo(code) {
   if (!IDIOMAS_UI.includes(code)) return;
+  await cargarIdiomaUI(code);
   S.ajustes.nativo = code;
   if (S.aprendiendo === code) S.aprendiendo = null;
   guardar();
@@ -2421,6 +2424,7 @@ $('#kitty-form').addEventListener('submit', (e) => {
 
 // ---------- Arranque ----------
 S.ajustes.nativo ??= nativoInicial();
+await cargarIdiomaUI(S.ajustes.nativo); // solo se descargan los textos del idioma de la persona
 aplicarAjustes();
 if (store.usarProtectores(S)) { store.guardar(S); setTimeout(() => toast(t('protector_usado')), 1500); }
 if (traspasado) setTimeout(() => toast(t('traspaso_ok')), 1200);

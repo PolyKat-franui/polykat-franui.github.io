@@ -2,13 +2,13 @@
 // Estrategia: primero la red (así siempre ves la versión nueva) y, si no hay conexión, lo guardado.
 // El banco de palabras (data/banco/*.json) se guarda la primera vez que se usa.
 // Al agregar archivos a la app, súmalos a NUCLEO (tests/pwa.test.mjs lo revisa).
-const VERSION = 'franui-v23';
+const VERSION = 'franui-v24';
 const NUCLEO = [
   './',
   'index.html',
   'manifest.webmanifest',
   'css/tokens.css', 'css/logo.css', 'css/app.css',
-  'js/main.js', 'js/i18n.js', 'js/store.js', 'js/srs.js', 'js/sesion.js', 'js/banco.js', 'js/voz.js', 'js/iconos.js',
+  'js/main.js', 'js/i18n.js', 'js/i18n-en.js', 'js/i18n-pt.js', 'js/i18n-fr.js', 'js/i18n-it.js', 'js/i18n-de.js', 'js/store.js', 'js/srs.js', 'js/sesion.js', 'js/banco.js', 'js/voz.js', 'js/iconos.js',
   'js/sonido.js', 'js/adornos.js', 'js/kitty.js', 'js/nube.js', 'js/nube-config.js', 'js/jardin.js', 'js/recordatorio.js', 'js/musica.js', 'js/traspaso.js', 'js/prueba.js',
   'data/idiomas.json', 'data/novedades.json',
   'assets/app/apple-touch-icon.png',

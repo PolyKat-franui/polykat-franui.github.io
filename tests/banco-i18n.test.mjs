@@ -35,8 +35,8 @@ test('los 13 mega temas del banco tienen traducción en la interfaz', () => {
   for (const m of megas) assert.ok(MEGA_TEMAS.includes(m), m);
 });
 
-test('la interfaz tiene todos los textos en los 6 idiomas', () => {
-  for (const [l, faltan] of Object.entries(clavesFaltantes())) assert.deepEqual(faltan, [], l);
+test('la interfaz tiene todos los textos en los 6 idiomas', async () => {
+  for (const [l, faltan] of Object.entries(await clavesFaltantes())) assert.deepEqual(faltan, [], l);
 });
 
 test('Kitty encuentra palabras sin importar tildes ni artículos', () => {
