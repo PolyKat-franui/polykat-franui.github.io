@@ -95,27 +95,6 @@ main { outline: none; }
   transform: rotate(-4deg); display: grid; grid-template-rows: auto 1fr; gap: 10px; overflow: hidden;
 }
 .telefono-isla { position: absolute; top: 12px; left: 50%; width: 84px; height: 22px; margin-left: -42px; border-radius: 20px; background: var(--oscuro); }
-.demo-progreso { height: 3px; border-radius: 3px; background: var(--accent-soft); overflow: hidden; }
-.demo-progreso i { display: block; height: 100%; width: 40%; background: var(--enfasis); animation: progreso 18s linear infinite; }
-.demo-tarjeta {
-  border-radius: 26px; padding: 16px 14px; display: flex; flex-direction: column; gap: 12px; text-align: center;
-  background: radial-gradient(260px 160px at 50% 0%, color-mix(in srgb, var(--surface-2) 90%, transparent), transparent 70%), var(--surface);
-  border: 1px solid color-mix(in srgb, var(--line) 50%, transparent); transition: transform .52s var(--ease), opacity .52s var(--ease);
-}
-.demo-tarjeta.sube { transform: translateY(-110%); opacity: 0; }
-.demo-tarjeta.entra { animation: entraAbajo .6s var(--ease); }
-.demo-top { display: flex; justify-content: space-between; align-items: center; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); }
-.demo-nivel { display: inline-flex; align-items: center; gap: 5px; border: 1.5px solid var(--d-nueva); background: var(--d-nueva); color: var(--blanco); border-radius: 999px; padding: 2px 9px 2px 6px; letter-spacing: .04em; text-transform: none; font-weight: 600; font-size: 11px; }
-.demo-nivel i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-.demo-palabra { margin-top: auto; font-family: var(--font-display); font-size: 36px; line-height: 1.05; padding-right: 30px; }
-.demo-trad { margin-right: 30px; padding: 10px; border-radius: 14px; border: 1px dashed var(--line); filter: blur(7px); transition: filter .5s var(--ease), background .5s; font-size: 16px; }
-.demo-tarjeta.revelada .demo-trad { filter: none; background: var(--surface-2); border-color: transparent; }
-.demo-acciones { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px; font-weight: 500; }
-.demo-acciones span { border: 1px solid var(--line); border-radius: 999px; padding: 10px 4px; }
-.demo-acciones .demo-sabe { background: var(--primary); color: var(--on-primary); border-color: transparent; }
-.demo-riel img { width: 20px; height: 16px; padding: 8px 6px; background: radial-gradient(circle closest-side, var(--surface-2) 99%, transparent 100%); }
-.demo-riel { position: absolute; right: 22px; top: 50%; display: grid; gap: 10px; transform: translateY(-30%); }
-.demo-riel span { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); border: 1px solid color-mix(in srgb, var(--line) 60%, transparent); font-size: 13px; }
 
 /* ---------- Cifras ---------- */
 .cifras {
@@ -254,8 +233,6 @@ dialog::backdrop { background: color-mix(in srgb, var(--sombra-color) 40%, trans
 @keyframes aparecer { from { opacity: 0; transform: translateY(14px); } }
 @keyframes flotar { 50% { transform: translateY(-10px); } }
 @keyframes girar { to { transform: rotate(360deg); } }
-@keyframes progreso { from { width: 0; } to { width: 100%; } }
-@keyframes entraAbajo { from { transform: translateY(40%); opacity: 0; } }
 @keyframes voltear { 0% { transform: rotateX(0); } 50% { transform: rotateX(90deg); } 100% { transform: rotateX(0); } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -316,32 +293,6 @@ dialog::backdrop { background: color-mix(in srgb, var(--sombra-color) 40%, trans
 .pantallas { position: relative; min-height: 0; }
 .pantalla { position: absolute; inset: 0; display: flex; flex-direction: column; opacity: 0; transform: scale(.96); transition: opacity .5s var(--ease), transform .5s var(--ease); pointer-events: none; }
 .pantalla.activa { opacity: 1; transform: none; }
-.pantalla.p-tarjeta .demo-tarjeta { flex: 1; }
-.p-menu, .p-premio { align-items: center; justify-content: center; gap: 10px; text-align: center; border-radius: 26px; background: radial-gradient(120% 60% at 50% 0%, var(--accent-soft), transparent 70%); }
-.mini-fichas { display: flex; font-family: var(--font-logo); font-weight: 600; font-size: 44px; line-height: .95; letter-spacing: .1em; padding-left: .1em; color: var(--ink); padding-bottom: 6px; border-bottom: 1px solid var(--ink); }
-.mini-fichas span { display: inline-block; }
-.p-menu.activa .mini-fichas span { animation: letraAparece .8s var(--ease) both; }
-.mini-fichas span:nth-child(2) { animation-delay: 100ms !important; } .mini-fichas span:nth-child(3) { animation-delay: 200ms !important; }
-.mini-fichas span:nth-child(4) { animation-delay: 300ms !important; } .mini-fichas span:nth-child(5) { animation-delay: 400ms !important; }
-.mini-fichas span:nth-child(6) { animation-delay: 500ms !important; }
-.mini-sub { font-family: var(--font-logo); font-style: italic; font-weight: 500; font-size: 22px; line-height: 1; color: var(--primary); margin-bottom: -4px; }
-.mini-kitty { width: 60px; height: 48px; padding: 14px; box-sizing: content-box; image-rendering: pixelated; background: radial-gradient(circle closest-side, var(--surface-2) 99%, transparent 100%); animation: kittySalta 1.6s ease-in-out infinite; }
-.mini-stats { display: flex; gap: 6px; }
-.mini-stats span { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px 4px 6px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-weight: 700; font-size: 13px; }
-.mini-stats img { image-rendering: pixelated; }
-.mini-jugar { display: block; width: 86%; padding: 10px 0; border-radius: 18px; background: var(--primary); color: var(--on-primary); font-family: var(--font-display); font-weight: 700; font-size: 18px; box-shadow: 0 4px 0 color-mix(in srgb, var(--primary) 55%, var(--sombra-color)); animation: latidoSuave 1.8s ease-in-out infinite; }
-.mini-botones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; width: 86%; }
-.mini-botones i { height: 38px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 3px 0 color-mix(in srgb, var(--nodo-2) 40%, transparent); }
-.mini-titulo { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: var(--enfasis); }
-.mini-rodillos { display: flex; gap: 6px; padding: 8px; border-radius: 16px; background: var(--oscuro); }
-.mini-rodillos span { width: 48px; height: 48px; border-radius: 10px; background: var(--surface); overflow: hidden; position: relative; }
-.mini-rodillos i { position: absolute; left: 0; right: 0; top: 0; height: 288px; background: url(app/assets/sakura.svg) center 12px / 23px 23px repeat-y, url(app/assets/moneda.svg) center 36px / 24px 24px repeat-y; background-size: 23px 23px, 24px 24px; image-rendering: pixelated; }
-.p-premio.gira .mini-rodillos i { animation: rodilloMini 1.2s cubic-bezier(.2, .7, .3, 1) both; }
-.p-premio.gira .mini-rodillos span:nth-child(2) i { animation-duration: 1.5s; }
-.p-premio.gira .mini-rodillos span:nth-child(3) i { animation-duration: 1.8s; }
-.mini-num { font-family: var(--font-display); font-weight: 700; font-size: 44px; line-height: 1; color: var(--gold); }
-.p-premio.gira .mini-num { animation: pop .6s 1.8s both; }
-.mini-txt { font-size: 13px; color: var(--ink-soft); font-weight: 700; }
 
 /* ---------- Cinta de saludos (se mueve sola, como un ticker) ---------- */
 .cinta { overflow: hidden; padding: 18px 0; border-block: 1px solid color-mix(in srgb, var(--line) 50%, transparent); background: var(--surface); }
@@ -413,12 +364,9 @@ dialog::backdrop { background: color-mix(in srgb, var(--sombra-color) 40%, trans
 
 @keyframes llenarBarra { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes cinta { to { transform: translateX(-50%); } }
-@keyframes letraAparece { from { transform: translateY(.35em); opacity: 0; filter: blur(6px); } to { transform: none; opacity: 1; filter: none; } }
 @keyframes kittySalta { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes kittyBrinco { 30% { transform: translateY(-30px) scale(1.06, .94); } 60% { transform: translateY(0) scale(.94, 1.06); } }
-@keyframes latidoSuave { 50% { transform: scale(1.04); } }
 @keyframes pop { 40% { transform: scale(1.3); } }
-@keyframes rodilloMini { from { transform: translateY(-240px); } to { transform: translateY(0); } }
 @keyframes entraFrase { from { opacity: 0; transform: translateY(16px); filter: blur(4px); } }
 @media (prefers-reduced-motion: reduce) { .cinta-pista { flex-wrap: wrap; width: auto; justify-content: center; } }
 /* El círculo punteado rodea solo a Kitty (no a la burbuja) */
@@ -596,3 +544,5 @@ main { counter-reset: seccion; }
 .hero-titulo.revelar { opacity: 1; animation: subeSuave 1s var(--ease) both; }
 @keyframes subeSuave { from { transform: translateY(20px); } to { transform: none; } }
 @media (prefers-reduced-motion: reduce) { .hero-titulo.revelar { animation: none; transform: none; } }
+/* Capturas reales de la app dentro del teléfono de la portada */
+.pantalla.captura { width: 100%; height: 100%; object-fit: cover; object-position: top center; border-radius: 26px; display: block; }
