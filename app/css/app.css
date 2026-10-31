@@ -1215,3 +1215,13 @@ body { background: var(--bg); --shadow: var(--sombra-suave); }
 .neurona-pct { box-shadow: none; font-weight: 600; }
 .neurona-txt { border-radius: var(--r-pill); }
 .nodo-idioma .monograma { box-shadow: 0 6px 16px color-mix(in srgb, var(--c) 20%, transparent); }
+
+/* Carga y listas vacías con Kitty */
+.cargando { align-content: center; gap: 14px; }
+.cargando-kitty { image-rendering: pixelated; animation: kittySalta 1.6s ease-in-out infinite; }
+.cargando-puntos { display: flex; gap: 6px; }
+.cargando-puntos i { width: 8px; height: 8px; border-radius: 50%; background: var(--enfasis); opacity: .3; animation: puntoCarga 1.1s ease-in-out infinite; animation-delay: calc(var(--k) * .16s); }
+@keyframes puntoCarga { 50% { opacity: 1; transform: translateY(-4px); } }
+.vacio-estado .cara-grande { image-rendering: pixelated; }
+.vacio-estado .aviso { text-align: center; }
+@media (prefers-reduced-motion: reduce) { .cargando-kitty, .cargando-puntos i { animation: none; opacity: 1; } }

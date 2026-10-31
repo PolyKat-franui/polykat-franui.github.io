@@ -362,8 +362,14 @@ function ir(hash) {
   else location.hash = hash;
 }
 
+/** Pantalla de carga: Kitty pensando, dando saltitos, con tres puntos. */
+const htmlCargando = () => `<div class="cargando" role="status" aria-busy="true" aria-label="${t('cargando')}">
+  <img class="cargando-kitty" src="${cara('pensando')}" alt="" width="80" height="64">
+  <span class="cargando-puntos" aria-hidden="true"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i></span></div>`;
+/** Lista vacía: Kitty con una cara según el caso y el mensaje debajo (clase extra para el párrafo, p. ej. «aviso»). */
+const htmlVacio = (texto, carita = 'pensando', clase = 'suave') => `<div class="vacio-estado"><img class="cara-grande" src="${cara(carita)}" alt="" width="80" height="64"><p class="${clase}">${texto}</p></div>`;
 function cargando() {
-  vista.innerHTML = '<div class="cargando" aria-busy="true"><img src="assets/corazon.svg" alt="" width="52" height="48"></div>';
+  vista.innerHTML = htmlCargando();
 }
 
 // ---------- Inicio: entrar / crear cuenta / invitado ----------
@@ -1979,7 +1985,7 @@ async function vistaRanking() {
     $('#rank-google')?.addEventListener('click', conectarGoogle);
     return;
   }
-  marco('<div class="cargando" aria-busy="true"><img src="assets/corazon.svg" alt="" width="52" height="48"></div>');
+  marco(htmlCargando());
   try {
     if (S.ajustes.ranking !== false) await nube.publicarRanking(uid, yo);
     let filas = (await nube.leerRanking(campo)).filter(deMiLiga);
@@ -1989,7 +1995,7 @@ async function vistaRanking() {
     const mio = filas.findIndex((f) => f.uid === uid);
     marco(`
       <ol class="ranking">${filas.map((f, i) => fila(f, i + 1)).join('')}</ol>
-      ${filas.length <= 1 ? `<p class="aviso">${t(campo === 'xp' ? 'liga_solo' : 'rank_vacio')}</p>` : ''}
+      ${filas.length <= 1 ? htmlVacio(t(campo === 'xp' ? 'liga_solo' : 'rank_vacio'), campo === 'xp' ? 'guino' : 'pensando', 'aviso') : ''}
       ${S.ajustes.ranking === false ? `<p class="aviso">${t('rank_oculto')}</p>` : mio >= 0 ? `<p class="suave centro">${t('rank_puesto', { n: mio + 1 })}</p>` : ''}`);
   } catch {
     marco(`<ol class="ranking">${fila({ ...yo, uid }, 1)}</ol><p class="aviso">${t('rank_error')}</p>`);
@@ -2033,7 +2039,7 @@ async function vistaLibre() {
     $('#libre-lista').innerHTML = mostrar.length ? mostrar.map((c) => `
       <li><label class="libre-fila"><input type="checkbox" value="${c.id}" ${f.elegidos.has(c.id) ? 'checked' : ''}>
         <span class="libre-palabra"><strong lang="${meta}">${esc(banco.texto(meta, c.id).texto)}</strong><small lang="${nativo}">${esc(banco.texto(nativo, c.id).texto)}</small></span>
-        ${insignia(nivelDe(c.id))}</label></li>`).join('') : `<li class="aviso">${t('libre_vacio')}</li>`;
+        ${insignia(nivelDe(c.id))}</label></li>`).join('') : `<li>${htmlVacio(t('libre_vacio'), 'confundida')}</li>`;
     $('#libre-mas').textContent = visibles.length > MAX_LIBRE_LISTA ? t('libre_mas', { n: MAX_LIBRE_LISTA, m: visibles.length }) : '';
     $$('#libre-lista input').forEach((i) => i.addEventListener('change', () => { i.checked ? f.elegidos.add(i.value) : f.elegidos.delete(i.value); botones(); }));
     botones();
@@ -2093,7 +2099,7 @@ function pintarLeida(li, b, leida) {
 /** Solo para la creadora: lee, marca y borra las sugerencias. */
 async function vistaBuzon() {
   if (!esCreadora()) { location.hash = '#/ajustes'; return; }
-  vista.innerHTML = `<section class="pagina angosta"><h1 class="display">${t('buzon_titulo')}</h1><div class="cargando" aria-busy="true"><img src="assets/corazon.svg" alt="" width="52" height="48"></div></section>`;
+  vista.innerHTML = `<section class="pagina angosta"><h1 class="display">${t('buzon_titulo')}</h1>${htmlCargando()}</section>`;
   let lista;
   try { lista = await nube.leerSugerencias(); } catch {
     vista.innerHTML = `<section class="pagina angosta"><h1 class="display">${t('buzon_titulo')}</h1><p class="aviso">${t('buzon_error')}</p></section>`; return;
@@ -2103,7 +2109,7 @@ async function vistaBuzon() {
   vista.innerHTML = `
     <section class="pagina angosta buzon">
       <h1 class="display">${t('buzon_titulo')}</h1>
-      ${lista.length ? `<p class="suave">${tn('buzon_nuevas_n', sinLeer)}</p>` : `<p class="aviso">${t('buzon_vacio')}</p>`}
+      ${lista.length ? `<p class="suave">${tn('buzon_nuevas_n', sinLeer)}</p>` : htmlVacio(t('buzon_vacio'), 'con_sueno', 'aviso')}
       <ul class="buzon-lista">${lista.map((x) => `
         <li class="card ${x.leida ? 'leida' : 'nueva'}" data-id="${esc(x.id)}">
           <p class="buzon-meta"><span class="tag" ${x.leida ? 'hidden' : ''}>${t('niv_nueva')}</span><strong>${esc(x.nombre || t('buzon_anonimo'))}</strong>
