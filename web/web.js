@@ -59,32 +59,8 @@ function rotarSaludo() {
 }
 if (!quieto) setInterval(rotarSaludo, 2600);
 
-// ---------- Teléfono de muestra: tarjetas reales del banco que se deslizan ----------
-const DEMO = [
-  ['Francés', 'Enchanté.', 'Mucho gusto.'],
-  ['Italiano', 'Come stai?', '¿Cómo estás?'],
-  ['Alemán', 'Bis bald.', 'Hasta pronto.'],
-  ['Portugués', 'Tudo bem?', '¿Qué tal?'],
-  ['Inglés', 'See you tomorrow.', 'Hasta mañana.'],
-];
-let iDemo = 0;
-function siguienteDemo() {
-  const t = $('#demo-tarjeta');
-  t.classList.add('sube');
-  setTimeout(() => {
-    iDemo = (iDemo + 1) % DEMO.length;
-    const [idioma, palabra, trad] = DEMO[iDemo];
-    $('#demo-idioma').textContent = idioma;
-    $('#demo-palabra').textContent = palabra;
-    $('#demo-trad').textContent = trad;
-    t.classList.remove('sube', 'revelada');
-    t.classList.add('entra');
-    setTimeout(() => t.classList.remove('entra'), 600);
-    setTimeout(() => t.classList.add('revelada'), 1300);
-  }, 520);
-}
-
-// Pantallas del teléfono como historias de Instagram: menú → tarjetas → premio (barras arriba).
+// ---------- Teléfono de muestra ----------
+// Capturas reales de la app en el teléfono, como historias de Instagram: menú → tarjeta → temas → jardín (barras arriba).
 const pantallas = $$('.pantalla');
 const barras = $$('#historias i');
 let iPantalla = 0;
@@ -100,14 +76,9 @@ function mostrarPantalla(i) {
     b.style.setProperty('--dur', `${dur}ms`);
   });
   void barras[i].offsetWidth; barras[i].classList.add('llenando');
-  if (p.classList.contains('p-tarjeta')) {
-    timersPantalla.push(setTimeout(() => $('#demo-tarjeta').classList.add('revelada'), 1200));
-    timersPantalla.push(setTimeout(siguienteDemo, 3600), setTimeout(siguienteDemo, 7200));
-  }
-  if (p.classList.contains('p-premio')) { p.classList.remove('gira'); void p.offsetWidth; p.classList.add('gira'); }
   timersPantalla.push(setTimeout(() => mostrarPantalla((i + 1) % pantallas.length), dur));
 }
-if (quieto) { pantallas.forEach((x, k) => x.classList.toggle('activa', k === 1)); $('#demo-tarjeta').classList.add('revelada'); barras.forEach((b) => b.classList.add('llena')); }
+if (quieto) { pantallas.forEach((x, k) => x.classList.toggle('activa', k === 1)); barras.forEach((b) => b.classList.add('llena')); }
 else mostrarPantalla(0);
 
 // Parallax suave del teléfono
