@@ -18,7 +18,8 @@ main { outline: none; }
 /* ---------- Tipografía ---------- */
 .display { font-family: var(--font-display); font-weight: 600; line-height: 1.04; letter-spacing: -0.02em; font-size: clamp(38px, 6.4vw, 84px); font-optical-sizing: auto; }
 .display em { font-style: normal; color: var(--enfasis); }
-.sobretitulo { font-size: 12px; letter-spacing: .32em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500; }
+.sobretitulo { font-family: var(--font-logo); font-style: italic; font-size: 22px; letter-spacing: .01em; text-transform: none; color: var(--primary); font-weight: 600; line-height: 1.2; }
+.eslogan-hero { font-size: 12px; font-style: normal; letter-spacing: .32em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500; }
 .suave { color: var(--ink-soft); }
 .nota { color: var(--ink-soft); font-size: 15px; font-style: italic; }
 
@@ -53,7 +54,7 @@ main { outline: none; }
 .marca .logo { --logo-size: 15px; }
 .eslogan-hero { font-family: var(--font-logo); letter-spacing: .26em; }
 .nav-links { display: none; gap: 4px; margin: 0 auto; }
-.nav-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; text-decoration: none; font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-soft); position: relative; }
+.nav-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; text-decoration: none; font-size: 14px; font-weight: 600; letter-spacing: 0; color: var(--ink-soft); position: relative; }
 .nav-links a::after { content: ''; position: absolute; left: 12px; right: 12px; bottom: 10px; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease); }
 .nav-links a:hover { color: var(--ink); }
 .nav-links a:hover::after { transform: scaleX(1); }
@@ -181,7 +182,7 @@ main { outline: none; }
 }
 .retrato span { font-family: var(--font-display); font-size: 96px; font-style: normal; color: var(--ink); opacity: .85; }
 .creadora .display { font-size: clamp(36px, 4.6vw, 64px); margin: 14px 0 10px; }
-.creadora-rol { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.creadora-rol { font-family: var(--font-logo); font-style: italic; font-size: 18px; color: var(--ink-soft); font-weight: 500; }
 .creadora-texto { margin-top: 22px; font-size: 19px; font-weight: 400; max-width: 560px; }
 
 /* Novedades */
@@ -206,7 +207,7 @@ main { outline: none; }
 .pie-marca .logo { --logo-size: 20px; }
 .pie-marca .eslogan { color: var(--sobre-oscuro-suave); font-size: 12px; }
 .pie nav { display: flex; flex-wrap: wrap; gap: 4px 20px; }
-.pie nav a { color: var(--sobre-oscuro); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; letter-spacing: .14em; text-transform: uppercase; font-size: 12px; }
+.pie nav a { color: var(--sobre-oscuro); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; font-weight: 600; font-size: 14px; }
 .pie-legal { color: var(--sobre-oscuro-suave); }
 
 /* Kitty en la web */
@@ -414,14 +415,14 @@ dialog::backdrop { background: color-mix(in srgb, var(--sombra-color) 40%, trans
 .metodo-intro { max-width: 560px; font-size: 18px; }
 .capitulo { position: relative; display: grid; gap: clamp(28px, 4vw, 64px); align-items: center; padding: clamp(28px, 4vw, 56px); border-radius: 32px; background: var(--surface); box-shadow: var(--shadow); overflow: hidden; isolation: isolate; }
 .capitulo::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--c); }
-.capitulo-num { display: flex; align-items: center; gap: 14px; margin: 0; font-size: 12px; letter-spacing: .32em; text-transform: uppercase; color: var(--ink-soft); }
+.capitulo-num { display: flex; align-items: center; gap: 14px; margin: 0; font-family: var(--font-logo); font-style: italic; font-size: 18px; letter-spacing: .01em; color: var(--primary); font-weight: 600; }
 .kanji { font-family: var(--font-logo); font-size: 44px; letter-spacing: 0; color: var(--c); line-height: 1; }
 .capitulo h3 { margin: 10px 0 0; font-family: var(--font-display); font-weight: 600; font-size: clamp(34px, 4.6vw, 56px); line-height: 1.02; letter-spacing: -0.02em; }
 .kanji-titulo { position: absolute; right: -0.08em; bottom: -0.25em; z-index: -1; font-family: var(--font-logo); font-size: clamp(140px, 20vw, 260px); line-height: 1; color: color-mix(in srgb, var(--c) 7%, transparent); pointer-events: none; }
 .capitulo-lema { margin: 8px 0 0; font-family: var(--font-logo); font-style: italic; font-size: clamp(20px, 2.2vw, 26px); color: var(--c); }
 .capitulo-datos { margin: 24px 0 0; display: grid; gap: 18px; }
 .capitulo-datos div { display: grid; gap: 4px; padding-top: 14px; border-top: 1px solid color-mix(in srgb, var(--line) 70%, transparent); }
-.capitulo-datos dt { font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--ink-soft); }
+.capitulo-datos dt { font-family: var(--font-logo); font-style: italic; font-size: 16px; color: var(--ink-soft); font-weight: 600; }
 .capitulo-datos dd { margin: 0; font-size: 17px; line-height: 1.6; }
 .capitulo-visual { margin: 0; min-height: 240px; display: grid; place-items: center; gap: 12px; padding: 24px; border-radius: 24px; background: color-mix(in srgb, var(--c) 6%, var(--surface-2)); text-align: center; }
 @media (min-width: 900px) {
@@ -523,7 +524,6 @@ body { --shadow: var(--sombra-suave); }
 /* Secciones numeradas, como un catálogo: 01 — Método */
 main { counter-reset: seccion; }
 .seccion-cabeza { counter-increment: seccion; }
-.seccion-cabeza .sobretitulo::before { content: counter(seccion, decimal-leading-zero) '  —  '; color: var(--ink); letter-spacing: .12em; }
 
 /* Tarjetas: blancas, bordes finos, sin franjas de color */
 .pieza { border-top: 0; border: 1px solid var(--borde-fino); }
@@ -539,7 +539,7 @@ main { counter-reset: seccion; }
 .cta-final .btn-descargar { background: var(--surface); color: var(--ink); border-color: var(--borde-fino); }
 /* Menú superior en una sola línea (en pantallas medianas se juntan un poco) */
 .nav-links a, .nav-cta { white-space: nowrap; }
-@media (min-width: 900px) and (max-width: 1360px) { .nav-links { gap: 0; } .nav-links a { padding-inline: 10px; letter-spacing: .14em; } }
+@media (min-width: 900px) and (max-width: 1360px) { .nav-links { gap: 0; } .nav-links a { padding-inline: 10px; } }
 /* Velocidad: el título de la portada se ve desde el primer dibujo (solo sube suave, sin esperar al JavaScript) */
 .hero-titulo.revelar { opacity: 1; animation: subeSuave 1s var(--ease) both; }
 @keyframes subeSuave { from { transform: translateY(20px); } to { transform: none; } }
