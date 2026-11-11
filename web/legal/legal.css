@@ -5,8 +5,8 @@ main { max-width: 720px; margin: 0 auto; padding: 32px 16px 64px; }
 .volver { display: flex; width: max-content; align-items: center; min-height: 44px; color: var(--primary); font-weight: 700; text-decoration: none; }
 .marca-completa { margin: 8px 0 24px; }
 .marca-completa .logo { --logo-size: 18px; }
-h1 { font-family: var(--font-logo); font-weight: 600; font-size: 40px; line-height: 1.1; margin: 0 0 8px; }
-h2 { font-family: var(--font-logo); font-weight: 600; font-size: 26px; margin: 36px 0 8px; }
+h1 { font-family: var(--font-logo); font-weight: 300; font-size: 40px; line-height: 1.1; margin: 0 0 8px; }
+h2 { font-family: var(--font-logo); font-weight: 500; font-size: 26px; margin: 36px 0 8px; }
 p, li { color: var(--ink); }
 .suave { color: var(--ink-soft); }
 .borrador { padding: 14px 16px; border-radius: 14px; background: var(--surface-2); border: 1px dashed var(--line); font-size: 15px; }

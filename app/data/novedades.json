@@ -2,6 +2,17 @@
   "_ayuda": "Lo más nuevo arriba. La app y la página web leen este mismo archivo.",
   "novedades": [
     {
+      "version": "0.14.0",
+      "fecha": "2026-11-11",
+      "titulo": "Nueva imagen: blanco, grises y negro",
+      "cambios": [
+        "Polykat estrena una estética editorial y monocroma, en la app y en la página web.",
+        "Nueva tipografía: Outfit en títulos y logo, con letras finas y elegantes, e Inter para leer cómodo.",
+        "El ícono de la app ahora es la sakura sobre negro. Kitty y sus íconos conservan sus colores.",
+        "¿Te gustaban los colores? En Ajustes → Paleta puedes elegir Piedra, Carbón, Tamarindo o Medianoche."
+      ]
+    },
+    {
       "version": "0.13.0",
       "fecha": "2026-11-11",
       "titulo": "Palabra del día",

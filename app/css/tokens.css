@@ -1,7 +1,7 @@
 /* ==========================================================
    Polykat — tokens de diseño. Cambia colores y fuentes SOLO aquí.
    Estética (2026-11-11, a pedido de Francisca): editorial y monocroma — blanco, grises y negro —,
-   títulos en serif (Cormorant Garamond) y texto en Inter. La paleta por defecto conserva la clave «higo»
+   títulos y logo en Outfit (sans geométrica, ligera) y texto en Inter. La paleta por defecto conserva la clave «higo»
    (así no se pierde lo que cada persona eligió) pero se llama «Monocromo».
    Paletas alternativas (Ajustes): 6 colores propios para los círculos (temas e idiomas): --nodo-1…6.
      Monocromo (por defecto) · Piedra: menta y azul · Carbón: blanco, negro y joyas
@@ -10,11 +10,14 @@
    Texto siempre oscuro en modo claro (contraste ≥ 4,5:1, comprobado en tests/contraste.test.mjs).
    ========================================================== */
 :root {
-  /* Tipografía (2026-11-11): serif editorial en títulos + sans neutra y muy legible en el texto */
-  --font-display: 'Cormorant Garamond', 'Cormorant', Garamond, 'Times New Roman', serif;
+  /* Tipografía (2026-11-11, a pedido de Francisca): sans geométrica elegante (Outfit, de Thin a Black, como sus
+     referencias Code Pro y Montenna) en títulos y logo, ligera en tamaños grandes; Inter en el texto largo */
+  --font-display: 'Outfit', 'Inter', 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --peso-titulo: 300;       /* títulos grandes: ligeros */
+  --peso-fuerte: 600;       /* énfasis dentro de un título */
   --font-ipa: 'Noto Sans', 'Segoe UI', system-ui, sans-serif; /* símbolos de pronunciación */
-  --font-logo: 'Cormorant Garamond', 'Cormorant', Garamond, 'Times New Roman', serif; /* logo y eslogan: serif elegante */
+  --font-logo: 'Outfit', 'Inter', 'Segoe UI', system-ui, sans-serif; /* logo y eslogan: Outfit ligera, muy espaciada */
   --escala: 1;              /* ajuste "tamaño de letra" */
   --fs-xs: calc(13px * var(--escala));
   --fs-sm: calc(14px * var(--escala));

@@ -1,6 +1,6 @@
 /* ==========================================================
    Logo de Polykat: «POLYKAT» en mayúsculas espaciadas (Franui es la autora, no la marca),
-   en serif elegante (Cormorant Garamond, --font-logo).
+   en Outfit ligera y muy espaciada (--font-logo), como las referencias de Francisca (2026-11-11).
    Eslogan (por ahora): «Be fluent in multiple languages».
    Lo usan la app y la página web. Colores y fuentes vienen de tokens.css.
    Variantes:
@@ -11,19 +11,19 @@
 .logo {
   --logo-size: 16px;
   display: inline-flex; align-items: baseline; flex-wrap: wrap; column-gap: .4em;
-  font-family: var(--font-logo); font-weight: 600; color: inherit; line-height: 1;
+  font-family: var(--font-logo); font-weight: 400; color: inherit; line-height: 1;
   font-size: var(--logo-size); white-space: nowrap;
 }
-.logo-a { text-transform: uppercase; letter-spacing: .16em; font-size: 1.25em; font-weight: 600; }
+.logo-a { text-transform: uppercase; letter-spacing: .3em; font-size: 1.15em; font-weight: 400; }
 .logo.apilado { flex-direction: column; align-items: flex-start; row-gap: .1em; }
-.logo.apilado .logo-a { font-size: 2em; letter-spacing: .18em; }
+.logo.apilado .logo-a { font-size: 2em; letter-spacing: .34em; font-weight: 300; }
 
 .marca-completa { display: inline-grid; justify-items: center; gap: 14px; text-align: center; color: var(--ink); }
 .marca-completa .logo { justify-content: center; }
 .marca-completa .logo.apilado { align-items: center; }
-.marca-completa .logo.apilado .logo-a { padding-left: .18em; } /* compensa el espaciado de la última letra */
+.marca-completa .logo.apilado .logo-a { padding-left: .34em; } /* compensa el espaciado de la última letra */
 .marca-linea { width: 100%; min-width: 160px; height: 1px; background: currentColor; }
 .eslogan {
-  margin: 0; font-family: var(--font-logo); font-size: 14px; font-weight: 600; letter-spacing: .28em;
+  margin: 0; font-family: var(--font-logo); font-size: 13px; font-weight: 400; letter-spacing: .32em;
   text-transform: uppercase; line-height: 1.6; color: var(--ink-soft);
 }
