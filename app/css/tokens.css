@@ -188,3 +188,32 @@
     --nodo-1: #4A4A4A; --nodo-2: #5A5A5A; --nodo-3: #626262; --nodo-4: #555555; --nodo-5: #4F4F4F; --nodo-6: #5E5E5E;
   }
 }
+
+/* Página web: siempre en Monocromo (claro u oscuro según el sistema), aunque en la app se elija otra paleta.
+   (2026-11-11: primero «casi monocromática con acento Higo», luego Francisca pidió blanco, grises y negro.) */
+:root[data-sitio="web"] {
+  --bg: #FAFAF9; --surface: #FFFFFF; --surface-2: #F0F0EE; --accent: #CFCFCD;
+  --accent-soft: #E9E9E7; --line: #D4D4D2; --ink: #161616; --ink-soft: #545454;
+  --primary: #1C1C1C; --on-primary: #FFFFFF; --enfasis: #5C5C5C; --gold: #5C5C5C;
+  --sand: #CFCFCD; --oscuro: #161616; --sobre-oscuro: #F0F0EE; --sobre-oscuro-suave: #C8C8C6;
+  --sombra-color: #000000;
+  --sombra-acento: 0 10px 24px rgba(0, 0, 0, .14);
+}
+:root[data-theme="dark"][data-sitio="web"] {
+  --bg: #121212; --surface: #1C1C1C; --surface-2: #262626; --accent: #5E5E5E;
+  --accent-soft: #242424; --line: #3A3A3A; --ink: #F2F2F2; --ink-soft: #BDBDBD;
+  --primary: #F2F2F2; --on-primary: #121212; --enfasis: #CFCFCF; --gold: #BDBDBD;
+  --sand: #5E5E5E; --oscuro: #0A0A0A; --sobre-oscuro: #F0F0EE; --sobre-oscuro-suave: #BDBDBD;
+  --sombra-acento: 0 10px 24px rgba(0, 0, 0, .4);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"])[data-sitio="web"] {
+    --bg: #121212; --surface: #1C1C1C; --surface-2: #262626; --accent: #5E5E5E;
+    --accent-soft: #242424; --line: #3A3A3A; --ink: #F2F2F2; --ink-soft: #BDBDBD;
+    --primary: #F2F2F2; --on-primary: #121212; --enfasis: #CFCFCF; --gold: #BDBDBD;
+    --sand: #5E5E5E; --oscuro: #0A0A0A; --sobre-oscuro: #F0F0EE; --sobre-oscuro-suave: #BDBDBD;
+    --sombra-acento: 0 10px 24px rgba(0, 0, 0, .4);
+    color-scheme: dark;
+  }
+}
