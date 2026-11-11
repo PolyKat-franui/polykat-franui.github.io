@@ -546,3 +546,53 @@ main { counter-reset: seccion; }
 @media (prefers-reduced-motion: reduce) { .hero-titulo.revelar { animation: none; transform: none; } }
 /* Capturas reales de la app dentro del teléfono de la portada */
 .pantalla.captura { width: 100%; height: 100%; object-fit: cover; object-position: top center; border-radius: 26px; display: block; }
+
+/* ---------- El proyecto: de idea propia a startup (etapas con su estado) ---------- */
+.proyecto .seccion-cabeza .suave { font-size: 19px; }
+.avance { display: grid; gap: 14px; max-width: 760px; }
+.avance-barra { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.avance-barra i { height: 10px; border-radius: 999px; background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--borde-fino); }
+.avance-barra i.hecho { background: var(--d-facil); box-shadow: none; }
+.avance-barra i.curso { background: linear-gradient(90deg, var(--d-media) 50%, var(--surface-2) 50%); }
+.avance-leyenda { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.estado { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0 12px; border-radius: 999px; font-size: 13px; font-weight: 700; letter-spacing: .04em; white-space: nowrap; }
+.estado.hecho { background: var(--d-facil); color: var(--blanco); }
+.estado.curso { background: var(--d-media); color: var(--blanco); }
+.estado.proximo { background: var(--surface-2); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+
+.etapas { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+.etapa {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px 18px; padding: 24px 20px;
+  background: var(--surface); border: 1px solid var(--borde-fino); border-radius: 28px; box-shadow: var(--sombra-suave);
+}
+.etapa-num { font-family: var(--font-display); font-size: 36px; line-height: 1; letter-spacing: -0.03em; color: var(--ink-soft); }
+.etapa-cuerpo { display: grid; gap: 14px; align-content: start; min-width: 0; }
+.etapa-cuerpo > .btn { justify-self: start; }
+.etapa-cabeza { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.etapa-nombre { font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
+.etapa h3 { font-family: var(--font-display); font-weight: 600; font-size: clamp(24px, 3vw, 34px); line-height: 1.12; }
+.etapa-datos { display: grid; gap: 12px; }
+.dato { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 20px; background: var(--surface-2); }
+.dato-num { font-family: var(--font-display); font-weight: 600; font-size: clamp(36px, 6vw, 52px); line-height: 1; color: var(--enfasis); }
+.etapa-pregunta { padding-left: 16px; border-left: 3px solid var(--primary); font-family: var(--font-display); font-size: 20px; line-height: 1.35; }
+.etapa-fuente { font-size: 13px; color: var(--ink-soft); }
+.etapa-lista { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+.etapa-lista .falta { list-style: '→  '; color: var(--ink-soft); font-style: italic; }
+.etapa-cifras { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.etapa-cifras li { display: grid; gap: 2px; padding: 14px 10px; border-radius: 20px; background: var(--surface-2); text-align: center; }
+.etapa-cifras strong { font-family: var(--font-display); font-weight: 600; font-size: clamp(26px, 5vw, 38px); line-height: 1.1; }
+.etapa-cifras span { font-size: 13px; color: var(--ink-soft); line-height: 1.3; }
+.caminos { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.caminos li { display: grid; gap: 2px; padding: 14px 16px; border-radius: 20px; border: 1px dashed var(--line); }
+.caminos strong { font-family: var(--font-display); font-weight: 600; font-size: 20px; }
+.caminos span { color: var(--ink-soft); }
+.fuentes { max-width: 760px; font-size: 14px; color: var(--ink-soft); }
+.fuentes summary { min-height: 44px; display: inline-flex; align-items: center; cursor: pointer; font-weight: 700; color: var(--ink); letter-spacing: .1em; text-transform: uppercase; font-size: 12px; }
+.fuentes ul { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.fuentes li { padding-left: 1.5em; text-indent: -1.5em; overflow-wrap: anywhere; }
+@media (min-width: 720px) {
+  .etapa { grid-template-columns: auto minmax(0, 1fr); padding: 36px 40px; gap: 4px 32px; }
+  .etapa-num { font-size: 64px; width: 1.3em; }
+  .etapa-cuerpo { max-width: 880px; }
+  .etapa-datos, .caminos { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+}
