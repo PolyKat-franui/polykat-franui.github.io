@@ -65,7 +65,7 @@ const T = {
     rank_pronto: 'El ranking con otras personas se activa cuando existan las cuentas en la nube.',
     nov_titulo: 'Novedades',
     aj_titulo: 'Ajustes', aj_apariencia: 'Apariencia', aj_tema: 'Tema', aj_sistema: 'Del dispositivo', aj_claro: 'Claro', aj_oscuro: 'Oscuro',
-    aj_paleta: 'Paleta', pal_higo: 'Higo', pal_piedra: 'Piedra', pal_carbon: 'Carbón', pal_tamarindo: 'Tamarindo', pal_medianoche: 'Medianoche',
+    aj_paleta: 'Paleta', pal_higo: 'Monocromo', pal_piedra: 'Piedra', pal_carbon: 'Carbón', pal_tamarindo: 'Tamarindo', pal_medianoche: 'Medianoche',
     aj_letra: 'Tamaño de letra', aj_brillo: 'Brillo', aj_ipa: 'Mostrar pronunciación escrita (IPA)',
     aj_sonido: 'Sonidos y vibración', premio_titulo: '¡Premio!', premio_texto: 'Revisaste {n} palabras hoy', premio_siguiente: 'Próximo premio a las {n} palabras: {m} monedas', premio_ok: '¡Cobrar!', desliza_lados: 'Desliza → si lo sabes · ← para repasar',
     nov_nueva: '¡Nueva actualización!', nov_anteriores: 'Versiones anteriores', tut_k1: '¡Hola! Soy Kitty. Toca la tarjeta para ver la traducción.', tut_k2: '¿Ya la sabías? Desliza la tarjeta a la derecha. ¿Quieres repasarla? A la izquierda.', tut_k3: 'Cada tarjeta te da monedas. ¡Cada 10 palabras del día ganas un premio!', tut_k4: 'Si te pierdes, tócame y te ayudo con la palabra.', tut_siguiente: 'Siguiente', tut_listo: '¡Entendido!', tut_saltar: 'Saltar', tut_ver: 'Ver el tutorial con Kitty',

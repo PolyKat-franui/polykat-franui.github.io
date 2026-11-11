@@ -9,11 +9,12 @@ const leer = (r) => readFileSync(join(APP, r), 'utf8');
 const pngTam = (r) => { const b = readFileSync(join(APP, r)); return [b.readUInt32BE(16), b.readUInt32BE(20)]; };
 const archivos = (dir) => readdirSync(join(APP, dir)).flatMap((f) => (statSync(join(APP, dir, f)).isDirectory() ? archivos(join(dir, f)) : [join(dir, f)]));
 
-test('manifest: nombre, colores carmesí e íconos con su tamaño real', () => {
+test('manifest: nombre, color negro de la paleta Monocromo e íconos con su tamaño real', () => {
   const m = JSON.parse(leer('manifest.webmanifest'));
   assert.equal(m.name, 'Polykat');
   assert.equal(m.display, 'standalone');
-  assert.equal(m.background_color, '#9E2A3A');
+  assert.equal(m.background_color, '#1C1C1C');
+  assert.equal(m.theme_color, '#1C1C1C');
   assert.ok(m.icons.some((i) => i.purpose === 'maskable'));
   for (const i of m.icons) {
     const [w, h] = pngTam(i.src);

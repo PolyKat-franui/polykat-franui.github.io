@@ -1,16 +1,18 @@
 /* ==========================================================
    Polykat — tokens de diseño. Cambia colores y fuentes SOLO aquí.
-   Paletas (2026-10-13, más claras y vivas a pedido de Francisca): fondos casi blancos con un tono suave,
-   un color principal fuerte y 6 colores propios para los círculos (temas e idiomas): --nodo-1…6.
-     Higo (por defecto): frambuesa y ciruela · Piedra: menta y azul · Carbón: blanco, negro y joyas
+   Estética (2026-11-11, a pedido de Francisca): editorial y monocroma — blanco, grises y negro —,
+   títulos en serif (Cormorant Garamond) y texto en Inter. La paleta por defecto conserva la clave «higo»
+   (así no se pierde lo que cada persona eligió) pero se llama «Monocromo».
+   Paletas alternativas (Ajustes): 6 colores propios para los círculos (temas e idiomas): --nodo-1…6.
+     Monocromo (por defecto) · Piedra: menta y azul · Carbón: blanco, negro y joyas
      Tamarindo: rosa y terracota · Medianoche: lavanda y azul noche
    Los círculos usan los --nodo de la paleta elegida, así combinan con ella.
    Texto siempre oscuro en modo claro (contraste ≥ 4,5:1, comprobado en tests/contraste.test.mjs).
    ========================================================== */
 :root {
-  /* Tipografía (2026-10-13): redonda y gruesa en títulos + sans muy legible en el texto */
-  --font-display: 'Fredoka', 'Nunito', 'Arial Rounded MT Bold', system-ui, sans-serif;
-  --font-body: 'Nunito', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  /* Tipografía (2026-11-11): serif editorial en títulos + sans neutra y muy legible en el texto */
+  --font-display: 'Cormorant Garamond', 'Cormorant', Garamond, 'Times New Roman', serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   --font-ipa: 'Noto Sans', 'Segoe UI', system-ui, sans-serif; /* símbolos de pronunciación */
   --font-logo: 'Cormorant Garamond', 'Cormorant', Garamond, 'Times New Roman', serif; /* logo y eslogan: serif elegante */
   --escala: 1;              /* ajuste "tamaño de letra" */
@@ -35,21 +37,21 @@
   --tracking-titulo: -0.03em;
   --borde-fino: color-mix(in srgb, var(--line) 45%, transparent);
   --vidrio: color-mix(in srgb, var(--surface) 72%, transparent);
-  --sombra-suave: 0 1px 2px rgba(90, 42, 48, .04), 0 12px 32px rgba(90, 42, 48, .07);
+  --sombra-suave: 0 1px 2px rgba(0, 0, 0, .04), 0 12px 32px rgba(0, 0, 0, .06);
   --sombra-acento: 0 12px 28px color-mix(in srgb, var(--primary) 28%, transparent);
 
-  /* Paleta "Higo" (por defecto, modo claro) */
-  --bg: #FBF6F3; --surface: #FFFFFF; --surface-2: #F5E4E0; --accent: #E8B4BC;
-  --accent-soft: #F7D5DC; --line: #E3CCC6; --ink: #2A1715; --ink-soft: #6B4B45;
-  --primary: #9E2A3A; --on-primary: #FFFFFF; --enfasis: #9E2A3A; --gold: #7A4A33;
-  --sand: #E8B4BC; --oscuro: #2A1715; --sobre-oscuro: #F5E4E0; --sobre-oscuro-suave: #E3CCC6;
-  --sombra-color: #5A2A30; --nodo-1: #A3264A; --nodo-2: #7B3FA0; --nodo-3: #C2410C;
-  --nodo-4: #A0367A; --nodo-5: #8A3324; --nodo-6: #5B4BA8;
-  --shadow: 0 1px 2px rgba(90, 42, 48, .06), 0 14px 40px rgba(90, 42, 48, .10);
+  /* Paleta «Monocromo» (por defecto, modo claro; clave interna «higo»): blanco, grises y negro */
+  --bg: #FAFAF9; --surface: #FFFFFF; --surface-2: #F0F0EE; --accent: #CFCFCD;
+  --accent-soft: #E9E9E7; --line: #D4D4D2; --ink: #161616; --ink-soft: #545454;
+  --primary: #1C1C1C; --on-primary: #FFFFFF; --enfasis: #5C5C5C; --gold: #5C5C5C;
+  --sand: #CFCFCD; --oscuro: #161616; --sobre-oscuro: #F0F0EE; --sobre-oscuro-suave: #C8C8C6;
+  --sombra-color: #000000; --nodo-1: #1C1C1C; --nodo-2: #3D3D3D; --nodo-3: #575757;
+  --nodo-4: #2B2B2B; --nodo-5: #4A4A4A; --nodo-6: #636363;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .05), 0 14px 40px rgba(0, 0, 0, .07);
 
   /* Dificultad: insignias de color con ícono y texto en blanco (iguales en claro y oscuro) */
   --blanco: #FFFFFF;
-  --carmesi: #9E2A3A; --carmesi-luz: #B8384A; --blanco-fijo: #FFFFFF; --luz-farol: #FFD27A; --brillo-diamante: #BFF3FF; /* ícono de la app (fijo, igual en todas las paletas) */
+  --carmesi: #1C1C1C; --carmesi-luz: #3A3A3A; --blanco-fijo: #FFFFFF; --luz-farol: #FFD27A; --brillo-diamante: #BFF3FF; /* ícono de la app (fijo, igual en todas las paletas) */
   --d-nueva: #0369A1;     /* destello */
   --d-dificil: #B91C1C;   /* llama */
   --d-media: #B45309;     /* medio círculo */
@@ -59,7 +61,7 @@
 }
 
 /* Muestras de cada paleta (Ajustes → Paleta): fondo, círculo y color principal */
-.muestra-higo { background: conic-gradient(#F7D5DC 0 33%, #7B3FA0 0 66%, #9E2A3A 0); }
+.muestra-higo { background: conic-gradient(#F0F0EE 0 33%, #8A8A8A 0 66%, #1C1C1C 0); }
 .muestra-piedra { background: conic-gradient(#CDEBE5 0 33%, #2563EB 0 66%, #0F766E 0); }
 .muestra-carbon { background: conic-gradient(#DDDDE3 0 33%, #2563EB 0 66%, #18181B 0); }
 .muestra-tamarindo { background: conic-gradient(#F2CFD3 0 33%, #B4532A 0 66%, #8E2F45 0); }
@@ -102,10 +104,10 @@
 /* Modo oscuro: fondos profundos con el tono de la paleta (no negro) */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #2B1B22; --surface: #3A2530; --surface-2: #4B3040; --accent: #B0506A;
-    --accent-soft: #4A2B3A; --line: #6E4A58; --ink: #FBEFF2; --ink-soft: #E6C9D1;
-    --primary: #F4A3B5; --on-primary: #2B1B22; --enfasis: #F4A3B5; --gold: #F2C9A8;
-    --sand: #B0506A;
+    --bg: #121212; --surface: #1C1C1C; --surface-2: #262626; --accent: #5E5E5E;
+    --accent-soft: #242424; --line: #3A3A3A; --ink: #F2F2F2; --ink-soft: #BDBDBD;
+    --primary: #F2F2F2; --on-primary: #121212; --enfasis: #CFCFCF; --gold: #BDBDBD;
+    --sand: #5E5E5E;
     --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 14px 40px rgba(0, 0, 0, .4);
     --sombra-suave: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 32px rgba(0, 0, 0, .35);
     --peligro: #FFB4B4;
@@ -113,10 +115,10 @@
   }
 }
 :root[data-theme="dark"] {
-  --bg: #2B1B22; --surface: #3A2530; --surface-2: #4B3040; --accent: #B0506A;
-  --accent-soft: #4A2B3A; --line: #6E4A58; --ink: #FBEFF2; --ink-soft: #E6C9D1;
-  --primary: #F4A3B5; --on-primary: #2B1B22; --enfasis: #F4A3B5; --gold: #F2C9A8;
-  --sand: #B0506A;
+  --bg: #121212; --surface: #1C1C1C; --surface-2: #262626; --accent: #5E5E5E;
+  --accent-soft: #242424; --line: #3A3A3A; --ink: #F2F2F2; --ink-soft: #BDBDBD;
+  --primary: #F2F2F2; --on-primary: #121212; --enfasis: #CFCFCF; --gold: #BDBDBD;
+  --sand: #5E5E5E;
   --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 14px 40px rgba(0, 0, 0, .4);
   --sombra-suave: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 32px rgba(0, 0, 0, .35);
   --peligro: #FFB4B4;
@@ -170,5 +172,16 @@
     --accent-soft: #2B3350; --line: #4C5680; --ink: #EEF0FB; --ink-soft: #C3C9EA;
     --primary: #A9B4FF; --on-primary: #1B2135; --enfasis: #A9B4FF; --gold: #D8C8FF;
     --sand: #5A67C9;
+  }
+}
+
+/* Monocromo en modo oscuro: los círculos (texto blanco) pasan a grises medios para verse sobre el fondo negro.
+   Solo para la paleta por defecto (las otras conservan sus colores). */
+:root[data-theme="dark"]:not([data-paleta]), :root[data-theme="dark"][data-paleta="higo"] {
+  --nodo-1: #4A4A4A; --nodo-2: #5A5A5A; --nodo-3: #626262; --nodo-4: #555555; --nodo-5: #4F4F4F; --nodo-6: #5E5E5E;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-paleta]), :root:not([data-theme="light"])[data-paleta="higo"] {
+    --nodo-1: #4A4A4A; --nodo-2: #5A5A5A; --nodo-3: #626262; --nodo-4: #555555; --nodo-5: #4F4F4F; --nodo-6: #5E5E5E;
   }
 }

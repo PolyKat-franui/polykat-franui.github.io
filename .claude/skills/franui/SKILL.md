@@ -100,6 +100,19 @@ No se traducen. Estilos en `app/css/logo.css` (una línea, apilado y marca compl
 encontrar uno definitivo. Kitty: el ícono de cuerpo entero que dibujó Francisca (gato blanco sentado,
 collar morado y cascabel), 20×16, en 14 expresiones.
 
+## 9·. Estética editorial monocroma [DECIDIDO 2026-11-11 — reemplaza lo de abajo donde se contradice]
+- Francisca pidió, con referencias de diseño editorial de lujo (portfolios, menús, moodboards), aplicar a **todo el
+  proyecto** (app, web y bitácora) una estética **monocroma: blanco, grises y negro**.
+- **Tipografía:** títulos y palabra de la tarjeta en **Cormorant Garamond** (serif editorial); texto en **Inter**.
+  Reemplaza a Fredoka y Nunito. El logo sigue en Cormorant Garamond.
+- **Paleta por defecto «Monocromo»** (clave interna `higo`, para no perder lo que eligió cada persona): fondo `#FAFAF9`,
+  tarjetas `#FFFFFF`, texto `#161616`, secundario `#545454`, botón principal negro `#1C1C1C`; modo oscuro en negros y grises.
+  Las paletas alternativas (Piedra, Carbón, Tamarindo, Medianoche) siguen en Ajustes.
+- Ícono de la app: la sakura sobre negro `#1C1C1C`. Adornos de fondo en gris.
+- Se mantienen en color, a propósito: el pixel art (Kitty, sakura, moneda, diamante) y las insignias de dificultad
+  (tienen significado; siempre con ícono y texto). Preguntar a Francisca si también los quiere en gris.
+- Bitácora: misma estética (Cormorant + Inter, blanco/grises/negro), fuentes en `fuentes/` del repo privado.
+
 ## 9. Estética [DECIDIDO 2026-10-09]
 Sensación limpia, simple, lujo "old money", estudio corto. Referencias: Apple, Dior, Chanel, Bvlgari.
 Todos los valores viven como variables en `app/css/tokens.css` (cambiarlos solo ahí).

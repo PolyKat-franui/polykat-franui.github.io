@@ -626,3 +626,15 @@ main { counter-reset: seccion; }
   .idioma-txt { flex: 1 1 calc(100% - 50px); }
   .idioma .tag { min-height: 22px; padding: 0 8px; font-size: 11px; }
 }
+
+/* ---------- Estética monocroma (2026-11-11): blanco, grises y negro ---------- */
+/* Adornos de fondo (sakuras, monedas) en gris: acompañan sin romper el blanco y negro. Kitty conserva su color. */
+.adornos { filter: grayscale(1); }
+/* Estados del proyecto: negro (hecho), gris (en curso), contorno (próximo); siempre con ícono y texto */
+.estado.hecho { background: var(--primary); color: var(--on-primary); }
+.estado.curso { background: var(--ink-soft); color: var(--surface); }
+.avance-barra i.hecho { background: var(--primary); }
+.avance-barra i.curso { background: linear-gradient(90deg, var(--ink-soft) 50%, var(--surface-2) 50%); }
+.dato-num { color: var(--ink); }
+/* Títulos en serif editorial: sin el apretado que necesitaba la letra redonda */
+.display, .seccion-cabeza .display { letter-spacing: -0.01em; font-weight: 600; }

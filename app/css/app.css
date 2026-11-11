@@ -1276,3 +1276,6 @@ body { background: var(--bg); --shadow: var(--sombra-suave); }
 .pd-idiomas .pd-audio { grid-area: audio; }
 .pd-idiomas li.destacada { border: 2px solid var(--primary); }
 .pd-idiomas li.destacada .monograma { background: var(--primary); color: var(--on-primary); box-shadow: none; }
+
+/* Estética monocroma (2026-11-11): adornos de fondo en gris; Kitty y los íconos del juego conservan su color */
+.adornos { filter: grayscale(1); }

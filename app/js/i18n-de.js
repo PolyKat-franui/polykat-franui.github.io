@@ -59,7 +59,7 @@ export default {
     rank_pronto: 'Die Rangliste mit anderen wird aktiviert, sobald es Cloud-Konten gibt.',
     nov_titulo: 'Neuigkeiten',
     aj_titulo: 'Einstellungen', aj_apariencia: 'Darstellung', aj_tema: 'Design', aj_sistema: 'Wie Gerät', aj_claro: 'Hell', aj_oscuro: 'Dunkel',
-    aj_paleta: 'Farbpalette', pal_higo: 'Feige', pal_piedra: 'Stein', pal_carbon: 'Kohle', pal_tamarindo: 'Tamarinde', pal_medianoche: 'Mitternacht',
+    aj_paleta: 'Farbpalette', pal_higo: 'Monochrom', pal_piedra: 'Stein', pal_carbon: 'Kohle', pal_tamarindo: 'Tamarinde', pal_medianoche: 'Mitternacht',
     aj_letra: 'Textgröße', aj_brillo: 'Helligkeit', aj_ipa: 'Lautschrift anzeigen (IPA)',
     aj_sonido: 'Töne und Vibration', premio_titulo: 'Gewinn!', premio_texto: 'Du hast heute {n} Wörter wiederholt', premio_siguiente: 'Nächster Gewinn bei {n} Wörtern: {m} Münzen', premio_ok: 'Einsammeln!', desliza_lados: 'Wische → wenn du es weißt · ← zum Wiederholen',
     nov_nueva: 'Neues Update!', nov_anteriores: 'Frühere Versionen', tut_k1: 'Hallo! Ich bin Kitty. Tippe auf die Karte, um die Übersetzung zu sehen.', tut_k2: 'Wusstest du es schon? Wische die Karte nach rechts. Willst du sie wiederholen? Nach links.', tut_k3: 'Jede Karte bringt dir Münzen. Alle 10 Wörter am Tag gewinnst du einen Preis!', tut_k4: 'Wenn du nicht weiterweißt, tippe auf mich und ich helfe dir mit dem Wort.', tut_siguiente: 'Weiter', tut_listo: 'Verstanden!', tut_saltar: 'Überspringen', tut_ver: 'Tutorial mit Kitty ansehen',
