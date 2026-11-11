@@ -111,6 +111,7 @@ collar morado y cascabel), 20×16, en 14 expresiones.
 - **Paleta por defecto «Monocromo»** (clave interna `higo`, para no perder lo que eligió cada persona): fondo `#FAFAF9`,
   tarjetas `#FFFFFF`, texto `#161616`, secundario `#545454`, botón principal negro `#1C1C1C`; modo oscuro en negros y grises.
   Las paletas alternativas (Piedra, Carbón, Tamarindo, Medianoche) siguen en Ajustes.
+- **La web va siempre en modo claro** (PR #30): `data-theme="light"` en web/index.html y en las páginas legales.
 - Ícono de la app: la sakura sobre negro `#1C1C1C`. Adornos de fondo en gris.
 - Se mantienen en color, a propósito: el pixel art (Kitty, sakura, moneda, diamante) y las insignias de dificultad
   (tienen significado; siempre con ícono y texto). Preguntar a Francisca si también los quiere en gris.

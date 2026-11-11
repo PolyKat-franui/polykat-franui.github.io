@@ -27,7 +27,6 @@ const paletas = {
   medianoche: { ...claro, ...bloque(':root[data-paleta="medianoche"]') },
   'tamarindo oscuro': { ...oscuro, ...bloque(':root[data-theme="dark"][data-paleta="tamarindo"]') },
   web: { ...claro, ...bloque(':root[data-sitio="web"]') },
-  'web oscuro': { ...oscuro, ...bloque(':root[data-theme="dark"][data-sitio="web"]') },
   'medianoche oscuro': { ...oscuro, ...bloque(':root[data-theme="dark"][data-paleta="medianoche"]') },
 };
 
