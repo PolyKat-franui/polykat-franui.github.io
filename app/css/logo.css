@@ -1,11 +1,11 @@
 /* ==========================================================
-   Logo de Franui · Polykat: «Polykat» en cursiva sobre «FRANUI» en mayúsculas espaciadas,
+   Logo de Polykat: «POLYKAT» en mayúsculas espaciadas (Franui es la autora, no la marca),
    en serif elegante (Cormorant Garamond, --font-logo).
    Eslogan (por ahora): «Be fluent in multiple languages».
    Lo usan la app y la página web. Colores y fuentes vienen de tokens.css.
    Variantes:
-     .logo               una línea (barra superior): Polykat FRANUI
-     .logo.apilado       dos líneas: Polykat / FRANUI (portada, pie de página)
+     .logo               una línea (barra superior): POLYKAT
+     .logo.apilado       versión grande (portada, pie de página)
      .marca-completa     logo + línea + eslogan
    ========================================================== */
 .logo {
@@ -15,10 +15,8 @@
   font-size: var(--logo-size); white-space: nowrap;
 }
 .logo-a { text-transform: uppercase; letter-spacing: .16em; font-size: 1.25em; font-weight: 600; }
-.logo-b { font-style: italic; font-weight: 500; letter-spacing: .02em; font-size: 1.1em; }
 .logo.apilado { flex-direction: column; align-items: flex-start; row-gap: .1em; }
 .logo.apilado .logo-a { font-size: 2em; letter-spacing: .18em; }
-.logo.apilado .logo-b { font-size: 1.15em; }
 
 .marca-completa { display: inline-grid; justify-items: center; gap: 14px; text-align: center; color: var(--ink); }
 .marca-completa .logo { justify-content: center; }

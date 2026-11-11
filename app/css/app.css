@@ -1,4 +1,4 @@
-/* Franui — estilos. Colores y fuentes vienen de tokens.css. */
+/* Polykat — estilos. Colores y fuentes vienen de tokens.css. */
 *, *::before, *::after { box-sizing: border-box; }
 :root {
   --barra-h: 64px;
@@ -703,9 +703,9 @@ body[data-ruta="estudiar"] .adornos { display: none; }
 }
 .menu-escena { display: grid; justify-items: center; gap: 10px; text-align: center; padding-top: 8px; }
 .menu-logo { margin: 0; display: grid; justify-items: center; gap: 2px; font-weight: 400; }
-/* FRANUI en letras grandes de máquina de escribir: cada letra cae como una tecla sobre el papel,
+/* POLYKAT en letras grandes de máquina de escribir: cada letra cae como una tecla sobre el papel,
    luego una ola lenta levanta una letra a la vez y la tiñe con el color de la paleta. Tocar una letra la hace saltar. */
-.menu-letras { display: flex; justify-content: center; font-family: var(--font-logo); font-weight: 600; font-size: clamp(60px, 19vw, 100px); line-height: .95; letter-spacing: .12em; padding-left: .12em; color: var(--ink); }
+.menu-letras { display: flex; justify-content: center; font-family: var(--font-logo); font-weight: 600; font-size: clamp(48px, 15.5vw, 92px); line-height: .95; letter-spacing: .1em; padding-left: .1em; color: var(--ink); }
 .menu-letras span {
   display: inline-block; cursor: pointer; -webkit-tap-highlight-color: transparent;
   animation: letraAparece .9s var(--ease) both, letraOla 6s ease-in-out infinite;
@@ -713,9 +713,6 @@ body[data-ruta="estudiar"] .adornos { display: none; }
 }
 .menu-letras span.salta { animation: letraSalta .55s cubic-bezier(.3, 1.6, .5, 1); color: var(--primary); }
 .menu-linea { width: min(70%, 320px); height: 1px; margin-top: 4px; background: var(--ink); transform-origin: center; transform: scaleX(0); animation: trazar .8s var(--ease) 1.3s forwards; }
-/* «Polykat» se escribe como en máquina de escribir */
-.menu-sub { font-family: var(--font-logo); font-style: italic; font-weight: 500; font-size: clamp(26px, 8vw, 36px); line-height: 1; color: var(--primary); letter-spacing: .02em; }
-.menu-tipeo { display: inline-block; clip-path: inset(0 100% 0 0); animation: tipear .9s var(--ease) .1s forwards; padding-right: .1em; }
 .menu-eslogan { opacity: 0; animation: aparecer .6s var(--ease) 2.1s forwards; }
 .menu-kitty {
   position: relative; border: 0; padding: 22px; cursor: pointer; border-radius: 50%;
@@ -783,7 +780,7 @@ body[data-ruta="estudiar"] .adornos { display: none; }
 @keyframes kittySalta { 0%, 100% { transform: translateY(0); } 45% { transform: translateY(-16px); } 55% { transform: translateY(-16px); } }
 @keyframes sombraKitty { 0%, 100% { transform: scaleX(1); opacity: 1; } 50% { transform: scaleX(.7); opacity: .5; } }
 @keyframes kittyBrinco { 30% { transform: translateY(-34px) scale(1.06, .94); } 60% { transform: translateY(0) scale(.94, 1.06); } }
-@media (prefers-reduced-motion: reduce) { .menu-tipeo { clip-path: none; } .menu-eslogan { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .menu-eslogan { opacity: 1; } }
 @media (max-width: 380px) { .menu-btn { min-height: 88px; } }
 
 /* ---------- Sakura del día (meta), cofre de racha ---------- */
