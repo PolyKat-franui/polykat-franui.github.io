@@ -164,12 +164,24 @@ fetch('app/data/idiomas.json').then((r) => r.json()).then(({ idiomas }) => {
 fetch('app/data/novedades.json').then((r) => r.json()).then(({ novedades }) => {
   // «El proyecto» muestra la versión actual de la app (la más nueva de novedades)
   if (novedades[0] && $('#proyecto-version')) $('#proyecto-version').textContent = novedades[0].version.replace(/\.0$/, '');
-  $('#lista-novedades').innerHTML = novedades.map((n) => `
+  const hito = (n) => `
     <li class="hito revelar">
       <p class="sobretitulo"><time datetime="${n.fecha}">${new Date(n.fecha + 'T12:00').toLocaleDateString('es', { day: 'numeric', month: 'long', year: 'numeric' })}</time> · v${esc(n.version)}</p>
       <h3>${esc(n.titulo)}</h3>
       <ul>${n.cambios.map((c) => `<li>${esc(c)}</li>`).join('')}</ul>
-    </li>`).join('');
+    </li>`;
+  // Las 3 últimas versiones a la vista; las anteriores, plegadas (la página no se alarga sin fin)
+  const VISIBLES = 3;
+  $('#lista-novedades').innerHTML = novedades.slice(0, VISIBLES).map(hito).join('');
+  const antiguas = novedades.slice(VISIBLES);
+  if (antiguas.length) {
+    $('#lista-novedades').insertAdjacentHTML('afterend', `
+      <details class="novedades-anteriores" id="novedades-anteriores">
+        <summary>Ver ${antiguas.length} versiones anteriores</summary>
+        <ol class="linea">${antiguas.map(hito).join('')}</ol>
+      </details>`);
+    observarRevelar($('#novedades-anteriores'));
+  }
   observarRevelar($('#lista-novedades'));
 }).catch(() => {});
 
