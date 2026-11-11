@@ -59,7 +59,7 @@ export default {
     rank_pronto: 'Le classement avec d’autres personnes s’activera avec les comptes en ligne.',
     nov_titulo: 'Nouveautés',
     aj_titulo: 'Réglages', aj_apariencia: 'Apparence', aj_tema: 'Thème', aj_sistema: 'De l’appareil', aj_claro: 'Clair', aj_oscuro: 'Sombre',
-    aj_paleta: 'Palette', pal_higo: 'Figue', pal_piedra: 'Pierre', pal_carbon: 'Charbon', pal_tamarindo: 'Tamarin', pal_medianoche: 'Minuit',
+    aj_paleta: 'Palette', pal_higo: 'Monochrome', pal_piedra: 'Pierre', pal_carbon: 'Charbon', pal_tamarindo: 'Tamarin', pal_medianoche: 'Minuit',
     aj_letra: 'Taille du texte', aj_brillo: 'Luminosité', aj_ipa: 'Afficher la prononciation écrite (API)',
     aj_sonido: 'Sons et vibrations', premio_titulo: 'Jackpot !', premio_texto: 'Tu as révisé {n} mots aujourd\'hui', premio_siguiente: 'Prochain prix à {n} mots : {m} pièces', premio_ok: 'Encaisser !', desliza_lados: 'Glisse → si tu sais · ← pour réviser',
     nov_nueva: 'Nouvelle mise à jour !', nov_anteriores: 'Versions précédentes', tut_k1: 'Salut ! Je suis Kitty. Touche la carte pour voir la traduction.', tut_k2: 'Tu le savais ? Glisse la carte vers la droite. Tu veux la réviser ? Vers la gauche.', tut_k3: 'Chaque carte te donne des pièces. Tous les 10 mots du jour, tu gagnes un prix !', tut_k4: 'Si tu es perdu, touche-moi et je t\'aide avec le mot.', tut_siguiente: 'Suivant', tut_listo: 'C\'est compris !', tut_saltar: 'Passer', tut_ver: 'Voir le tutoriel avec Kitty',

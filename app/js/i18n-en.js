@@ -59,7 +59,7 @@ export default {
     rank_pronto: 'Ranking against other people turns on once cloud accounts exist.',
     nov_titulo: 'What’s new',
     aj_titulo: 'Settings', aj_apariencia: 'Appearance', aj_tema: 'Theme', aj_sistema: 'Device', aj_claro: 'Light', aj_oscuro: 'Dark',
-    aj_paleta: 'Palette', pal_higo: 'Fig', pal_piedra: 'Stone', pal_carbon: 'Charcoal', pal_tamarindo: 'Tamarind', pal_medianoche: 'Midnight',
+    aj_paleta: 'Palette', pal_higo: 'Monochrome', pal_piedra: 'Stone', pal_carbon: 'Charcoal', pal_tamarindo: 'Tamarind', pal_medianoche: 'Midnight',
     aj_letra: 'Text size', aj_brillo: 'Brightness', aj_ipa: 'Show written pronunciation (IPA)',
     aj_sonido: 'Sounds and vibration', premio_titulo: 'Jackpot!', premio_texto: 'You reviewed {n} words today', premio_siguiente: 'Next prize at {n} words: {m} coins', premio_ok: 'Collect!', desliza_lados: 'Swipe → if you know it · ← to review',
     nov_nueva: 'New update!', nov_anteriores: 'Previous versions', tut_k1: 'Hi! I\'m Kitty. Tap the card to see the translation.', tut_k2: 'Already knew it? Swipe the card right. Want to review it? Swipe left.', tut_k3: 'Every card gives you coins. Every 10 words a day you win a prize!', tut_k4: 'If you get lost, tap me and I\'ll help you with the word.', tut_siguiente: 'Next', tut_listo: 'Got it!', tut_saltar: 'Skip', tut_ver: 'Watch the tutorial with Kitty',

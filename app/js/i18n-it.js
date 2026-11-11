@@ -59,7 +59,7 @@ export default {
     rank_pronto: 'La classifica con altre persone si attiva quando esisteranno gli account nel cloud.',
     nov_titulo: 'Novità',
     aj_titulo: 'Impostazioni', aj_apariencia: 'Aspetto', aj_tema: 'Tema', aj_sistema: 'Del dispositivo', aj_claro: 'Chiaro', aj_oscuro: 'Scuro',
-    aj_paleta: 'Tavolozza', pal_higo: 'Fico', pal_piedra: 'Pietra', pal_carbon: 'Carbone', pal_tamarindo: 'Tamarindo', pal_medianoche: 'Mezzanotte',
+    aj_paleta: 'Tavolozza', pal_higo: 'Monocromatico', pal_piedra: 'Pietra', pal_carbon: 'Carbone', pal_tamarindo: 'Tamarindo', pal_medianoche: 'Mezzanotte',
     aj_letra: 'Dimensione del testo', aj_brillo: 'Luminosità', aj_ipa: 'Mostra la pronuncia scritta (IPA)',
     aj_sonido: 'Suoni e vibrazione', premio_titulo: 'Premio!', premio_texto: 'Oggi hai ripassato {n} parole', premio_siguiente: 'Prossimo premio a {n} parole: {m} monete', premio_ok: 'Ritira!', desliza_lados: 'Scorri → se la sai · ← per ripassare',
     nov_nueva: 'Nuovo aggiornamento!', nov_anteriores: 'Versioni precedenti', tut_k1: 'Ciao! Sono Kitty. Tocca la carta per vedere la traduzione.', tut_k2: 'La sapevi già? Scorri la carta a destra. Vuoi ripassarla? A sinistra.', tut_k3: 'Ogni carta ti dà monete. Ogni 10 parole al giorno vinci un premio!', tut_k4: 'Se ti perdi, toccami e ti aiuto con la parola.', tut_siguiente: 'Avanti', tut_listo: 'Capito!', tut_saltar: 'Salta', tut_ver: 'Guarda il tutorial con Kitty',

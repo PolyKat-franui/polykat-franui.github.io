@@ -1276,3 +1276,14 @@ body { background: var(--bg); --shadow: var(--sombra-suave); }
 .pd-idiomas .pd-audio { grid-area: audio; }
 .pd-idiomas li.destacada { border: 2px solid var(--primary); }
 .pd-idiomas li.destacada .monograma { background: var(--primary); color: var(--on-primary); box-shadow: none; }
+
+/* Estética monocroma (2026-11-11): adornos de fondo en gris; Kitty y los íconos del juego conservan su color */
+.adornos { filter: grayscale(1); }
+/* Tipografía Outfit (2026-11-11): títulos grandes ligeros, logo muy espaciado y sin cursivas falsas
+   (Outfit no tiene cursiva: lo que antes iba en cursiva ahora va recto). */
+.display { font-weight: var(--peso-titulo); letter-spacing: -0.01em; }
+.display em, .display strong { font-weight: var(--peso-fuerte); font-style: normal; }
+.palabra { font-weight: 400; letter-spacing: -0.005em; }
+.menu-letras { font-weight: 200; letter-spacing: .2em; }
+.tanzaku, .dominada-titulo, .baile-titulo { font-style: normal; font-weight: 300; }
+.jardin-cabeza .display, .tienda-seccion, .menu-jardin-txt strong, .menu-palabra-txt strong, .pd-palabra { font-weight: 400; }

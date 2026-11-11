@@ -59,7 +59,7 @@ export default {
     rank_pronto: 'O ranking com outras pessoas é ativado quando existirem as contas na nuvem.',
     nov_titulo: 'Novidades',
     aj_titulo: 'Ajustes', aj_apariencia: 'Aparência', aj_tema: 'Tema', aj_sistema: 'Do dispositivo', aj_claro: 'Claro', aj_oscuro: 'Escuro',
-    aj_paleta: 'Paleta', pal_higo: 'Figo', pal_piedra: 'Pedra', pal_carbon: 'Carvão', pal_tamarindo: 'Tamarindo', pal_medianoche: 'Meia-noite',
+    aj_paleta: 'Paleta', pal_higo: 'Monocromático', pal_piedra: 'Pedra', pal_carbon: 'Carvão', pal_tamarindo: 'Tamarindo', pal_medianoche: 'Meia-noite',
     aj_letra: 'Tamanho do texto', aj_brillo: 'Brilho', aj_ipa: 'Mostrar pronúncia escrita (IPA)',
     aj_sonido: 'Sons e vibração', premio_titulo: 'Prêmio!', premio_texto: 'Você revisou {n} palavras hoje', premio_siguiente: 'Próximo prêmio com {n} palavras: {m} moedas', premio_ok: 'Pegar!', desliza_lados: 'Deslize → se você sabe · ← para revisar',
     nov_nueva: 'Nova atualização!', nov_anteriores: 'Versões anteriores', tut_k1: 'Oi! Eu sou a Kitty. Toque no cartão para ver a tradução.', tut_k2: 'Já sabia? Deslize o cartão para a direita. Quer revisar? Para a esquerda.', tut_k3: 'Cada cartão te dá moedas. A cada 10 palavras do dia você ganha um prêmio!', tut_k4: 'Se você se perder, toque em mim que eu te ajudo com a palavra.', tut_siguiente: 'Próximo', tut_listo: 'Entendi!', tut_saltar: 'Pular', tut_ver: 'Ver o tutorial com a Kitty',

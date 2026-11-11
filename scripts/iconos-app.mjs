@@ -13,7 +13,7 @@ import { sakura } from './arte-iconos.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(RAIZ, 'app', 'assets', 'app');
-export const CARMESI = '#9E2A3A';     // --primary de Higo
+export const CARMESI = '#1C1C1C';     // fondo del ícono: negro de la paleta Monocromo
 
 const rgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
 

@@ -100,6 +100,23 @@ No se traducen. Estilos en `app/css/logo.css` (una línea, apilado y marca compl
 encontrar uno definitivo. Kitty: el ícono de cuerpo entero que dibujó Francisca (gato blanco sentado,
 collar morado y cascabel), 20×16, en 14 expresiones.
 
+## 9·. Estética editorial monocroma [DECIDIDO 2026-11-11 — reemplaza lo de abajo donde se contradice]
+- Francisca pidió, con referencias de diseño editorial de lujo (portfolios, menús, moodboards), aplicar a **todo el
+  proyecto** (app, web y bitácora) una estética **monocroma: blanco, grises y negro**.
+- **Tipografía [2026-11-11, segunda pasada]:** **Outfit** (sans geométrica de Thin a Black, como las referencias
+  Code Pro y Montenna de Francisca) en títulos, palabra de la tarjeta y logo; **Inter** en el texto largo.
+  Títulos grandes **ligeros** (`--peso-titulo: 300`) con la palabra clave en peso fuerte (`--peso-fuerte`).
+  Logo: «POLYKAT» en Outfit ligera, muy espaciada. Outfit no tiene cursiva: no usar cursivas en títulos.
+  Reemplaza a Fredoka/Nunito y a Cormorant Garamond (que duró unas horas).
+- **Paleta por defecto «Monocromo»** (clave interna `higo`, para no perder lo que eligió cada persona): fondo `#FAFAF9`,
+  tarjetas `#FFFFFF`, texto `#161616`, secundario `#545454`, botón principal negro `#1C1C1C`; modo oscuro en negros y grises.
+  Las paletas alternativas (Piedra, Carbón, Tamarindo, Medianoche) siguen en Ajustes.
+- **La web va siempre en modo claro** (PR #30): `data-theme="light"` en web/index.html y en las páginas legales.
+- Ícono de la app: la sakura sobre negro `#1C1C1C`. Adornos de fondo en gris.
+- Se mantienen en color, a propósito: el pixel art (Kitty, sakura, moneda, diamante) y las insignias de dificultad
+  (tienen significado; siempre con ícono y texto). Preguntar a Francisca si también los quiere en gris.
+- Bitácora: misma estética (Outfit + Inter, blanco/grises/negro), fuentes en `fuentes/` del repo privado.
+
 ## 9. Estética [DECIDIDO 2026-10-09]
 Sensación limpia, simple, lujo "old money", estudio corto. Referencias: Apple, Dior, Chanel, Bvlgari.
 Todos los valores viven como variables en `app/css/tokens.css` (cambiarlos solo ahí).

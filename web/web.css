@@ -629,3 +629,29 @@ main { counter-reset: seccion; }
   .idioma-txt { flex: 1 1 calc(100% - 50px); }
   .idioma .tag { min-height: 22px; padding: 0 8px; font-size: 11px; }
 }
+
+/* ---------- Estética monocroma (2026-11-11): blanco, grises y negro ---------- */
+/* Adornos de fondo (sakuras, monedas) en gris: acompañan sin romper el blanco y negro. Kitty conserva su color. */
+.adornos { filter: grayscale(1); }
+/* Estados del proyecto: negro (hecho), gris (en curso), contorno (próximo); siempre con ícono y texto */
+.estado.hecho { background: var(--primary); color: var(--on-primary); }
+.estado.curso { background: var(--ink-soft); color: var(--surface); }
+.avance-barra i.hecho { background: var(--primary); }
+.avance-barra i.curso { background: linear-gradient(90deg, var(--ink-soft) 50%, var(--surface-2) 50%); }
+.dato-num { color: var(--ink); }
+/* Títulos en serif editorial: sin el apretado que necesitaba la letra redonda */
+.display, .seccion-cabeza .display { letter-spacing: -0.01em; font-weight: 600; }
+/* Tipografía Outfit (2026-11-11): títulos ligeros con la palabra clave en peso fuerte, como «LIGHT · REG · BOLD» */
+.display, .seccion-cabeza .display { font-weight: var(--peso-titulo); letter-spacing: -0.015em; }
+.display em { font-weight: var(--peso-fuerte); font-style: normal; color: var(--ink); }
+.capitulo-lema { font-style: normal; font-weight: 300; }
+.eslogan-hero { letter-spacing: .32em; }
+.pieza h3, .paso h3, .ruta h3, .hito h3, .etapa h3, .capitulo h3, .hito-paso h3 { font-weight: 400; }
+/* Etiquetas de sección (PR #28 las pasó a frase en vez de mayúsculas): en Outfit ligera, recta (Outfit no tiene cursiva) */
+.sobretitulo, .creadora-rol, .capitulo-num, .capitulo-datos dt { font-family: var(--font-display); font-style: normal; }
+.sobretitulo { font-size: 20px; font-weight: 300; color: var(--ink); letter-spacing: 0; }
+.eslogan-hero { font-size: 12px; font-weight: 400; color: var(--ink-soft); }
+.creadora-rol { font-size: 17px; font-weight: 300; }
+.capitulo-num { font-size: 17px; font-weight: 400; color: var(--ink); }
+.capitulo-datos dt { font-size: 15px; font-weight: 500; }
+.etapa-nombre { font-family: var(--font-display); }
