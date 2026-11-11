@@ -1,7 +1,7 @@
-# Franui · Polykat — Diccionario Políglota
+# Polykat — Diccionario Políglota
 
-> Nombre decidido el 2026-10-13 (antes: «Franui» y luego «Franui Polykat» provisorio).
-> Logo: «Polykat» (cursiva) sobre «FRANUI», en Cormorant Garamond · Eslogan: «Be fluent in multiple languages».
+> La app y la web se llaman **Polykat** (decidido el 2026-11-11). **Franui** es la autora, Francisca Ignacia Sanhueza Flores.
+> Logo: «POLYKAT» en mayúsculas espaciadas, en Cormorant Garamond · Eslogan: «Be fluent in multiple languages».
 
 **En línea:** https://polykat-franui.github.io/ (web) · https://polykat-franui.github.io/app/ (app).
 Se publica sola con cada cambio en `main` (`.github/workflows/publicar.yml`).

@@ -1,4 +1,4 @@
-/* Franui — página web. Colores y fuentes: app/css/tokens.css (compartidos con la app). */
+/* Polykat — página web. Colores y fuentes: app/css/tokens.css (compartidos con la app). */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 84px; }
 body {
@@ -510,7 +510,7 @@ body { --shadow: var(--sombra-suave); }
 /* Portada: sin manchas de color y con la marca gigante de fondo */
 .hero { position: relative; isolation: isolate; overflow: hidden; background: none; }
 .hero::before {
-  content: 'FRANUI'; position: absolute; z-index: -1; left: 0; right: 0; bottom: 4%;
+  content: 'POLYKAT'; position: absolute; z-index: -1; left: 0; right: 0; bottom: 4%;
   font-family: var(--font-logo); font-weight: 600; font-size: clamp(110px, 24vw, 400px); line-height: .8; letter-spacing: .08em;
   text-align: center; white-space: nowrap; color: color-mix(in srgb, var(--ink) 4%, transparent); pointer-events: none;
 }

@@ -1,4 +1,4 @@
-// Íconos pixel art de Franui: sakura (racha), moneda, estrella, cerezas, notificación y burbuja vacía.
+// Íconos pixel art de Polykat: sakura (racha), moneda, estrella, cerezas, notificación y burbuja vacía.
 // Cada función devuelve { filas, colores }. Se exportan en tamaño exacto (sin relleno)
 // y se muestran siempre a escala entera (1x, 2x, 3x…) para que no se deformen.
 import { lienzo, pon, ponTodos, silueta, sello, contornear, aTexto } from './kitty-arte.mjs';

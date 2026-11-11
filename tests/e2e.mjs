@@ -63,7 +63,7 @@ try {
   await page.keyboard.press('Escape');
   await aviso.locator('.aviso-cerrar').click();
   assert.equal(await aviso.count(), 0, 'el aviso se cierra');
-  paso('Aviso grande «Descarga Franui» con pasos; se puede cerrar');
+  paso('Aviso grande «Descarga Polykat» con pasos; se puede cerrar');
 
   await page.locator('[name=usuario]').fill('Fran');
   await page.locator('[name=clave]').fill('123');
@@ -272,7 +272,7 @@ try {
   await page.locator('#modal-cerrar').click();
   assert.ok(await page.evaluate(() => navigator.serviceWorker.ready.then((r) => !!r.active)), 'service worker activo');
   const man = await page.evaluate(() => fetch('manifest.webmanifest').then((r) => r.json()));
-  assert.equal(man.short_name, 'Franui');
+  assert.equal(man.short_name, 'Polykat');
   assert.ok(!(await page.locator('#menu-historia').evaluate((b) => b.classList.contains('vista'))), 'historia sin ver: anillo de color');
   await page.locator('#menu-historia').click();
   await page.locator('.historia .historia-frase').waitFor();
@@ -393,7 +393,7 @@ try {
   await page.locator('#aj-hora').fill('21:15');
   await page.locator('#aj-hora').dispatchEvent('change');
   const [descarga] = await Promise.all([page.waitForEvent('download'), page.locator('#aj-calendario').click()]);
-  assert.equal(descarga.suggestedFilename(), 'franui-recordatorio.ics');
+  assert.equal(descarga.suggestedFilename(), 'polykat-recordatorio.ics');
   const ics = await (await import('node:fs/promises')).readFile(await descarga.path(), 'utf8');
   assert.match(ics, /T211500[\s\S]*RRULE:FREQ=DAILY/);
   await page.locator('#aj-recordatorio').click();

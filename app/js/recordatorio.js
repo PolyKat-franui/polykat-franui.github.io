@@ -19,7 +19,7 @@ export function crearICS({ hora = '20:00', titulo, descripcion = '', url = '', a
   const fin = `${fecha}T${dosDig(Math.floor(finMin / 60) % 24)}${dosDig(finMin % 60)}00`;
   const sello = d.toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
   return [
-    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Franui Polykat//Recordatorio//ES', 'CALSCALE:GREGORIAN',
+    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Polykat//Recordatorio//ES', 'CALSCALE:GREGORIAN',
     'BEGIN:VEVENT',
     `UID:recordatorio-${fecha}@franui-polykat`,
     `DTSTAMP:${sello}`,

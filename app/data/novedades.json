@@ -2,6 +2,16 @@
   "_ayuda": "Lo más nuevo arriba. La app y la página web leen este mismo archivo.",
   "novedades": [
     {
+      "version": "0.12.0",
+      "fecha": "2026-11-11",
+      "titulo": "Nuevo nombre: Polykat",
+      "cambios": [
+        "La app y la página web ahora se llaman simplemente Polykat. Franui es su creadora, Francisca.",
+        "En el menú, el título POLYKAT cae letra por letra. Toca cualquier letra y suena una moneda.",
+        "Tu avance, tu racha y tu jardín siguen intactos: no tienes que hacer nada."
+      ]
+    },
+    {
       "version": "0.11.0",
       "fecha": "2026-10-14",
       "titulo": "Diamantes, estudio libre y racha de 20 palabras",

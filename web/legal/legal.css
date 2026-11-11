@@ -1,4 +1,4 @@
-/* Páginas legales de Franui · Polykat. Colores y fuentes: app/css/tokens.css */
+/* Páginas legales de Polykat. Colores y fuentes: app/css/tokens.css */
 *, *::before, *::after { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.65; }
 main { max-width: 720px; margin: 0 auto; padding: 32px 16px 64px; }

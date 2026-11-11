@@ -1,4 +1,6 @@
-# Franui — instrucciones para Claude
+# Polykat — instrucciones para Claude
+
+- La app y la web se llaman **Polykat**; **Franui** es la autora (Francisca). No renombres claves internas como `franui:v1`.
 
 - Antes de trabajar, lee `.claude/skills/franui/SKILL.md` (especificación y decisiones).
 - Habla con Francisca en español, con texto corto y fácil de leer en el celular.

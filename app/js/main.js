@@ -1,4 +1,4 @@
-// Franui — interfaz. Rutas con # (funciona en cualquier hosting estático, p. ej. GitHub Pages).
+// Polykat — interfaz. Rutas con # (funciona en cualquier hosting estático, p. ej. GitHub Pages).
 import { traspasado } from './traspaso.js'; // primero: puede traer el avance desde la dirección antigua
 import * as prueba from './prueba.js';
 import { t, tn, setIdiomaUI, cargarIdiomaUI, idiomaCargado, tMega, tTipo, nombreIdioma, IDIOMAS_UI, MEGA_TEMAS } from './i18n.js';
@@ -46,7 +46,7 @@ function descargarCalendario() {
   const ics = rec.crearICS({ hora: a.horaRecordatorio, titulo: t('rec_evento'), descripcion: t('rec_noti_texto'), url: new URL('./', location.href).href });
   const enlace = document.createElement('a');
   enlace.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
-  enlace.download = 'franui-recordatorio.ics';
+  enlace.download = 'polykat-recordatorio.ics';
   document.body.append(enlace); enlace.click(); enlace.remove();
   setTimeout(() => URL.revokeObjectURL(enlace.href), 4000);
 }
@@ -379,7 +379,7 @@ function vistaInicio() {
     <section class="inicio">
       <div class="inicio-hero">
         <img class="inicio-kitty" src="assets/caras/feliz.svg" alt="Kitty" width="80" height="64">
-        <h1 class="marca-completa"><span class="logo apilado"><span class="logo-b">Polykat</span> <span class="logo-a">Franui</span></span><span class="marca-linea" aria-hidden="true"></span><span class="eslogan">Be fluent in multiple languages</span></h1>
+        <h1 class="marca-completa"><span class="logo apilado"><span class="logo-a">Polykat</span></span><span class="marca-linea" aria-hidden="true"></span><span class="eslogan">Be fluent in multiple languages</span></h1>
       </div>
       <div class="card inicio-card">
         <div class="seg" role="tablist">
@@ -497,13 +497,12 @@ function vistaMenu() {
   const hoy = hoyRevisadas();
   const meta = S.ajustes.meta;
   const faltan = store.PREMIO_CADA - (hoy % store.PREMIO_CADA);
-  const letras = [...'FRANUI'].map((l, i) => `<span style="--i:${i}">${l}</span>`).join('');
+  const letras = [...'POLYKAT'].map((l, i) => `<span style="--i:${i}">${l}</span>`).join('');
   const boton = (href, icon, texto, id) => `<a class="menu-btn" href="${href}" id="${id}">${icon}<span>${texto}</span></a>`;
   vista.innerHTML = `
     <section class="menu-juego">
       <div class="menu-escena">
-        <h1 class="menu-logo" aria-label="Franui Polykat">
-          <span class="menu-sub" aria-hidden="true"><span class="menu-tipeo">Polykat</span></span>
+        <h1 class="menu-logo" aria-label="Polykat">
           <span class="menu-letras" aria-hidden="true">${letras}</span>
           <span class="menu-linea" aria-hidden="true"></span>
         </h1>
@@ -548,7 +547,7 @@ function vistaMenu() {
     </section>`;
   marcarAvisoNovedades();
   $('#menu-historia').addEventListener('click', abrirHistoria);
-  // Tocar una letra de FRANUI: salta y suena una moneda (cada letra un poco más aguda)
+  // Tocar una letra de POLYKAT: salta y suena una moneda (cada letra un poco más aguda)
   $('.menu-letras').addEventListener('click', (e) => {
     const l = e.target.closest('span[style]');
     if (!l) return;

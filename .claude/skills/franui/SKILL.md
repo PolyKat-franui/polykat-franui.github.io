@@ -1,9 +1,9 @@
 ---
 name: franui
-description: Especificación del proyecto Franui (Diccionario Políglota) — objetivo, idiomas, banco de palabras, tarjetas, SRS, estética, Kitty, rachas, ranking, configuración y reglas de trabajo. Úsala antes de construir o cambiar la app, la página web o el banco de palabras.
+description: Especificación del proyecto Polykat (Diccionario Políglota; autora Franui) — objetivo, idiomas, banco de palabras, tarjetas, SRS, estética, Kitty, rachas, ranking, configuración y reglas de trabajo. Úsala antes de construir o cambiar la app, la página web o el banco de palabras.
 ---
 
-# Franui — Diccionario Políglota
+# Polykat — Diccionario Políglota
 
 Lee esto completo antes de tocar la app, la web o el banco.
 - **[DECIDIDO]** no se reabre sin que Francisca lo pida.
@@ -11,7 +11,7 @@ Lee esto completo antes de tocar la app, la web o el banco.
 - **[ABIERTO]** pregunta antes de construir.
 
 Esta versión (2026-10-09) reemplaza al "Plan maestro" anterior donde se contradicen:
-pasan a ser **6 idiomas** (se suma portugués), el nombre provisional es **Franui**,
+pasan a ser **6 idiomas** (se suma portugués), el nombre provisional era **Franui** (hoy: **Polykat**, ver §nombre),
 la estética es **lujo rosado/perla** y el proyecto es una **startup**.
 
 ## 1. Objetivo [DECIDIDO]
@@ -87,11 +87,12 @@ marca lo corregido, no mezcla pronunciaciones.
 [ABIERTO] Proveedor de IA. Nota técnica: una app no puede "usar la cuenta de Google"
 de alguien para hablar con Claude/ChatGPT/Gemini; se necesita una API con clave
 guardada en un servidor propio (nunca en el navegador). Ver `docs/RECOMENDACIONES.md`.
-Nombre de la app [DECIDIDO 2026-10-13]: **Franui · Polykat** — Polykat se escribe **con k** (antes «Franui», «Polyglok» provisorio y «Polycat»).
-En títulos: «Franui · Polykat»; dentro de frases: «Franui Polykat». Los nombres internos (carpetas, `franui:v1`,
-esta skill) no cambian.
-Logo [DECIDIDO 2026-10-13, ajustado]: **«Polykat» arriba (cursiva) y «FRANUI» abajo (mayúsculas espaciadas)**,
-en serif elegante **Cormorant Garamond** (`--font-logo`). En la barra va en una línea: «Polykat FRANUI».
+Nombre de la app [DECIDIDO 2026-11-11]: **Polykat** (con k). La app y la web se llaman solo Polykat;
+**Franui es la autora** (Francisca), no la marca. (Antes: «Franui · Polykat», «Polyglok» y «Polycat».)
+Los nombres internos (carpetas, `franui:v1`, `franui:aviso-descarga`, caché `franui-recordatorio`,
+proyecto de Firebase `franui-polykat`, esta skill) no cambian: guardan el avance de las personas.
+Logo [DECIDIDO 2026-11-11]: **«POLYKAT» en mayúsculas espaciadas**, en serif elegante **Cormorant Garamond**
+(`--font-logo`); en el menú, cada letra cae como una tecla. (Antes: «Polykat» en cursiva sobre «FRANUI».)
 (Antes: máquina de escribir Special Elite con cursor; Francisca pidió algo más elegante.)
 Eslogan (por ahora): **«Be fluent in multiple languages»**, en mayúsculas espaciadas bajo una línea.
 No se traducen. Estilos en `app/css/logo.css` (una línea, apilado y marca completa con eslogan).
