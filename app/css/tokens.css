@@ -174,7 +174,8 @@
 }
 
 /* Página web (2026-11-11, a pedido de Francisca): versión clara de Higo, pero casi monocromática.
-   Neutros piedra/lino/carbón y el Higo solo como acento. La app no cambia. */
+   Neutros piedra/lino/carbón y el Higo solo como acento. La app no cambia.
+   La web va siempre en modo claro (data-theme="light" en web/index.html). */
 :root[data-sitio="web"] {
   --bg: #F6F5F1; --surface: #FFFFFF; --surface-2: #EEECE6; --accent: #CFCDBF;
   --accent-soft: #E9E7E0; --line: #DCD9D1; --ink: #211A18; --ink-soft: #5C534D;
@@ -184,26 +185,4 @@
   --shadow: 0 1px 2px rgba(33, 26, 24, .05), 0 14px 40px rgba(33, 26, 24, .07);
   --sombra-suave: 0 1px 2px rgba(33, 26, 24, .04), 0 12px 32px rgba(33, 26, 24, .06);
   --sombra-acento: 0 10px 24px rgba(33, 26, 24, .14);
-}
-:root[data-theme="dark"][data-sitio="web"] {
-    --bg: #1C1917; --surface: #252120; --surface-2: #302B29; --accent: #5C534D;
-    --accent-soft: #2A2523; --line: #463F3B; --ink: #F3F1EC; --ink-soft: #CBC4BC;
-    --primary: #EFEAE2; --on-primary: #1C1917; --enfasis: #E7B2B2; --gold: #D9CFC4;
-    --sand: #5C534D; --oscuro: #141211; --sobre-oscuro: #EEECE6; --sobre-oscuro-suave: #CBC4BC;
-    --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 14px 40px rgba(0, 0, 0, .4);
-    --sombra-suave: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 32px rgba(0, 0, 0, .35);
-    --sombra-acento: 0 10px 24px rgba(0, 0, 0, .4);
-    color-scheme: dark;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"])[data-sitio="web"] {
-    --bg: #1C1917; --surface: #252120; --surface-2: #302B29; --accent: #5C534D;
-    --accent-soft: #2A2523; --line: #463F3B; --ink: #F3F1EC; --ink-soft: #CBC4BC;
-    --primary: #EFEAE2; --on-primary: #1C1917; --enfasis: #E7B2B2; --gold: #D9CFC4;
-    --sand: #5C534D; --oscuro: #141211; --sobre-oscuro: #EEECE6; --sobre-oscuro-suave: #CBC4BC;
-    --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 14px 40px rgba(0, 0, 0, .4);
-    --sombra-suave: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 32px rgba(0, 0, 0, .35);
-    --sombra-acento: 0 10px 24px rgba(0, 0, 0, .4);
-    color-scheme: dark;
-  }
 }
