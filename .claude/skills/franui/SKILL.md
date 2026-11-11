@@ -201,6 +201,16 @@ Todos los valores viven como variables en `app/css/tokens.css` (cambiarlos solo 
   solo `pausa/index.html` (Kitty durmiendo, «Volvemos pronto») en `/` y `/app/`, y `pausa/sw.js` borra cachés y
   se da de baja en celulares con la app instalada. El código no se toca. Reactivar: `"pausado": false`.
 
+## 9i. Palabra del día [DECIDIDO 2026-11-11]
+- Francisca la pidió desde la bitácora (idea para el club y la app). **La misma palabra para toda la comunidad**
+  cada día, aprenda el idioma que aprenda. Lógica pura en `app/js/palabra-dia.js` (pruebas: `tests/palabra-dia.test.mjs`).
+- Candidatas: sustantivos, verbos, adjetivos y adverbios con oración de ejemplo (sin frases ni nombres propios).
+  Se recorren con un salto fijo: ninguna se repite hasta pasar por todas (~940 días).
+- Menú: tarjeta «Palabra del día» con la palabra en el idioma que aprende y etiqueta «Nueva» hasta verla (`S.palabraDia`).
+- Pantalla `#/palabra`: palabra grande, traducción, ejemplo, audio, nota de Kitty, la palabra en los 6 idiomas
+  (con audio cada una), guardar en favoritos, practicarla (`#/estudiar?ids=`) y compartir. Lleva la marca de borrador.
+- Futuro: mostrarla en los encuentros del Club Polykat como rompehielos (ver la bitácora).
+
 ## 10. Pantallas de la app
 Inicio/cuenta (Entrar, Crear cuenta con usuario + contraseña ≥ 6, Google, Invitado) —
 [DECIDIDO 2026-10-09] se pide **antes de estudiar**, solo la primera vez; la sesión queda

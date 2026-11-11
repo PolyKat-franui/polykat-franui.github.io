@@ -81,4 +81,5 @@ export default {
     kitty_modo: 'Wörterbuch-Modus (keine KI verbunden)', kitty_esta: 'Erklär mir diese Karte',
     kitty_frase: 'Probier diesen Satz:', kitty_sin_frase: 'Lerne zuerst ein paar Sätze, dann schlage ich dir einen vor.',
     kitty_abrir: 'Mit Kitty sprechen', kitty_tipo: 'Wortart', kitty_palabra_frase: 'satz',
+    pd_titulo: "Wort des Tages", pd_nueva: "Neu", pd_ver: "In 6 Sprachen ansehen", pd_vista: "Heute schon gesehen", pd_kitty: "Heute lernt die ganze Polykat-Community dieses Wort. Benutze es in einem Gespräch!", pd_idiomas: "In allen 6 Sprachen", pd_practicar: "Üben", pd_compartir: "Teilen", pd_copiada: "Kopiert. Teile es, wo du willst!", pd_sin: "Das Wort des Tages ist noch nicht fertig. Schau bald wieder vorbei.", pd_manana: "Morgen gibt es ein neues Wort.",
 };

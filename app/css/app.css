@@ -1234,3 +1234,45 @@ body { background: var(--bg); --shadow: var(--sombra-suave); }
 #vista:focus { outline: none; }
 /* Círculo del idioma (raíz): el texto usa el color «sobre principal», legible también en las paletas oscuras */
 .raiz .neurona-pct { color: var(--on-primary); }
+
+/* Palabra del día: tarjeta en el menú y pantalla con la palabra en los 6 idiomas */
+.menu-palabra {
+  display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; min-height: 44px; padding: 14px 18px;
+  background: var(--surface); color: var(--ink); text-decoration: none; border: 1px solid var(--borde-fino); border-radius: var(--r-card);
+  box-shadow: var(--sombra-suave); animation: aparecer .5s var(--ease) 1s both;
+}
+.menu-palabra-txt { display: grid; gap: 2px; min-width: 0; }
+.menu-palabra-txt small { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); font-weight: 700; }
+.menu-palabra-txt strong { font-family: var(--font-display); font-size: var(--fs-xl); font-weight: 600; line-height: 1.15; overflow-wrap: anywhere; }
+.menu-palabra-txt span { color: var(--ink-soft); font-size: var(--fs-sm); font-weight: 600; }
+.menu-palabra-nueva { padding: 3px 10px; border-radius: var(--r-pill); background: var(--primary); color: var(--on-primary); font-size: var(--fs-xs); font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.menu-palabra > svg { width: 22px; height: 22px; color: var(--ink-soft); }
+.menu-palabra:active { transform: scale(.98); }
+
+.palabra-dia { gap: 18px; }
+.pd-tarjeta {
+  position: relative; display: grid; justify-items: center; gap: 10px; padding: 18px 18px 22px; text-align: center;
+  background: var(--surface); border: 1px solid var(--borde-fino); border-radius: var(--r-card); box-shadow: var(--sombra-suave);
+}
+.pd-tarjeta .tarjeta-top { justify-content: center; width: 100%; }
+.pd-palabra { margin: 8px 0 0; font-family: var(--font-display); font-weight: 600; font-size: calc(clamp(40px, 11vw, 64px) * var(--escala)); line-height: 1.05; overflow-wrap: anywhere; }
+.pd-trad { margin: 0; font-size: var(--fs-lg); color: var(--ink-soft); }
+.pd-ejemplo { display: grid; justify-items: center; gap: 4px; width: 100%; padding-top: 12px; border-top: 1px solid color-mix(in srgb, var(--line) 60%, transparent); }
+.pd-ejemplo p { margin: 0; }
+.pd-ejemplo mark { background: var(--accent-soft); color: var(--ink); border-radius: 4px; padding: 0 3px; }
+.pd-kitty { display: flex; align-items: flex-end; gap: 8px; }
+.pd-kitty img { flex: none; image-rendering: pixelated; }
+.pd-kitty .burbuja-texto { margin: 0; }
+.pd-nota { margin: 0; padding: 10px 14px; border-radius: var(--r-card); background: var(--surface-2); }
+.pd-subtitulo { margin: 6px 0 0; font-family: var(--font-display); font-weight: 600; font-size: var(--fs-lg); }
+.pd-idiomas { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.pd-idiomas li {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "mono nombre audio" "mono palabra audio";
+  align-items: center; column-gap: 12px; padding: 8px 8px 8px 12px; background: var(--surface); border: 1px solid var(--borde-fino); border-radius: var(--r-card);
+}
+.pd-idiomas .monograma { grid-area: mono; }
+.pd-idioma { grid-area: nombre; font-size: var(--fs-xs); color: var(--ink-soft); letter-spacing: .08em; text-transform: uppercase; }
+.pd-idiomas strong { grid-area: palabra; font-family: var(--font-display); font-weight: 600; font-size: var(--fs-lg); overflow-wrap: anywhere; }
+.pd-idiomas .pd-audio { grid-area: audio; }
+.pd-idiomas li.destacada { border: 2px solid var(--primary); }
+.pd-idiomas li.destacada .monograma { background: var(--primary); color: var(--on-primary); box-shadow: none; }

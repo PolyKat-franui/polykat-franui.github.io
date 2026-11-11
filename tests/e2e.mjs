@@ -293,6 +293,35 @@ try {
   await page.keyboard.press('Escape');
   paso('Historia del día de Kitty: frase, traducción y guardar en favoritos; misma frase todo el día');
 
+  await page.locator('.historia-capa').waitFor({ state: 'detached' });
+  assert.equal(await page.locator('.menu-palabra-nueva').count(), 1, 'palabra del día sin ver: etiqueta «Nueva»');
+  await page.waitForFunction(() => document.querySelector('#menu-palabra-texto')?.textContent.trim().length > 1);
+  const palabraMenu = (await page.locator('#menu-palabra-texto').innerText()).trim();
+  await page.locator('#menu-palabra').click();
+  await page.waitForURL(/#\/palabra/);
+  await page.locator('.pd-palabra').waitFor();
+  assert.equal((await page.locator('.pd-palabra').innerText()).trim(), palabraMenu, 'la misma palabra del menú');
+  assert.equal(await page.locator('.pd-idiomas li').count(), 6, 'la palabra en los 6 idiomas');
+  assert.equal(await page.locator('.pd-idiomas li.destacada').count(), 1, 'se destaca el idioma que aprende');
+  assert.ok(await page.locator('.pd-tarjeta .borrador').isVisible(), 'lleva la marca de borrador');
+  assert.ok(await page.locator('.pd-ejemplo').isVisible(), 'oración de ejemplo');
+  const favAntes = await page.locator('#pd-fav').getAttribute('aria-pressed');
+  await page.locator('#pd-fav').click();
+  assert.notEqual(await page.locator('#pd-fav').getAttribute('aria-pressed'), favAntes, 'guardar en favoritos');
+  await page.locator('#pd-fav').click();
+  assert.equal(await page.locator('#pd-fav').getAttribute('aria-pressed'), favAntes, 'y quitarla');
+  await imagenesCargadas(page, 'palabra del día');
+  await page.waitForTimeout(400);
+  await foto(page, '07f-celular-palabra-dia');
+  await page.locator('#pd-practicar').click();
+  await page.waitForURL(/#\/estudiar\?ids=/);
+  await page.locator('#feed .slide.activa .palabra').waitFor();
+  assert.equal((await page.locator('#feed .slide.activa .palabra').innerText()).trim(), palabraMenu, 'practicar abre esa palabra');
+  await page.goto(`${URL_APP}#/menu`);
+  await page.locator('#menu-palabra').waitFor();
+  assert.equal(await page.locator('.menu-palabra-nueva').count(), 0, 'vista hoy: sin «Nueva»');
+  paso('Palabra del día: la misma en el menú y en su pantalla, en 6 idiomas, con ejemplo; favorito y practicar');
+
   await page.locator('#menu-temas').click();
   await page.waitForURL(/#\/aprender/);
   paso('Tocar el logo abre el menú principal animado; «Descargar la app» muestra los pasos; service worker activo');

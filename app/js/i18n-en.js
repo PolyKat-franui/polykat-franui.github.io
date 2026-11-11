@@ -81,4 +81,5 @@ export default {
     kitty_modo: 'Dictionary mode (no AI connected)', kitty_esta: 'Explain this card',
     kitty_frase: 'Try this phrase:', kitty_sin_frase: 'Study a few phrases first and I’ll suggest one.',
     kitty_abrir: 'Talk to Kitty', kitty_tipo: 'Type', kitty_palabra_frase: 'phrase',
+    pd_titulo: "Word of the day", pd_nueva: "New", pd_ver: "See it in 6 languages", pd_vista: "Seen today", pd_kitty: "Today the whole Polykat community is learning this word. Use it in a conversation!", pd_idiomas: "In all 6 languages", pd_practicar: "Practice it", pd_compartir: "Share", pd_copiada: "Copied. Share it anywhere!", pd_sin: "The word of the day isn’t ready yet. Come back soon.", pd_manana: "Tomorrow there’s a new word.",
 };
