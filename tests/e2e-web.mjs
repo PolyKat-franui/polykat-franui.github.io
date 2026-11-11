@@ -70,7 +70,7 @@ try {
 
   const { ctx, page } = await pagina({ width: 1440, height: 900 });
   await page.goto(URL_WEB);
-  assert.equal(await page.locator('.nav-links a').count(), 8);
+  assert.equal(await page.locator('.nav-links a').count(), 9);
   await recorrer(page);
 
   await page.locator('#jardin-regar').click();
@@ -99,6 +99,22 @@ try {
   assert.ok(await page.locator('#lista-novedades .hito').count() >= 1);
   assert.match(await page.locator('#lista-novedades').innerText(), /Primera versión de prueba/);
   paso('Novedades compartidas con la app');
+
+  assert.equal(await page.locator('#proyecto .etapa').count(), 6, '6 etapas del proyecto');
+  assert.equal(await page.locator('#proyecto .etapa .estado.hecho').count(), 3);
+  assert.equal(await page.locator('#proyecto .etapa .estado.curso').count(), 1);
+  assert.equal(await page.locator('#proyecto .etapa .estado.proximo').count(), 2);
+  const versionWeb = await page.locator('#proyecto-version').innerText();
+  const versionApp = (await page.evaluate(() => fetch('app/data/novedades.json').then((r) => r.json()))).novedades[0].version;
+  assert.equal(versionWeb, versionApp.replace(/\.0$/, ''), 'versión actual leída de novedades');
+  await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+  await page.waitForTimeout(600);
+  await page.locator('.nav-links a[href="#proyecto"]').click();
+  await page.waitForFunction(() => Math.abs(document.getElementById('proyecto').getBoundingClientRect().top) < 120);
+  await page.locator('#proyecto .fuentes summary').click();
+  assert.ok(await page.locator('#proyecto .fuentes li').first().isVisible(), 'fuentes visibles');
+  await page.screenshot({ path: `${CAPTURAS}/web-proyecto.png` });
+  paso('El proyecto: 6 etapas con su estado (3 hechas, 1 en curso, 2 próximas), versión real y fuentes');
 
   const flaps = await page.locator('.flap').evaluateAll((els) => els.map((e) => e.textContent));
   assert.deepEqual(flaps, ['4996', '6', '13', '10']);

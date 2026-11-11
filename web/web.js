@@ -162,6 +162,8 @@ fetch('app/data/idiomas.json').then((r) => r.json()).then(({ idiomas }) => {
 
 // ---------- Novedades (mismo archivo que usa la app) ----------
 fetch('app/data/novedades.json').then((r) => r.json()).then(({ novedades }) => {
+  // «El proyecto» muestra la versión actual de la app (la más nueva de novedades)
+  if (novedades[0] && $('#proyecto-version')) $('#proyecto-version').textContent = novedades[0].version.replace(/\.0$/, '');
   $('#lista-novedades').innerHTML = novedades.map((n) => `
     <li class="hito revelar">
       <p class="sobretitulo"><time datetime="${n.fecha}">${new Date(n.fecha + 'T12:00').toLocaleDateString('es', { day: 'numeric', month: 'long', year: 'numeric' })}</time> · v${esc(n.version)}</p>
