@@ -81,4 +81,5 @@ export default {
     kitty_modo: 'Modo dicionário (sem IA conectada)', kitty_esta: 'Explique este cartão',
     kitty_frase: 'Experimente esta frase:', kitty_sin_frase: 'Estude algumas frases primeiro e eu sugiro uma.',
     kitty_abrir: 'Falar com a Kitty', kitty_tipo: 'Tipo', kitty_palabra_frase: 'frase',
+    pd_titulo: "Palavra do dia", pd_nueva: "Nova", pd_ver: "Veja em 6 idiomas", pd_vista: "Você já viu hoje", pd_kitty: "Hoje toda a comunidade Polykat aprende esta palavra. Use-a numa conversa!", pd_idiomas: "Nos 6 idiomas", pd_practicar: "Praticar", pd_compartir: "Compartilhar", pd_copiada: "Copiada. Compartilhe onde quiser!", pd_sin: "A palavra do dia ainda não está pronta. Volte logo.", pd_manana: "Amanhã tem uma palavra nova.",
 };

@@ -2,6 +2,16 @@
   "_ayuda": "Lo más nuevo arriba. La app y la página web leen este mismo archivo.",
   "novedades": [
     {
+      "version": "0.13.0",
+      "fecha": "2026-11-11",
+      "titulo": "Palabra del día",
+      "cambios": [
+        "Cada día, una palabra nueva para toda la comunidad Polykat: la misma para todas las personas.",
+        "Mírala en los 6 idiomas a la vez, escúchala en cada uno y lee su oración de ejemplo.",
+        "Guárdala en favoritos, practícala o compártela con tus amistades. Está en el menú principal."
+      ]
+    },
+    {
       "version": "0.12.0",
       "fecha": "2026-11-11",
       "titulo": "Nuevo nombre: Polykat",
