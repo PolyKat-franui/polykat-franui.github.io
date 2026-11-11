@@ -500,7 +500,10 @@ dialog::backdrop { background: color-mix(in srgb, var(--sombra-color) 40%, trans
 body { --shadow: var(--sombra-suave); }
 .adornos { opacity: .45; }
 .display { letter-spacing: var(--tracking-titulo); }
-.display em { color: var(--ink-soft); }
+/* Palabras destacadas (2026-11-11): mismo color que el título; un trazo Higo se dibuja debajo al aparecer */
+.display em { color: inherit; background-image: linear-gradient(var(--enfasis), var(--enfasis)); background-repeat: no-repeat; background-position: 0 94%; background-size: 0% .085em; transition: background-size 1.2s var(--ease) .5s; }
+.visible .display em, .display.visible em { background-size: 100% .085em; }
+@media (prefers-reduced-motion: reduce) { .display em { transition: none; background-size: 100% .085em; } }
 
 /* Botones: píldoras limpias */
 .btn { border-color: var(--borde-fino); font-weight: 600; }
