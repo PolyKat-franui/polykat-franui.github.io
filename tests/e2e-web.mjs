@@ -97,7 +97,9 @@ try {
   paso('Método en 3 capítulos animados (1,01³⁶⁵ ≈ 37,8) y línea de 6 pasos que se llena al bajar con Kitty');
 
   assert.ok(await page.locator('#lista-novedades .hito').count() >= 1);
-  assert.match(await page.locator('#lista-novedades').innerText(), /Primera versión de prueba/);
+  assert.ok(await page.locator('#lista-novedades .hito').count() <= 3, 'solo las últimas versiones a la vista');
+  await page.locator('#novedades-anteriores summary').click();
+  assert.match(await page.locator('#novedades-anteriores').innerText(), /Primera versión de prueba/);
   paso('Novedades compartidas con la app');
 
   assert.equal(await page.locator('#proyecto .etapa').count(), 6, '6 etapas del proyecto');

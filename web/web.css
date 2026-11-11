@@ -596,3 +596,33 @@ main { counter-reset: seccion; }
   .etapa-cuerpo { max-width: 880px; }
   .etapa-datos, .caminos { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 }
+
+/* ---------- Pulido de la página (2026-11-11) ---------- */
+/* Novedades: las 3 últimas a la vista y el resto plegado; «Lo que viene» acompaña al bajar */
+.novedades-lista { display: grid; gap: 28px; align-content: start; }
+.novedades-anteriores summary {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--borde-fino); background: var(--surface); font-weight: 600; font-size: 15px; letter-spacing: .04em; list-style: none;
+  transition: background .3s var(--ease), box-shadow .3s var(--ease);
+}
+.novedades-anteriores summary::-webkit-details-marker { display: none; }
+.novedades-anteriores summary::after { content: '+'; font-family: var(--font-display); font-size: 20px; line-height: 1; color: var(--enfasis); }
+.novedades-anteriores[open] summary::after { content: '−'; }
+.novedades-anteriores summary:hover { box-shadow: var(--sombra-suave); }
+.novedades-anteriores > .linea { margin-top: 28px; }
+.ruta { align-self: start; }
+@media (min-width: 720px) { .ruta { position: sticky; top: 96px; } }
+
+/* Pruébalo: los 5 idiomas caben en una sola fila en pantallas anchas */
+.prueba-juego { max-width: 560px; }
+
+/* Idiomas en el celular: dos columnas compactas (antes, 12 filas a lo ancho) */
+@media (max-width: 719px) {
+  .lista-idiomas { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .idioma { min-height: 0; padding: 12px; gap: 8px 10px; border-radius: 18px; align-content: flex-start; }
+  .idioma .monograma { width: 40px; height: 40px; font-size: 15px; }
+  .idioma-txt strong { font-size: 17px; line-height: 1.2; }
+  .idioma-txt small { font-size: 13px; }
+  .idioma-txt { flex: 1 1 calc(100% - 50px); }
+  .idioma .tag { min-height: 22px; padding: 0 8px; font-size: 11px; }
+}
