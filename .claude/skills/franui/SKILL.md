@@ -101,6 +101,7 @@ encontrar uno definitivo. Kitty: el ícono de cuerpo entero que dibujó Francisc
 collar morado y cascabel), 20×16, en 14 expresiones.
 
 ## 9·. Estética editorial monocroma [DECIDIDO 2026-11-11 — reemplaza lo de abajo donde se contradice]
+- **Nombre del club** [DECIDIDO 2026-11-12]: **Polykat Club** (no «Polyglot Club», que es otra comunidad).
 - **Lema** [DECIDIDO 2026-11-12]: «Entender es el comienzo. Hablar es el viaje.» (primera frase fuerte, segunda suave). Va en la web (sobre «Nuestro objetivo»), en la bitácora y en la infografía.
 - Francisca pidió, con referencias de diseño editorial de lujo (portfolios, menús, moodboards), aplicar a **todo el
   proyecto** (app, web y bitácora) una estética **monocroma: blanco, grises y negro**.
@@ -227,7 +228,7 @@ Todos los valores viven como variables en `app/css/tokens.css` (cambiarlos solo 
 - Menú: tarjeta «Palabra del día» con la palabra en el idioma que aprende y etiqueta «Nueva» hasta verla (`S.palabraDia`).
 - Pantalla `#/palabra`: palabra grande, traducción, ejemplo, audio, nota de Kitty, la palabra en los 6 idiomas
   (con audio cada una), guardar en favoritos, practicarla (`#/estudiar?ids=`) y compartir. Lleva la marca de borrador.
-- Futuro: mostrarla en los encuentros del Club Polykat como rompehielos (ver la bitácora).
+- Futuro: mostrarla en los encuentros del Polykat Club como rompehielos (ver la bitácora).
 
 ## 10. Pantallas de la app
 Inicio/cuenta (Entrar, Crear cuenta con usuario + contraseña ≥ 6, Google, Invitado) —
