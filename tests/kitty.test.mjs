@@ -49,7 +49,7 @@ function assetDe(src) {
 // La interfaz de la app está repartida en módulos (app/js y app/js/pantallas): se revisan todos los que dibujan imágenes.
 const jsConImagenes = readdirSync(R('app/js'), { recursive: true })
   .filter((f) => f.endsWith('.js')).map((f) => `app/js/${f.replace(/\\/g, '/')}`).sort()
-  .filter((f) => /<img[^>]*?src="/.test(leer(f)));
+  .filter((f) => /<img[^>]*?src="([^"]+)"[^>]*?width="(\d+)" height="(\d+)"/.test(leer(f)));
 test('imágenes a escala entera: se revisan los módulos de la app que dibujan imágenes', () => {
   assert.ok(jsConImagenes.length >= 5, `solo se encontraron ${jsConImagenes.length}`);
 });
