@@ -1,7 +1,8 @@
-// Polykat — interfaz. Rutas con # (funciona en cualquier hosting estático, p. ej. GitHub Pages).
+// Polykat — arranque y rutas con # (funciona en cualquier hosting estático, p. ej. GitHub Pages).
+// Cada pantalla vive en js/pantallas/; lo que comparten, en ui.js, estado.js y marco.js.
 import { traspasado } from './traspaso.js'; // primero: puede traer el avance desde la dirección antigua
 import * as prueba from './prueba.js';
-import { t, tn, setIdiomaUI, cargarIdiomaUI, idiomaCargado, idiomaUI, tMega, tTipo, nombreIdioma, IDIOMAS_UI, MEGA_TEMAS } from './i18n.js';
+import { t, tn, cargarIdiomaUI, idiomaUI, tMega, tTipo, nombreIdioma, IDIOMAS_UI, MEGA_TEMAS } from './i18n.js';
 import * as store from './store.js';
 import { PALETAS } from './store.js';
 import { dificultad } from './srs.js';
@@ -12,36 +13,21 @@ import { ICON } from './iconos.js';
 import { sonido, activarSonido } from './sonido.js';
 import { musica } from './musica.js';
 import { sembrarAdornos, sembrarVisitantes, estallido, lluvia } from './adornos.js';
-import { buscar, fraseConocida, normalizar } from './kitty.js';
 import * as nube from './nube.js';
 import * as J from './jardin.js';
 import * as rec from './recordatorio.js';
 import * as PD from './palabra-dia.js';
+import { $, $$, esc, vista, cara, toast, modal, registrarRouter, ir, htmlCargando, htmlVacio, cargando, marcar, sinMovimiento, estallarCorazones } from './ui.js';
+import { S, setS, sesion, setSesion, guardar, guardarYa, cuentaPendiente, setCuentaPendiente, conCuenta, subirYa, filaRanking, publicarMiRanking, conectarGoogle, salirDeGoogle, sincronizarAlAbrir, aplicarAjustes, nativoInicial } from './estado.js';
+import { kittyAbrir } from './kitty-chat.js';
+import { actualizarChips, pintarMarco, pulsoChip, ultimaVersion, setUltimaVersion, marcarAvisoNovedades, cambiarNativo, htmlArana, insignia, EMOJI_MEGA, hoyRevisadas, etapaHoy, srcFlor } from './marco.js';
+import { instalada, avisoDescarga, iconoApp, instalarApp, botonInstalar } from './instalacion.js';
+import { celebrarRacha, volarMonedas, mostrarDominada, aparecerDiamante, celebrarDiamante, mostrarPremio } from './celebraciones.js';
 
-const $ = (sel, root = document) => root.querySelector(sel);
-const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
-const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const vista = $('#vista');
-
-let S = store.cargar();
 let idiomas = [];
-let sesion = null;
 let primeraCarga = true;
-let ultimaVersion = null;      // versión más nueva de Novedades (para el aviso en la pestaña)
 let tutorialAlRevelar = null;  // el tutorial avanza cuando se revela la primera tarjeta
 
-// ---------- Guardado automático ----------
-let timerGuardar = null;
-function guardar() {
-  clearTimeout(timerGuardar);
-  timerGuardar = setTimeout(() => { store.guardar(S); subirPronto(); publicarRecordatorio(); }, 150);
-}
-/** Le cuenta al service worker si hoy ya estudiaste (para no avisar de más). */
-function publicarRecordatorio() {
-  const a = S.ajustes;
-  if (!a.recordatorio) return;
-  rec.publicarEstado({ activo: true, hora: a.horaRecordatorio, ultimoDiaEstudio: S.racha.ultimoDia, titulo: t('rec_noti_titulo'), texto: t('rec_noti_texto') }).catch(() => {});
-}
 function descargarCalendario() {
   const a = S.ajustes;
   const ics = rec.crearICS({ hora: a.horaRecordatorio, titulo: t('rec_evento'), descripcion: t('rec_noti_texto'), url: new URL('./', location.href).href });
@@ -50,254 +36,6 @@ function descargarCalendario() {
   enlace.download = 'polykat-recordatorio.ics';
   document.body.append(enlace); enlace.click(); enlace.remove();
   setTimeout(() => URL.revokeObjectURL(enlace.href), 4000);
-}
-const guardarYa = () => { clearTimeout(timerGuardar); store.guardar(S); subirYa(); };
-
-// ---------- Nube (cuenta de Google) ----------
-// Con cuenta, cada cambio se sube unos segundos después (y al cerrar o esconder la app).
-// Solo se sube si hay cambios sin enviar: así un celular olvidado abierto no pisa lo estudiado en otro.
-let timerNube = null;
-let sinSubir = false;
-let cuentaPendiente = null; // avance de la nube que espera la pantalla «¿Qué avance conservo?»
-const conCuenta = () => S.perfil.cuenta?.tipo === 'google' && nube.nubeLista();
-function subirYa(forzar = false) {
-  clearTimeout(timerNube);
-  if (!conCuenta() || (!sinSubir && !forzar)) return;
-  sinSubir = false;
-  nube.guardarAvance(S.perfil.cuenta.uid, S).catch(() => { sinSubir = true; });
-  publicarMiRanking();
-}
-/** Fila pública del ranking: solo nombre y números (nunca el correo). Se puede apagar en Ajustes. */
-const filaRanking = () => ({
-  nombre: (S.perfil.nombre || S.perfil.cuenta?.nombre?.split(' ')[0] || 'Polyglot').trim().slice(0, 30),
-  racha: store.rachaVigente(S.racha),
-  dia: S.racha.ultimoDia || '',
-  palabras: store.resumen(S).palabras,
-  nivel: J.nivelDe(S.jardin.crecimiento),
-  actualizado: Date.now(),
-  liga: S.liga.nivel,
-  semana: S.liga.semana || store.semanaISO(),
-  xp: S.liga.semana === store.semanaISO() ? S.liga.xp : 0,
-});
-function publicarMiRanking() {
-  if (!conCuenta() || S.ajustes.ranking === false) return;
-  nube.publicarRanking(S.perfil.cuenta.uid, filaRanking()).catch((e) => console.warn('ranking:', e?.code || e));
-}
-function subirPronto() {
-  if (!conCuenta() || cuentaPendiente) return;
-  sinSubir = true;
-  clearTimeout(timerNube);
-  timerNube = setTimeout(subirYa, 4000);
-}
-/** Une el avance de la nube con el del navegador según store.decidirAlEntrar. Devuelve la acción. */
-function sincronizar(remota, cuenta) {
-  const accion = store.decidirAlEntrar(remota, S);
-  if (accion === 'bajar') {
-    const perfil = { ...S.perfil }, nativo = S.ajustes.nativo;
-    S = store.normalizar(remota);
-    S.perfil = { ...S.perfil, ...perfil, cuenta };
-    S.ajustes.nativo ||= nativo;
-    aplicarAjustes();
-  } else if (accion === 'preguntar') {
-    cuentaPendiente = store.normalizar(remota);
-  }
-  S.perfil.cuenta = cuenta;
-  store.guardar(S);
-  if (accion === 'subir') subirYa(true);
-  return accion;
-}
-/** Botón «Entrar con Google» (portada y Ajustes). */
-async function conectarGoogle() {
-  if (!nube.nubeLista()) return void toast(t('login_pronto'));
-  try {
-    const cuenta = await nube.entrarConGoogle();
-    const remota = await nube.leerAvance(cuenta.uid);
-    S.perfil.elegido = true;
-    if (!S.perfil.nombre && cuenta.nombre) S.perfil.nombre = cuenta.nombre.split(' ')[0];
-    const accion = sincronizar(remota, cuenta);
-    toast(t('nube_conectada', { email: cuenta.email }));
-    if (accion === 'preguntar') return void ir('#/conservar');
-    ir(S.aprendiendo ? '#/menu' : '#/idiomas');
-  } catch (e) {
-    if (e?.code === 'auth/popup-closed-by-user' || e?.code === 'auth/cancelled-popup-request') return;
-    toast(t('nube_error'));
-  }
-}
-async function salirDeGoogle() {
-  try { subirYa(); await nube.salir(); } catch { /* sin conexión: igual se cierra aquí */ }
-  S.perfil.cuenta = null;
-  guardar();
-  toast(t('nube_salio'));
-  router();
-}
-/** Al abrir la app con cuenta: trae lo más nuevo de la nube (p. ej. lo que estudiaste en otro celular). */
-async function sincronizarAlAbrir() {
-  if (!conCuenta()) return;
-  try {
-    const cuenta = await nube.sesionActual();
-    if (!cuenta) { S.perfil.cuenta = null; guardar(); return; }
-    const accion = sincronizar(await nube.leerAvance(cuenta.uid), cuenta);
-    if (accion === 'preguntar') ir('#/conservar');
-    else if (accion === 'bajar') router();
-    // Cada vez que se abre la app con cuenta se actualiza la fila del ranking:
-    // así aparece también quien entró con Google pero cerró antes de que se publicara.
-    if (accion !== 'preguntar') publicarMiRanking();
-  } catch { /* sin conexión: se sigue con el avance de este navegador */ }
-}
-addEventListener('pagehide', guardarYa);
-document.addEventListener('visibilitychange', () => { if (document.hidden) guardarYa(); });
-
-// ---------- Ajustes visuales ----------
-function aplicarAjustes() {
-  const a = S.ajustes;
-  const root = document.documentElement;
-  if (a.tema === 'sistema') root.removeAttribute('data-theme');
-  else root.dataset.theme = a.tema === 'oscuro' ? 'dark' : 'light';
-  root.dataset.paleta = a.paleta;
-  activarSonido(a.sonido);
-  root.style.setProperty('--escala', a.escala);
-  $('#capa-brillo').style.opacity = String(Math.max(0, 1 - a.brillo));
-  root.lang = a.nativo;
-  setIdiomaUI(a.nativo);
-  // Si los textos de ese idioma aún no están descargados (p. ej. llegó un avance de la nube), se bajan y se repinta.
-  if (!idiomaCargado(a.nativo)) cargarIdiomaUI(a.nativo).then(() => { if (idiomaCargado(a.nativo)) { setIdiomaUI(a.nativo); router(); } });
-}
-
-function nativoInicial() {
-  const nav = (navigator.language || 'es').slice(0, 2).toLowerCase();
-  return IDIOMAS_UI.includes(nav) ? nav : 'es';
-}
-
-// ---------- Avisos ----------
-let timerToast = null;
-function toast(msg) {
-  const el = $('#toast');
-  el.textContent = msg;
-  el.classList.add('visible');
-  clearTimeout(timerToast);
-  timerToast = setTimeout(() => el.classList.remove('visible'), 3200);
-}
-
-function modal(titulo, html) {
-  $('#modal-titulo').textContent = titulo;
-  $('#modal-cuerpo').innerHTML = html;
-  $('#modal-cerrar').textContent = t('cerrar');
-  $('#modal').showModal();
-}
-
-// ---------- Marco: barra superior, pestañas, Kitty ----------
-const NAV = [
-  ['aprender', ICON.libro],
-  ['jardin', ICON.arbol],
-  ['favoritos', ICON.corazon],
-  ['ranking', ICON.trofeo],
-  ['novedades', ICON.brillo],
-];
-
-/** Ruta de una expresión de Kitty (ver app/assets/caras/caras.json). */
-const cara = (nombre) => `assets/caras/${nombre}.svg`;
-let tokensVistos = null;
-
-function actualizarChips() {
-  const racha = store.rachaVigente(S.racha);
-  const chipR = $('#chip-racha');
-  chipR.querySelector('span').textContent = racha;
-  chipR.setAttribute('aria-label', tn('racha_n', racha));
-  chipR.title = tn('racha_n', racha);
-  const chipT = $('#chip-tokens');
-  chipT.querySelector('span:last-child').textContent = S.tokens;
-  // la moneda gira cuando ganas Kitty tokens
-  if (tokensVistos !== null && S.tokens > tokensVistos) {
-    const m = chipT.querySelector('.moneda');
-    m.classList.remove('gira'); void m.offsetWidth; m.classList.add('gira');
-  }
-  tokensVistos = S.tokens;
-  chipT.setAttribute('aria-label', t('tokens_n', { n: S.tokens }));
-  chipT.title = t('tokens_n', { n: S.tokens });
-}
-
-function pintarMarco(ruta) {
-  const enInicio = ruta === 'inicio' || ruta === 'menu' || ruta === 'instalar'; // pantallas a pantalla completa, sin barra
-  $('#barra').hidden = enInicio;
-  $('#tabbar').hidden = enInicio;
-  $('#kitty-fab').hidden = enInicio;
-  const activa = ruta === 'tema' || ruta === 'estudiar' || ruta === 'idiomas' ? 'aprender' : ruta;
-  const links = NAV.map(([k, icon]) =>
-    `<a href="#/${k}" ${k === activa ? 'aria-current="page"' : ''}>${icon}<span>${t('nav_' + k)}</span></a>`).join('');
-  $('#nav-sup').innerHTML = links;
-  $('#tabbar').innerHTML = links;
-  marcarAvisoNovedades();
-  actualizarChips();
-  const bn = $('#btn-nativo');
-  bn.innerHTML = `<span class="monograma pequeno" aria-hidden="true">${S.ajustes.nativo.toUpperCase()}</span>`;
-  bn.setAttribute('aria-label', `${t('idioma_nativo')}: ${nombreIdioma(S.ajustes.nativo)}`);
-  bn.title = t('idioma_nativo');
-  const inicial = (S.perfil.nombre || '').trim().charAt(0).toUpperCase();
-  const avatar = $('#avatar');
-  avatar.innerHTML = inicial ? esc(inicial) : ICON.usuario;
-  avatar.setAttribute('aria-label', t('perfil'));
-  const aj = $('#btn-ajustes');
-  aj.innerHTML = ICON.ajustes;
-  aj.setAttribute('aria-label', t('nav_ajustes'));
-  $('#kitty-fab').setAttribute('aria-label', t('kitty_abrir'));
-  $('#kitty-cerrar').innerHTML = ICON.cerrar;
-  $('#kitty-cerrar').setAttribute('aria-label', t('cerrar'));
-  $('#kitty-enviar').innerHTML = ICON.enviar;
-  $('#kitty-enviar').setAttribute('aria-label', t('aj_enviar'));
-  $('#kitty-input').placeholder = t('kitty_placeholder');
-  $('#kitty-input').setAttribute('aria-label', t('kitty_placeholder'));
-  $('#kitty-modo').textContent = t('kitty_modo');
-}
-
-async function cambiarNativo(code) {
-  if (!IDIOMAS_UI.includes(code)) return;
-  await cargarIdiomaUI(code);
-  S.ajustes.nativo = code;
-  if (S.aprendiendo === code) S.aprendiendo = null;
-  guardar();
-  aplicarAjustes();
-  kittyEntradas = null;
-  router();
-}
-$('#btn-nativo').addEventListener('click', abrirRedNativo);
-
-// ---------- Red de idiomas en forma de araña (pantalla completa) ----------
-/** Dibuja una araña: un idioma al centro y los demás alrededor, unidos por hilos y una tela. */
-function htmlArana(centro, nodos) {
-  const n = nodos.length;
-  const pos = nodos.map((_, i) => {
-    const a = (-90 + (360 * i) / n) * (Math.PI / 180);
-    return [50 + 39 * Math.cos(a), 50 + 40 * Math.sin(a)];
-  });
-  const anillo = (k) => pos.map(([x, y]) => `${(50 + (x - 50) * k).toFixed(2)},${(50 + (y - 50) * k).toFixed(2)}`).join(' ');
-  return `
-    <div class="arana" style="--n:${n}">
-      <svg class="arana-hilos" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <polygon class="tela" points="${anillo(1)}"/><polygon class="tela" points="${anillo(0.66)}"/><polygon class="tela" points="${anillo(0.33)}"/>
-        ${pos.map(([x, y], i) => `<line class="hilo" x1="50" y1="50" x2="${x.toFixed(2)}" y2="${y.toFixed(2)}" pathLength="100" style="--i:${i}"/>`).join('')}
-      </svg>
-      <div class="arana-centro">${centro}</div>
-      ${nodos.map((html, i) => `<div class="arana-nodo" style="left:${pos[i][0].toFixed(2)}%;top:${pos[i][1].toFixed(2)}%;--i:${i};--c:var(--nodo-${(i % 6) + 1})">${html}</div>`).join('')}
-    </div>`;
-}
-
-function abrirRedNativo() {
-  const capa = $('#capa-idiomas');
-  const actual = S.ajustes.nativo;
-  const nodos = IDIOMAS_UI.filter((c) => c !== actual).map((c) =>
-    `<button type="button" class="nodo-idioma" data-nativo="${c}"><span class="monograma" aria-hidden="true">${c.toUpperCase()}</span><span class="nodo-nombre" lang="${c}">${esc(nombreIdioma(c, c))}</span></button>`);
-  capa.innerHTML = `
-    <div class="arana-cabeza">
-      <h2 id="capa-idiomas-titulo">${t('idioma_nativo')}</h2>
-      <button class="icon-btn" type="button" id="capa-idiomas-cerrar" aria-label="${t('cerrar')}">${ICON.cerrar}</button>
-    </div>
-    ${htmlArana(`<span class="monograma grande" aria-hidden="true">${actual.toUpperCase()}</span><strong lang="${actual}">${esc(nombreIdioma(actual, actual))}</strong>`, nodos)}`;
-  capa.hidden = false;
-  const cerrar = () => { capa.hidden = true; $('#btn-nativo').focus(); };
-  $('#capa-idiomas-cerrar').addEventListener('click', cerrar);
-  capa.onkeydown = (e) => { if (e.key === 'Escape') cerrar(); };
-  $$('[data-nativo]', capa).forEach((b) => b.addEventListener('click', () => { capa.hidden = true; cambiarNativo(b.dataset.nativo); }));
-  $('[data-nativo]', capa)?.focus();
 }
 
 // ---------- Router ----------
@@ -341,6 +79,7 @@ async function router() {
   if (r.nombre !== 'estudiar') scrollTo(0, 0);
 }
 addEventListener('hashchange', router);
+registrarRouter(router); // para que los demás módulos puedan volver a dibujar la vista
 sembrarAdornos($('#adornos'), { cantidad: 10 });
 sembrarVisitantes($('#adornos'), { nubes: 2, abejas: 1 });
 // Estallido de sakuras y monedas al elegir un tema o un idioma
@@ -348,31 +87,11 @@ document.addEventListener('click', (e) => {
   if (e.target.closest('.neurona:not(.vacio), .nodo-idioma:not([aria-disabled="true"])')) estallido(e.clientX, e.clientY);
 });
 
-function marcarAvisoNovedades() {
-  const hay = ultimaVersion && S.novedadVista !== ultimaVersion && !store.esNovato(S);
-  $$('a[href="#/novedades"]').forEach((a) => a.classList.toggle('con-aviso', !!hay));
-}
-fetch('data/novedades.json').then((r) => r.json()).then((d) => { ultimaVersion = d.novedades[0]?.version ?? null; marcarAvisoNovedades(); }).catch(() => {});
+fetch('data/novedades.json').then((r) => r.json()).then((d) => { setUltimaVersion(d.novedades[0]?.version ?? null); marcarAvisoNovedades(); }).catch(() => {});
 // Clic suave en botones y enlaces (los sonidos especiales se suman encima)
 // La música (si está encendida) parte con el primer toque: los navegadores no dejan sonar antes.
 document.addEventListener('pointerdown', () => { if (S.ajustes.musica) musica(true); }, { once: true, passive: true });
 document.addEventListener('pointerdown', (e) => { if (e.target.closest('button, a, [role="radio"], input[type="checkbox"], select')) sonido.toque(); }, { passive: true });
-
-/** Navega; si ya estamos en esa dirección, vuelve a dibujar la vista. */
-function ir(hash) {
-  if (location.hash === hash) router();
-  else location.hash = hash;
-}
-
-/** Pantalla de carga: Kitty pensando, dando saltitos, con tres puntos. */
-const htmlCargando = () => `<div class="cargando" role="status" aria-busy="true" aria-label="${t('cargando')}">
-  <img class="cargando-kitty" src="${cara('pensando')}" alt="" width="80" height="64">
-  <span class="cargando-puntos" aria-hidden="true"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i></span></div>`;
-/** Lista vacía: Kitty con una cara según el caso y el mensaje debajo (clase extra para el párrafo, p. ej. «aviso»). */
-const htmlVacio = (texto, carita = 'pensando', clase = 'suave') => `<div class="vacio-estado"><img class="cara-grande" src="${cara(carita)}" alt="" width="80" height="64"><p class="${clase}">${texto}</p></div>`;
-function cargando() {
-  vista.innerHTML = htmlCargando();
-}
 
 // ---------- Inicio: entrar / crear cuenta / invitado ----------
 function vistaInicio() {
@@ -998,71 +717,10 @@ function activarTienda() {
 }
 addEventListener('resize', () => { if (document.body.dataset.ruta === 'jardin') dibujarEscena(); });
 
-// ---------- Instalar la app en la pantalla de inicio ----------
-// Chrome/Edge/Android avisan con «beforeinstallprompt» y se instala con un toque.
-// iPhone/iPad (Safari) y otros navegadores no tienen ese aviso: se muestran los pasos.
-let avisoInstalar = null;
-const instalada = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
-addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); avisoInstalar = e; });
-addEventListener('appinstalled', () => { avisoInstalar = null; toast(t('inst_lista')); $$('.btn-instalar').forEach((b) => b.remove()); $('#aviso-descarga')?.remove(); });
-if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
-}
-// Navegadores dentro de otras apps (Instagram, TikTok, Facebook…): ahí no se puede instalar.
-const enOtraApp = () => /Instagram|FBAN|FBAV|FB_IAB|musical_ly|TikTok|Bytedance|Line\/|Snapchat|LinkedInApp|Twitter/i.test(navigator.userAgent);
-
-// Aviso grande «Descarga la app»: aparece abajo mientras no esté instalada (se puede cerrar por 3 días).
-const CLAVE_AVISO = 'franui:aviso-descarga';
-function avisoDescarga(ruta) {
-  $('#aviso-descarga')?.remove();
-  document.body.classList.remove('con-aviso-descarga');
-  if (instalada() || ['estudiar', 'instalar'].includes(ruta)) return;
-  let cerrado = 0;
-  try { cerrado = Number(localStorage.getItem(CLAVE_AVISO)) || 0; } catch { /* sin almacenamiento */ }
-  if (Date.now() - cerrado < 3 * 864e5) return;
-  const el = document.createElement('div');
-  el.id = 'aviso-descarga'; el.className = 'aviso-descarga'; el.setAttribute('role', 'region'); el.setAttribute('aria-label', t('inst_boton'));
-  el.innerHTML = `
-    <img src="assets/app/icono-192.png" alt="" width="52" height="52">
-    <div class="aviso-txt"><strong>${t('inst_aviso_titulo')}</strong><small>${t('inst_aviso_sub')}</small></div>
-    <button class="btn primario btn-instalar" type="button">${ICON.descargar}<span>${t('inst_aviso_boton')}</span></button>
-    <button class="icon-btn aviso-cerrar" type="button" aria-label="${t('inst_aviso_cerrar')}">${ICON.cerrar}</button>`;
-  $('.aviso-cerrar', el).addEventListener('click', () => {
-    try { localStorage.setItem(CLAVE_AVISO, String(Date.now())); } catch { /* sin almacenamiento */ }
-    el.remove(); document.body.classList.remove('con-aviso-descarga');
-  });
-  document.body.append(el);
-  document.body.classList.add('con-aviso-descarga');
-}
-
-const iconoApp = () => '<span class="icono-app" aria-hidden="true"><img src="assets/app/icono-192.png" alt="" width="96" height="96"></span>';
-async function instalarApp() {
-  if (instalada()) return void toast(t('inst_ya'));
-  if (avisoInstalar) {
-    avisoInstalar.prompt();
-    const { outcome } = await avisoInstalar.userChoice.catch(() => ({}));
-    avisoInstalar = null;
-    if (outcome === 'accepted') { sonido.premio(); lluvia({ cantidad: 24 }); }
-    return;
-  }
-  const ua = navigator.userAgent;
-  const ios = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  const android = /android/i.test(ua);
-  const pasos = enOtraApp() ? ['inst_otra_1', 'inst_otra_2', 'inst_otra_3'] : ios ? ['inst_ios_1', 'inst_ios_2', 'inst_ios_3'] : android ? ['inst_and_1', 'inst_and_2', 'inst_and_3'] : ['inst_pc_1', 'inst_pc_2'];
-  modal(t('inst_titulo'), `
-    <div class="instalar">
-      ${iconoApp()}
-      <p class="suave">${t('inst_texto')}</p>
-      <ol class="pasos-instalar">${pasos.map((k) => `<li>${t(k)}</li>`).join('')}</ol>
-    </div>`);
-}
 function vistaInstalar(r) {
   (S.perfil.elegido ? vistaMenu : vistaInicio)(r);
   setTimeout(instalarApp, 700);
 }
-const botonInstalar = (clase = 'menu-instalar') => (instalada() ? '' :
-  `<button class="btn-instalar ${clase}" type="button">${ICON.descargar}<span>${t('inst_boton')}</span></button>`);
-document.addEventListener('click', (e) => { if (e.target.closest('.btn-instalar')) instalarApp(); });
 
 // ---------- ¿Qué avance conservo? ----------
 function cuentaDeMuestra() {
@@ -1091,9 +749,9 @@ function vistaConservar(r) {
   $$('.opcion').forEach((b) => b.addEventListener('click', () => {
     if (!demo) {
       const perfil = { ...S.perfil };
-      S = store.elegirAvance(cuenta, S, b.dataset.eleccion);
+      setS(store.elegirAvance(cuenta, S, b.dataset.eleccion));
       S.perfil = { ...S.perfil, cuenta: perfil.cuenta, elegido: true };
-      cuentaPendiente = null;
+      setCuentaPendiente(null);
       aplicarAjustes(); store.guardar(S); subirYa(true);
     }
     else toast(`✓ ${b.querySelector('strong').textContent}`);
@@ -1138,10 +796,7 @@ async function vistaIdiomas() {
 }
 
 // ---------- Temas (13 mega temas) como red de neuronas ----------
-const ICON_NIVEL = { nueva: ICON.nueva, dificil: ICON.dificil, media: ICON.media, facil: ICON.facil, dominada: ICON.dominada };
 const ICON_DIF = { todas: ICON.todas, facil: ICON.facil, medio: ICON.media, dificil: ICON.dificil };
-/** Insignia de dificultad: ícono + texto, en el color de su nivel. */
-const insignia = (niv) => `<span class="nivel" data-nivel="${niv}">${ICON_NIVEL[niv]}<span>${t('niv_' + niv)}</span></span>`;
 /** Cada tema toma uno de los 6 colores de la paleta elegida (--nodo-1…6). */
 const colorTema = (mega) => `var(--nodo-${(MEGA_TEMAS.indexOf(mega) % 6) + 1})`;
 const CARRILES = [0, 1, 2, 1]; // zigzag de la red: izquierda, centro, derecha, centro…
@@ -1268,7 +923,7 @@ function cerrarSesion() {
   ocultarTutorial();
   if (!sesion) return;
   sesion.observer?.disconnect();
-  sesion = null;
+  setSesion(null);
 }
 
 function idsParaEstudiar(q, meta, nativo) {
@@ -1310,7 +965,7 @@ async function vistaEstudiar(r) {
     return;
   }
 
-  sesion = { meta, nativo, libre, sabias: 0, repasar: 0, tokens: 0, reps: {}, actual: 0, k: 0, terminada: false, ruta: location.hash, volverA };
+  setSesion({ meta, nativo, libre, sabias: 0, repasar: 0, tokens: 0, reps: {}, actual: 0, k: 0, terminada: false, ruta: location.hash, volverA });
   vista.innerHTML = `
     <section class="feed" id="feed" aria-label="${t('nav_aprender')}">
       <div class="feed-progreso" aria-hidden="true"><span class="progreso"><i id="feed-barra"></i></span><span id="feed-cuenta"></span><img class="feed-flor" id="feed-flor" src="assets/flor-0.svg" alt="" width="23" height="23"></div>
@@ -1327,16 +982,6 @@ async function vistaEstudiar(r) {
   actualizarCuenta();
   pintarFlor();
 }
-
-const EMOJI_MEGA = {
-  'Conversación y vida social': '💬', 'Lenguaje, números y tiempo': '🔢', 'Personas y relaciones': '👪',
-  'Cuerpo, salud y emociones': '💗', 'Comida y bebida': '🍙', 'Hogar y vida diaria': '🏠', 'Ropa y compras': '👘',
-  'Lugares y viajes': '🗺️', 'Naturaleza y animales': '🌿', 'Trabajo, estudios y sociedad': '💼',
-  'Ocio, arte y tecnología': '🎨', 'Descripción y formas': '🔷', 'Acciones y mente': '🧠',
-};
-
-/** *palabra* → <mark>palabra</mark> (el resto escapado). */
-const marcar = (s) => esc(s).replace(/\*([^*]+)\*/, '<mark>$1</mark>');
 
 /** Oración de ejemplo: aparece discreta al revelar; la nota de Kitty se abre solo si la persona curiosea. */
 function htmlEjemplo(id, meta, nativo) {
@@ -1401,10 +1046,6 @@ function actualizarCuenta() {
   $('#feed-barra').style.width = `${(hechas / slides.length) * 100}%`;
 }
 
-// ---------- Sakura del día, racha y cofres ----------
-const hoyRevisadas = () => (S.diario?.dia === store.diaLocal(Date.now()) ? S.diario.revisadas : 0);
-const etapaHoy = () => store.etapaFlor(hoyRevisadas(), S.ajustes.meta);
-const srcFlor = (e) => (e >= store.ETAPAS_FLOR ? 'assets/sakura.svg' : `assets/flor-${e}.svg`);
 /** Sakura chica junto a la barra de la sesión: crece con cada palabra hasta la meta. */
 function pintarFlor(crece = false) {
   const img = $('#feed-flor');
@@ -1413,82 +1054,6 @@ function pintarFlor(crece = false) {
   img.title = t('meta_progreso', { n: Math.min(hoyRevisadas(), S.ajustes.meta), m: S.ajustes.meta });
   img.setAttribute('aria-label', img.title);
   if (crece) { img.classList.remove('crece'); void img.offsetWidth; img.classList.add('crece'); }
-}
-/** Primer estudio del día: la racha sube con una lluvia de sakuras; cada 7 días, un cofre. */
-/** Racha del día cumplida (20 palabras): Kitty baila a pantalla completa; después, el cofre si toca. */
-function celebrarRacha() {
-  if (document.querySelector('.premio-capa')) return setTimeout(celebrarRacha, 400); // espera a que se cobre el premio
-  const n = store.rachaVigente(S.racha);
-  pulsoChip();
-  const cofre = store.abrirCofre(S);
-  if (cofre) guardar();
-  bailarKitty(n, () => { if (cofre) setTimeout(() => mostrarCofre(cofre), 300); });
-}
-function bailarKitty(n, alCerrar) {
-  document.querySelector('.baile-capa')?.remove();
-  const capa = document.createElement('div');
-  capa.className = 'baile-capa'; capa.setAttribute('role', 'dialog'); capa.setAttribute('aria-modal', 'true'); capa.setAttribute('aria-labelledby', 'baile-titulo');
-  capa.innerHTML = `<div class="baile">
-      <div class="baile-pista" aria-hidden="true">
-        <span class="baile-nota n1">♪</span><span class="baile-nota n2">♫</span><span class="baile-nota n3">♪</span>
-        <img class="baile-kitty" id="baile-kitty" src="${cara('celebrando')}" alt="" width="160" height="128">
-        <span class="baile-sombra"></span>
-      </div>
-      <h2 class="baile-titulo" id="baile-titulo">${t('baile_titulo')}</h2>
-      <p class="baile-racha"><img src="assets/sakura.svg" alt="" width="46" height="46"><strong>${tn('baile_dias_n', n)}</strong></p>
-      <p>${t('baile_texto')}</p>
-      <button class="btn primario grande" type="button" id="baile-ok">${t('baile_ok')}</button>
-    </div>`;
-  document.body.append(capa);
-  sonido.fin();
-  lluvia({ cantidad: 40, monedas: 0.3, dur: 3200 });
-  // Kitty cambia de cara al ritmo del baile
-  const caras = ['celebrando', 'muy_feliz', 'guino', 'enamorada'];
-  let i = 0;
-  const ritmo = sinMovimiento() ? null : setInterval(() => { const k = $('#baile-kitty'); if (!k) return clearInterval(ritmo); k.src = cara(caras[++i % caras.length]); }, 450);
-  const cerrar = () => { clearInterval(ritmo); capa.remove(); alCerrar?.(); };
-  $('#baile-ok').addEventListener('click', cerrar);
-  capa.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrar(); });
-  $('#baile-ok').focus();
-}
-/** Cofre: se sacude, se abre al tocarlo y suelta monedas. */
-function mostrarCofre({ dias, monedas }) {
-  document.querySelector('.cofre-capa')?.remove();
-  const capa = document.createElement('div');
-  capa.className = 'premio-capa cofre-capa';
-  capa.setAttribute('role', 'dialog');
-  capa.setAttribute('aria-modal', 'true');
-  capa.setAttribute('aria-labelledby', 'cofre-titulo');
-  capa.innerHTML = `
-    <div class="premio-caja">
-      <p class="premio-titulo" id="cofre-titulo">${t('cofre_titulo')}</p>
-      <p class="premio-texto">${t('cofre_texto', { n: dias })}</p>
-      <button class="cofre-boton" type="button" id="cofre-abrir" aria-label="${t('cofre_abrir')}">
-        <img src="assets/cofre.svg" alt="" width="120" height="100">
-      </button>
-      <p class="premio-monto" hidden id="cofre-monto"><img src="assets/moneda.svg" alt="" width="48" height="48"><span>+${monedas}</span></p>
-      <button class="btn primario grande" type="button" id="cofre-ok">${t('cofre_abrir')}</button>
-    </div>`;
-  document.body.append(capa);
-  let abierto = false;
-  const cerrar = () => { capa.classList.add('saliendo'); setTimeout(() => capa.remove(), 300); actualizarChips(); pulsoChip(); };
-  const abrir = () => {
-    if (abierto) return cerrar();
-    abierto = true;
-    const b = $('#cofre-abrir', capa);
-    b.classList.add('abierto');
-    $('img', b).src = 'assets/cofre-abierto.svg';
-    $('#cofre-monto', capa).hidden = false;
-    $('#cofre-ok', capa).textContent = t('premio_ok');
-    sonido.premio();
-    const r = b.getBoundingClientRect();
-    estallido(r.left + r.width / 2, r.top + r.height / 3, { cantidad: 16 });
-    lluvia({ cantidad: 24, monedas: 0.8 });
-  };
-  $('#cofre-abrir', capa).addEventListener('click', abrir);
-  $('#cofre-ok', capa).addEventListener('click', abrir);
-  capa.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrar(); });
-  $('#cofre-ok', capa).focus({ preventScroll: true });
 }
 
 function responderSlide(slide, sabia, auto = false) {
@@ -1660,8 +1225,6 @@ function flotar(slide, texto) {
   setTimeout(() => el.remove(), 900);
 }
 
-const sinMovimiento = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 /** Responde con animación: la tarjeta sale volando a la derecha (Lo sé) o a la izquierda (Repasar). */
 function lanzarTarjeta(slide, sabia) {
   if (!sesion || slide.dataset.r) return;
@@ -1718,154 +1281,6 @@ function activarDeslizar(feed) {
   };
   feed.addEventListener('pointerup', soltar);
   feed.addEventListener('pointercancel', soltar);
-}
-
-/** Monedas que vuelan de la tarjeta al contador de arriba. */
-function volarMonedas(origen, n = 1) {
-  const destino = $('#chip-tokens .moneda');
-  if (!destino || sinMovimiento()) return;
-  const a = $('.tarjeta', origen)?.getBoundingClientRect() ?? origen.getBoundingClientRect();
-  const b = destino.getBoundingClientRect();
-  for (let i = 0; i < n; i++) {
-    const m = document.createElement('img');
-    m.src = 'assets/moneda.svg'; m.alt = ''; m.width = 24; m.height = 24; m.className = 'moneda-vuela';
-    const x0 = a.left + a.width / 2 - 12 + (Math.random() - 0.5) * 80;
-    const y0 = a.top + a.height * 0.45 - 12 + (Math.random() - 0.5) * 50;
-    m.style.left = `${x0}px`; m.style.top = `${y0}px`;
-    document.body.append(m);
-    const dx = b.left - x0, dy = b.top - y0;
-    m.animate([
-      { transform: 'translate(0, 0) scale(.4) rotate(0)', opacity: 0 },
-      { transform: `translate(${dx * 0.25}px, ${dy * 0.25 - 60}px) scale(1.5) rotate(180deg)`, opacity: 1, offset: 0.35 },
-      { transform: `translate(${dx}px, ${dy}px) scale(.9) rotate(540deg)`, opacity: 1 },
-    ], { duration: 720, delay: i * 90, easing: 'cubic-bezier(.45, 0, .55, 1)', fill: 'forwards' })
-      .finished.then(() => { m.remove(); pulsoChip(); }).catch(() => m.remove());
-  }
-}
-function pulsoChip() {
-  const chip = $('#chip-tokens');
-  chip.classList.remove('cobra'); void chip.offsetWidth; chip.classList.add('cobra');
-}
-
-/** Corazones que saltan al marcar favorito. */
-function estallarCorazones(boton) {
-  if (sinMovimiento()) return;
-  for (let i = 0; i < 6; i++) {
-    const h = document.createElement('span');
-    h.className = 'chispa-corazon'; h.setAttribute('aria-hidden', 'true'); h.innerHTML = ICON.corazonLleno;
-    h.style.setProperty('--a', `${i * 60 + Math.random() * 20}deg`);
-    boton.append(h);
-    setTimeout(() => h.remove(), 700);
-  }
-}
-
-/** Pantalla «¡Dominada!» (como el match de Tinder): la palabra y su traducción chocan y Kitty celebra. */
-function mostrarDominada(id, meta) {
-  document.querySelector('.dominada-capa')?.remove();
-  const nativo = S.ajustes.nativo;
-  const palabra = banco.texto(meta, id)?.texto ?? '', trad = banco.texto(nativo, id)?.texto ?? '';
-  const total = Object.values(store.progresoDe(S, meta)).filter((e) => dificultad(e) === 'dominada').length;
-  const capa = document.createElement('div');
-  capa.className = 'dominada-capa'; capa.setAttribute('role', 'dialog'); capa.setAttribute('aria-modal', 'true'); capa.setAttribute('aria-labelledby', 'dom-titulo');
-  capa.innerHTML = `<div class="dominada">
-      <h2 id="dom-titulo" class="dominada-titulo">${t('dom_titulo')}</h2>
-      <div class="dominada-par" aria-hidden="true">
-        <span class="dominada-burbuja izq" lang="${meta}">${esc(palabra)}</span>
-        <img class="dominada-kitty" src="${cara('orgullosa')}" alt="" width="100" height="80">
-        <span class="dominada-burbuja der" lang="${nativo}">${esc(trad)}</span>
-      </div>
-      <p>${t('dom_texto', { palabra: esc(palabra) })}</p>
-      <p class="dominada-bono"><img src="assets/moneda.svg" alt="" width="24" height="24">${t('dom_bono', { n: store.BONO_DOMINADA })}</p>
-      <small>${t('dom_total', { n: total })}</small>
-      <button class="btn primario grande" type="button" id="dom-seguir">${t('dom_seguir')}</button>
-    </div>`;
-  document.body.append(capa);
-  sonido.like();
-  lluvia({ cantidad: 30, monedas: 0.4 });
-  const cerrar = () => { capa.remove(); actualizarChips(); };
-  $('#dom-seguir').addEventListener('click', cerrar);
-  capa.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrar(); });
-  $('#dom-seguir').focus();
-}
-
-/** Diamante sorpresa: cruza la pantalla unos segundos; si lo tocas a tiempo, es tuyo. */
-function aparecerDiamante() {
-  if (!sesion || document.querySelector('.diamante-vuela')) return;
-  const b = document.createElement('button');
-  b.type = 'button'; b.className = 'diamante-vuela'; b.setAttribute('aria-label', t('dia_atrapa'));
-  b.innerHTML = '<img src="assets/diamante.svg" alt="" width="75" height="57">';
-  b.style.top = `${18 + Math.random() * 50}vh`;
-  b.style.setProperty('--dir', Math.random() < 0.5 ? 1 : -1);
-  document.body.append(b);
-  sonido.toque();
-  const fuera = setTimeout(() => b.remove(), 3600);
-  b.addEventListener('click', (e) => {
-    clearTimeout(fuera);
-    const r0 = b.getBoundingClientRect();
-    b.remove();
-    estallido(r0.left + r0.width / 2, r0.top + r0.height / 2, { cantidad: 14 });
-    store.ganarDiamante(S);
-    guardar();
-    celebrarDiamante(t('dia_ganado'));
-  });
-}
-function celebrarDiamante(texto) {
-  sonido.brillo();
-  toast(texto);
-  if (sinMovimiento()) return;
-  const d = document.createElement('img');
-  d.src = 'assets/diamante.svg'; d.alt = ''; d.width = 125; d.height = 95; d.className = 'diamante-gana';
-  document.body.append(d);
-  setTimeout(() => d.remove(), 1600);
-}
-
-/** Ventana de premio estilo tragamonedas: 3 rodillos que se detienen en monedas y lluvia de monedas. */
-const SIMBOLOS = [['moneda', 48, 48], ['sakura', 46, 46], ['estrella', 42, 42], ['cerezas', 36, 34], ['corazon', 39, 36]];
-function mostrarPremio(p) {
-  document.querySelector('.premio-capa')?.remove();
-  const tira = () => {
-    const celdas = Array.from({ length: 14 }, () => SIMBOLOS[1 + Math.floor(Math.random() * 4)]);
-    celdas.push(SIMBOLOS[0]);
-    return celdas.map(([n, w, h]) => `<span class="celda-rodillo"><img src="assets/${n}.svg" alt="" width="${w}" height="${h}"></span>`).join('');
-  };
-  const capa = document.createElement('div');
-  capa.className = 'premio-capa';
-  capa.setAttribute('role', 'dialog');
-  capa.setAttribute('aria-modal', 'true');
-  capa.setAttribute('aria-labelledby', 'premio-titulo');
-  capa.innerHTML = `
-    <div class="premio-caja">
-      <p class="premio-titulo" id="premio-titulo">${t('premio_titulo')}</p>
-      <div class="rodillos" aria-hidden="true">${[0, 1, 2].map((i) => `<div class="rodillo"><div class="tira" style="--i:${i}">${tira()}</div></div>`).join('')}</div>
-      <p class="premio-monto"><img src="assets/moneda.svg" alt="" width="48" height="48"><span id="premio-num" aria-live="polite">+${p.monedas}</span></p>
-      <p class="premio-texto">${t('premio_texto', { n: p.revisadas })}</p>
-      <p class="suave">${t('premio_siguiente', { n: p.revisadas + store.PREMIO_CADA, m: p.siguiente })}</p>
-      <button class="btn primario grande" type="button" id="premio-ok">${t('premio_ok')}</button>
-    </div>
-    <div class="lluvia-monedas" aria-hidden="true"></div>`;
-  document.body.append(capa);
-  const cerrar = () => { capa.classList.add('saliendo'); setTimeout(() => capa.remove(), 300); actualizarChips(); pulsoChip(); };
-  $('#premio-ok', capa).addEventListener('click', () => { sonido.monedas(4); cerrar(); });
-  capa.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrar(); });
-  $('#premio-ok', capa).focus({ preventScroll: true });
-  if (sinMovimiento()) { sonido.premio(); return; }
-  sonido.rodillos(1.5);
-  [0.9, 1.2, 1.5].forEach((t0) => sonido.tope(t0));
-  const num = $('#premio-num', capa);
-  num.textContent = '+0';
-  setTimeout(() => {
-    sonido.premio();
-    capa.classList.add('ganado');
-    const inicio = performance.now();
-    const contar = (ahora) => {
-      const k = Math.min(1, (ahora - inicio) / 900);
-      num.textContent = `+${Math.round(p.monedas * k)}`;
-      if (k < 1) requestAnimationFrame(contar);
-    };
-    requestAnimationFrame(contar);
-    $('.lluvia-monedas', capa).innerHTML = Array.from({ length: 28 }, (_, i) =>
-      `<img src="assets/moneda.svg" alt="" width="24" height="24" style="--x:${Math.random() * 100}%;--d:${(Math.random() * 0.9).toFixed(2)}s;--r:${Math.round(Math.random() * 720)}deg;--i:${i}">`).join('');
-  }, 1600);
 }
 
 // ---------- Tutorial guiado por Kitty (en la primera sesión) ----------
@@ -2264,7 +1679,7 @@ async function vistaNovedades() {
   const data = await (await fetch('data/novedades.json')).json();
   const [ultima, ...resto] = data.novedades;
   const fecha = (f) => new Date(f + 'T12:00').toLocaleDateString(S.ajustes.nativo, { day: 'numeric', month: 'long', year: 'numeric' });
-  ultimaVersion = ultima.version;
+  setUltimaVersion(ultima.version);
   if (S.novedadVista !== ultima.version) { S.novedadVista = ultima.version; guardar(); }
   marcarAvisoNovedades();
   const confeti = [['sakura', 23, 23], ['estrella', 21, 21], ['moneda', 24, 24], ['corazon', 26, 24], ['sakura', 23, 23], ['estrella', 21, 21], ['moneda', 24, 24], ['cerezas', 18, 17]]
@@ -2445,7 +1860,7 @@ function vistaAjustes() {
     $('#aj-borrar-si').addEventListener('click', () => {
       $('#modal').close();
       const ajustes = S.ajustes;
-      S = store.estadoInicial();
+      setS(store.estadoInicial());
       S.ajustes = ajustes;
       S.perfil.elegido = true;
       guardarYa();
@@ -2453,89 +1868,6 @@ function vistaAjustes() {
     });
   });
 }
-
-// ---------- Kitty (chat) ----------
-let kittyEntradas = null;
-let ultimaFrase = null;
-
-/** Mensaje en el chat. Los de Kitty llevan su cara (expresión) al lado. */
-function kittyMsg(html, de = 'kitty', expresion = 'feliz') {
-  const el = document.createElement('p');
-  el.className = `msg msg-${de}`;
-  el.innerHTML = html;
-  let fila = el;
-  if (de === 'kitty') {
-    fila = document.createElement('div');
-    fila.className = 'msg-fila';
-    fila.innerHTML = `<img class="msg-cara" src="${cara(expresion)}" alt="" width="40" height="32">`;
-    fila.append(el);
-    $('#kitty-cara').src = cara(expresion);
-  }
-  $('#kitty-msgs').append(fila);
-  fila.scrollIntoView({ block: 'end' });
-}
-
-async function entradasKitty() {
-  if (!S.aprendiendo) return [];
-  const meta = S.aprendiendo, nativo = S.ajustes.nativo;
-  if (kittyEntradas?.par === meta + nativo) return kittyEntradas.lista;
-  await banco.prepararPar(meta, nativo);
-  const lista = banco.disponibles(meta, nativo).map((c) => ({
-    id: c.id, tipos: c.tipos, meta: banco.texto(meta, c.id).texto, nativo: banco.texto(nativo, c.id).texto,
-    borrador: banco.texto(meta, c.id).borrador || banco.texto(nativo, c.id).borrador,
-  }));
-  kittyEntradas = { par: meta + nativo, lista };
-  return lista;
-}
-
-const fichaKitty = (e) => `<span lang="${S.aprendiendo}">«${esc(e.meta)}»</span> → <span lang="${S.ajustes.nativo}">«${esc(e.nativo)}»</span>
-  <small>${t('kitty_tipo')}: ${e.tipos.map((x) => esc(tTipo(x))).join(', ')}${e.borrador ? ' · ' + t('borrador') : ''}</small>`;
-
-async function kittyResponder(texto) {
-  const entradas = await entradasKitty();
-  if (!S.aprendiendo) return kittyMsg(esc(t('idiomas_titulo')), 'kitty', 'pensando');
-  const q = normalizar(texto);
-  if (q === normalizar(t('kitty_palabra_frase')) || q === 'frase' || q === 'phrase') {
-    const f = fraseConocida(entradas, store.progresoDe(S, S.aprendiendo), ultimaFrase);
-    if (!f) return kittyMsg(esc(t('kitty_sin_frase')), 'kitty', 'pensando');
-    ultimaFrase = f.id;
-    return kittyMsg(`${esc(t('kitty_frase'))}<br>${fichaKitty(f)}`, 'kitty', 'guino');
-  }
-  const r = buscar(texto, entradas);
-  if (r.length) kittyMsg(r.map(fichaKitty).join('<br>'), 'kitty', 'feliz');
-  else kittyMsg(esc(t('kitty_no', { q: texto })), 'kitty', 'confundida');
-}
-
-function kittyAbrir() {
-  const panel = $('#kitty-panel');
-  if (!$('#kitty-msgs').childElementCount) kittyMsg(esc(t('kitty_hola')), 'kitty', 'muy_feliz');
-  const rapidas = [`<button type="button" class="chip" data-r="frase">${esc(t('kitty_palabra_frase'))}</button>`];
-  const slide = sesion ? $$('#feed .slide')[sesion.actual] : null;
-  if (slide && !slide.classList.contains('fin')) rapidas.unshift(`<button type="button" class="chip" data-r="esta">${esc(t('kitty_esta'))}</button>`);
-  $('#kitty-rapidas').innerHTML = rapidas.join('');
-  $$('#kitty-rapidas button').forEach((b) => b.addEventListener('click', async () => {
-    if (b.dataset.r === 'frase') { kittyMsg(esc(t('kitty_palabra_frase')), 'yo'); kittyResponder(t('kitty_palabra_frase')); return; }
-    const id = slide.dataset.id;
-    const e = (await entradasKitty()).find((x) => x.id === id);
-    kittyMsg(esc(t('kitty_esta')), 'yo');
-    const ipa = banco.texto(S.aprendiendo, id).ipa;
-    if (e) kittyMsg(`${fichaKitty(e)}${ipa ? `<br><small>IPA: /${esc(ipa)}/</small>` : ''}`, 'kitty', 'orgullosa');
-  }));
-  panel.showModal();
-  $('#kitty-input').focus();
-}
-$('#kitty-fab').addEventListener('click', kittyAbrir);
-$('#kitty-cerrar').addEventListener('click', () => $('#kitty-panel').close());
-$('#kitty-panel').addEventListener('click', (e) => { if (e.target.id === 'kitty-panel') e.target.close(); });
-$('#kitty-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const input = $('#kitty-input');
-  const texto = input.value.trim();
-  if (!texto) return;
-  kittyMsg(esc(texto), 'yo');
-  input.value = '';
-  kittyResponder(texto);
-});
 
 // ---------- Arranque ----------
 S.ajustes.nativo ??= nativoInicial();
