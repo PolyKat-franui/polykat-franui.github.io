@@ -12,6 +12,7 @@ import { S, setS, guardar, guardarYa, conCuenta, publicarMiRanking, conectarGoog
 import { pintarMarco, cambiarNativo, srcFlor } from '../marco.js';
 import { instalada, iconoApp, botonInstalar } from '../instalacion.js';
 import { esCreadora, enviarSugerenciasPendientes } from './buzon.js';
+import { medicionActiva, cambiarMedicion } from '../medicion.js';
 
 function descargarCalendario() {
   const a = S.ajustes;
@@ -100,6 +101,7 @@ export function vistaAjustes() {
       ${esCreadora() ? `<a class="card buzon-acceso" href="#/buzon">${ICON.enviar}<span>${t('buzon_abrir')}</span>${ICON.flecha}</a>` : ''}
       <div class="card">
         <h2>${t('aj_sugerencias')}</h2>
+        <label class="interruptor"><input type="checkbox" id="aj-medicion" ${medicionActiva() ? 'checked' : ''}><span>${t('aj_medicion')}</span></label>
         <form id="f-sug">
           <label class="campo"><span>${t('aj_sug_texto')}</span><textarea id="aj-sug" rows="3" maxlength="2000" required></textarea></label>
           <button class="btn primario" type="submit">${ICON.enviar}<span>${t('aj_enviar')}</span></button>
@@ -123,6 +125,7 @@ export function vistaAjustes() {
   $('#aj-nombre').addEventListener('input', (e) => { S.perfil.nombre = e.target.value.trim(); guardar(); pintarMarco('ajustes'); });
   $('#aj-google')?.addEventListener('click', conectarGoogle);
   $('#aj-salir')?.addEventListener('click', salirDeGoogle);
+  $('#aj-medicion').addEventListener('change', (e) => cambiarMedicion(e.target.checked));
   $('#aj-ranking')?.addEventListener('change', (e) => {
     a.ranking = e.target.checked;
     guardar();
