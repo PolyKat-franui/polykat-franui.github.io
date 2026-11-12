@@ -12,7 +12,7 @@ mejor evaluadas», al 31 de enero de 2027).
 | Banco | 4.996 palabras y frases en 6 idiomas. **Las 24.980 traducciones están en `borrador`.** |
 | Ejemplos | Oraciones de ejemplo solo para **998 palabras** (las más usadas). |
 | Voz | La app **lee** en voz alta (`app/js/voz.js`), pero no **escucha** a la persona. |
-| Medición | **No se mide** quién vuelve al día 1, 7 y 30. |
+| Medición | ✅ **Medición anónima (2026-11-12):** código al azar en el celular; retorno al día 1, 7 y 30 en el buzón de la creadora. |
 | Código | ✅ **Ordenado (2026-11-12):** `main.js` pasó de 2.550 a **95 líneas**; cada pantalla vive en `app/js/pantallas/` y lo compartido en módulos propios. |
 | Pruebas | 119 pruebas unitarias + pruebas de punta a punta de app y web. |
 
@@ -22,7 +22,7 @@ mejor evaluadas», al 31 de enero de 2027).
 
 | # | Mejora | Por qué | Peso | Modelo |
 |---|---|---|---|---|
-| 1 | **Medición anónima de uso**: retorno al día 1, 7 y 30, sesiones por semana, palabra del día abierta. Sin datos personales y con aviso claro (Ley 21.719). | Sin esto no se puede validar nada. Es el objetivo 3. | Media | Opus |
+| 1 | ✅ **Hecho:** medición anónima de uso con un código al azar guardado en el celular: retorno al día 1, 7 y 30 y sesiones terminadas. Sin datos personales, con una línea en Ajustes para apagarla (Ley 21.719). | Sin esto no se puede validar nada. Es el objetivo 3. | Media | Opus |
 | 2 | **Revisión de las 24.980 traducciones**, en lotes de 500 palabras: detectar errores, género, registro y falsos amigos. Todo sigue como `borrador` hasta que una persona nativa lo confirme. | La confianza en el contenido es la base. | **Pesada** | **Fable 5.2** |
 | 3 | **Ejemplos para las ~4.000 palabras que faltan**, en los 6 idiomas (unas 24.000 oraciones), cortos y naturales. | Las personas piden saber *cuándo* usar una palabra (hallazgo H2). | **Pesada** | **Fable 5.2** |
 | 4 | ✅ **Hecho:** `main.js` dividido en un módulo por pantalla, sin cambiar lo que ve la persona (Fable 5.2, revisado y con todas las pruebas en verde). | Hace más rápido y seguro todo lo que venga. | **Pesada** | **Fable 5.2** |
@@ -91,7 +91,7 @@ Empieza con un plan y espera mi aprobación.
 
 | Cuándo | Qué |
 |---|---|
-| Noviembre 2026 | Medición anónima (1) · auditoría de seguridad (5) · ~~dividir `main.js` (4)~~ hecho |
+| Noviembre 2026 | ~~Medición anónima (1)~~ hecha · auditoría de seguridad (5) · ~~dividir `main.js` (4)~~ hecho |
 | Diciembre 2026 | Traducciones lotes 1–5 (2) · ejemplos lotes 1–4 (3) · **entrevistas** |
 | Enero 2027 | Las 3 ideas mejor evaluadas de la fase 2 (objetivo 3, al 31 de enero) |
 | Febrero 2027 | Prueba con 30 personas nuevas durante dos semanas (objetivo 4) |

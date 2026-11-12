@@ -25,6 +25,17 @@ service cloud.firestore {
         && (!('semana' in request.resource.data) || (request.resource.data.semana is string && request.resource.data.semana.size() <= 8))
         && (!('xp' in request.resource.data) || (request.resource.data.xp is int && request.resource.data.xp >= 0 && request.resource.data.xp < 100000));
     }
+    // Medición anónima de uso: cada celular escribe su documento con un código al azar (sin cuenta ni datos
+    // personales): el día en que empezó, los días en que abrió la app y cuántas sesiones terminó.
+    // Nadie puede leer ni borrar documentos ajenos; solo la creadora ve el conjunto para calcular el retorno.
+    match /uso/{id} {
+      allow create, update: if id.matches('^[0-9a-f-]{36}$')
+        && request.resource.data.keys().hasOnly(['primer', 'dias', 'sesiones'])
+        && request.resource.data.primer is string && request.resource.data.primer.size() == 10
+        && request.resource.data.dias is list && request.resource.data.dias.size() <= 400
+        && request.resource.data.sesiones is int && request.resource.data.sesiones >= 0 && request.resource.data.sesiones < 100000;
+      allow read: if esCreadora();
+    }
     // Buzón de sugerencias: cualquiera envía (con o sin cuenta); solo la creadora lee, marca y borra.
     match /sugerencias/{id} {
       allow create: if request.resource.data.keys().hasOnly(['texto', 'fecha', 'idioma', 'version', 'leida', 'nombre', 'uid'])

@@ -24,6 +24,7 @@ import { vistaLibre } from './pantallas/libre.js';
 import { enviarSugerenciasPendientes, vistaBuzon } from './pantallas/buzon.js';
 import { vistaNovedades } from './pantallas/novedades.js';
 import { vistaAjustes } from './pantallas/ajustes.js';
+import { registrarVisita } from './medicion.js';
 
 let primeraCarga = true;
 
@@ -93,3 +94,4 @@ setTimeout(() => enviarSugerenciasPendientes(), 3000);
 matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', aplicarAjustes);
 router();
 sincronizarAlAbrir();
+setTimeout(() => registrarVisita(), 2500); // medición anónima: una vez al día como máximo
