@@ -1,7 +1,7 @@
 // Pixel art de Polykat: bien formado, al día y siempre mostrado sin deformar.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { COLORES, cara, EXPRESIONES } from '../scripts/kitty-arte.mjs';
 import { ICONOS } from '../scripts/arte-iconos.mjs';
 import { archivos } from '../scripts/kitty.mjs';
@@ -46,7 +46,14 @@ function assetDe(src) {
   const m = src.match(/assets\/([\w-]+\.svg)/);
   return m ? m[1] : null;
 }
-for (const archivo of ['app/index.html', 'app/js/main.js', 'web/index.html', 'web/web.js']) {
+// La interfaz de la app está repartida en módulos (app/js y app/js/pantallas): se revisan todos los que dibujan imágenes.
+const jsConImagenes = readdirSync(R('app/js'), { recursive: true })
+  .filter((f) => f.endsWith('.js')).map((f) => `app/js/${f.replace(/\\/g, '/')}`).sort()
+  .filter((f) => /<img[^>]*?src="([^"]+)"[^>]*?width="(\d+)" height="(\d+)"/.test(leer(f)));
+test('imágenes a escala entera: se revisan los módulos de la app que dibujan imágenes', () => {
+  assert.ok(jsConImagenes.length >= 5, `solo se encontraron ${jsConImagenes.length}`);
+});
+for (const archivo of ['app/index.html', ...jsConImagenes, 'web/index.html', 'web/web.js']) {
   test(`imágenes a escala entera: ${archivo}`, () => {
     const imgs = [...leer(archivo).matchAll(/<img[^>]*?src="([^"]+)"[^>]*?width="(\d+)" height="(\d+)"/g)];
     assert.ok(imgs.length > 0);
