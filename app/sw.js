@@ -11,6 +11,7 @@ const NUCLEO = [
   'js/main.js', 'js/i18n.js', 'js/i18n-en.js', 'js/i18n-pt.js', 'js/i18n-fr.js', 'js/i18n-it.js', 'js/i18n-de.js', 'js/store.js', 'js/srs.js', 'js/sesion.js', 'js/banco.js', 'js/voz.js', 'js/iconos.js',
   'js/sonido.js', 'js/adornos.js', 'js/kitty.js', 'js/nube.js', 'js/nube-config.js', 'js/jardin.js', 'js/recordatorio.js', 'js/musica.js', 'js/traspaso.js', 'js/prueba.js', 'js/palabra-dia.js',
   'js/ui.js', 'js/estado.js', 'js/marco.js', 'js/kitty-chat.js', 'js/instalacion.js', 'js/celebraciones.js',
+  'js/pantallas/inicio.js', 'js/pantallas/idiomas.js', 'js/pantallas/aprender.js', 'js/pantallas/palabra.js',
   'data/idiomas.json', 'data/novedades.json',
   'assets/app/apple-touch-icon.png',
   'assets/app/favicon-32.png',

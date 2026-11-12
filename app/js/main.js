@@ -2,11 +2,11 @@
 // Cada pantalla vive en js/pantallas/; lo que comparten, en ui.js, estado.js y marco.js.
 import { traspasado } from './traspaso.js'; // primero: puede traer el avance desde la dirección antigua
 import * as prueba from './prueba.js';
-import { t, tn, cargarIdiomaUI, idiomaUI, tMega, tTipo, nombreIdioma, IDIOMAS_UI, MEGA_TEMAS } from './i18n.js';
+import { t, tn, cargarIdiomaUI, tMega, tTipo, nombreIdioma, IDIOMAS_UI, MEGA_TEMAS } from './i18n.js';
 import * as store from './store.js';
 import { PALETAS } from './store.js';
 import { dificultad } from './srs.js';
-import { armarSesion, practicaLibre, filtrarLibre, ordenar, grupoDificultad, bloques, bloqueActual, REINSERTAR_EN, MAX_REPETICIONES } from './sesion.js';
+import { armarSesion, practicaLibre, filtrarLibre, ordenar, grupoDificultad, REINSERTAR_EN, MAX_REPETICIONES } from './sesion.js';
 import * as banco from './banco.js';
 import { hablar } from './voz.js';
 import { ICON } from './iconos.js';
@@ -17,14 +17,17 @@ import * as nube from './nube.js';
 import * as J from './jardin.js';
 import * as rec from './recordatorio.js';
 import * as PD from './palabra-dia.js';
-import { $, $$, esc, vista, cara, toast, modal, registrarRouter, ir, htmlCargando, htmlVacio, cargando, marcar, sinMovimiento, estallarCorazones } from './ui.js';
-import { S, setS, sesion, setSesion, guardar, guardarYa, cuentaPendiente, setCuentaPendiente, conCuenta, subirYa, filaRanking, publicarMiRanking, conectarGoogle, salirDeGoogle, sincronizarAlAbrir, aplicarAjustes, nativoInicial } from './estado.js';
+import { $, $$, esc, vista, cara, toast, modal, registrarRouter, htmlCargando, htmlVacio, cargando, marcar, sinMovimiento, estallarCorazones } from './ui.js';
+import { S, setS, sesion, setSesion, guardar, guardarYa, conCuenta, filaRanking, publicarMiRanking, conectarGoogle, salirDeGoogle, sincronizarAlAbrir, aplicarAjustes, nativoInicial } from './estado.js';
 import { kittyAbrir } from './kitty-chat.js';
-import { actualizarChips, pintarMarco, pulsoChip, ultimaVersion, setUltimaVersion, marcarAvisoNovedades, cambiarNativo, htmlArana, insignia, EMOJI_MEGA, hoyRevisadas, etapaHoy, srcFlor } from './marco.js';
+import { actualizarChips, pintarMarco, pulsoChip, ultimaVersion, setUltimaVersion, marcarAvisoNovedades, cambiarNativo, insignia, EMOJI_MEGA, hoyRevisadas, etapaHoy, srcFlor } from './marco.js';
 import { instalada, avisoDescarga, iconoApp, instalarApp, botonInstalar } from './instalacion.js';
 import { celebrarRacha, volarMonedas, mostrarDominada, aparecerDiamante, celebrarDiamante, mostrarPremio } from './celebraciones.js';
+import { vistaInicio, vistaConservar } from './pantallas/inicio.js';
+import { vistaIdiomas } from './pantallas/idiomas.js';
+import { vistaAprender, vistaTema } from './pantallas/aprender.js';
+import { idiomaPrincipal, pintarPalabraMenu, vistaPalabra } from './pantallas/palabra.js';
 
-let idiomas = [];
 let primeraCarga = true;
 let tutorialAlRevelar = null;  // el tutorial avanza cuando se revela la primera tarjeta
 
@@ -92,169 +95,6 @@ fetch('data/novedades.json').then((r) => r.json()).then((d) => { setUltimaVersio
 // La música (si está encendida) parte con el primer toque: los navegadores no dejan sonar antes.
 document.addEventListener('pointerdown', () => { if (S.ajustes.musica) musica(true); }, { once: true, passive: true });
 document.addEventListener('pointerdown', (e) => { if (e.target.closest('button, a, [role="radio"], input[type="checkbox"], select')) sonido.toque(); }, { passive: true });
-
-// ---------- Inicio: entrar / crear cuenta / invitado ----------
-function vistaInicio() {
-  let modo = 'entrar';
-  vista.innerHTML = `
-    <section class="inicio">
-      <div class="inicio-hero">
-        <img class="inicio-kitty" src="assets/caras/feliz.svg" alt="Kitty" width="80" height="64">
-        <h1 class="marca-completa"><span class="logo apilado"><span class="logo-a">Polykat</span></span><span class="marca-linea" aria-hidden="true"></span><span class="eslogan">Be fluent in multiple languages</span></h1>
-      </div>
-      <div class="card inicio-card">
-        <div class="seg" role="tablist">
-          <button role="tab" type="button" data-modo="entrar" aria-selected="true">${t('login_entrar')}</button>
-          <button role="tab" type="button" data-modo="crear" aria-selected="false">${t('login_crear')}</button>
-        </div>
-        <form id="f-login" novalidate>
-          <label class="campo"><span>${t('login_usuario')}</span>
-            <input name="usuario" autocomplete="username" maxlength="30" required></label>
-          <label class="campo"><span>${t('login_clave')}</span>
-            <input name="clave" type="password" minlength="6" autocomplete="current-password" aria-describedby="ayuda-clave" required>
-            <small id="ayuda-clave">${t('login_clave_min')}</small></label>
-          <p class="error" id="login-error" role="alert"></p>
-          <button class="btn primario ancho" type="submit" id="btn-login">${t('login_entrar')}</button>
-        </form>
-        <div class="separador"><span>${t('login_o')}</span></div>
-        <button class="btn ancho" type="button" id="btn-google">${ICON.google}<span>${t('login_google')}</span></button>
-        <button class="btn fantasma ancho" type="button" id="btn-invitado">${t('login_invitado')}</button>
-        <p class="suave centro pequeno">${t('login_invitado_nota')}</p>
-      </div>
-      <label class="campo inicio-idioma"><span>${t('idioma_nativo')}</span>
-        <select id="inicio-nativo">${IDIOMAS_UI.map((c) => `<option value="${c}" ${c === S.ajustes.nativo ? 'selected' : ''}>${esc(nombreIdioma(c, c))}</option>`).join('')}</select>
-      </label>
-    </section>`;
-
-  $$('.seg [role=tab]').forEach((b) => b.addEventListener('click', () => {
-    modo = b.dataset.modo;
-    $$('.seg [role=tab]').forEach((x) => x.setAttribute('aria-selected', String(x === b)));
-    $('#btn-login').textContent = t(modo === 'entrar' ? 'login_entrar' : 'login_crear');
-    $('[name=clave]').autocomplete = modo === 'entrar' ? 'current-password' : 'new-password';
-  }));
-  $('#inicio-nativo').addEventListener('change', (e) => cambiarNativo(e.target.value));
-
-  const continuar = (nombre = '') => {
-    S.perfil.elegido = true;
-    if (nombre) S.perfil.nombre = nombre;
-    guardar();
-    ir(S.aprendiendo ? '#/menu' : '#/idiomas');
-  };
-  $('#f-login').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const f = new FormData(e.target);
-    const usuario = String(f.get('usuario') || '').trim();
-    const clave = String(f.get('clave') || '');
-    const err = !usuario ? t('login_error_usuario') : clave.length < 6 ? t('login_error_clave') : '';
-    $('#login-error').textContent = err;
-    if (err) return;
-    // Las cuentas reales necesitan un servidor (ver docs/RECOMENDACIONES.md). La contraseña no se guarda.
-    toast(t('login_pronto'));
-    continuar(usuario);
-  });
-  $('#btn-google').addEventListener('click', conectarGoogle);
-  $('#btn-invitado').addEventListener('click', () => continuar());
-}
-
-// ---------- Palabra del día ----------
-// La misma palabra para toda la comunidad cada día, en los 6 idiomas (lógica en palabra-dia.js).
-/** Idioma en que se destaca: el que aprende; si aún no elige, inglés (o español si su idioma es inglés). */
-const idiomaPrincipal = () => S.aprendiendo || (S.ajustes.nativo === 'en' ? 'es' : 'en');
-
-async function idPalabraDia() {
-  const [conceptos, ejEn] = await Promise.all([banco.cargarConceptos(), banco.cargarEjemplos('en')]);
-  return PD.palabraDelDia(store.diaLocal(Date.now()), PD.candidatos(conceptos, ejEn));
-}
-
-/** Escribe la palabra de hoy en la tarjeta del menú (se carga después de pintar el menú). */
-async function pintarPalabraMenu() {
-  try {
-    const meta = idiomaPrincipal();
-    const id = await idPalabraDia();
-    await banco.cargarIdioma(meta);
-    const el = $('#menu-palabra-texto');
-    if (el && id) el.textContent = banco.texto(meta, id)?.texto ?? '';
-  } catch { /* sin conexión: queda el «…» */ }
-}
-
-async function vistaPalabra() {
-  cargando();
-  const meta = idiomaPrincipal(), nativo = S.ajustes.nativo;
-  const id = await idPalabraDia();
-  await Promise.all([...PD.IDIOMAS_PALABRA.map((l) => banco.cargarIdioma(l)), banco.cargarEjemplos(meta), banco.cargarEjemplos(nativo)]);
-  const c = id && banco.concepto(id), a = id && banco.texto(meta, id);
-  if (!c || !a) {
-    vista.innerHTML = `<section class="pagina angosta centro">${htmlVacio(t('pd_sin'))}</section>`;
-    return;
-  }
-  PD.marcarVista(S); guardar();
-  const b = nativo !== meta ? banco.texto(nativo, id) : null;
-  const filas = PD.IDIOMAS_PALABRA.map((code) => ({ code, ...(banco.texto(code, id) ?? {}) }));
-  const ejA = banco.ejemplo(meta, id), ejB = nativo !== meta ? banco.ejemplo(nativo, id) : null;
-  const nota = meta === 'en' ? banco.ejemplo(nativo, id)?.nota : '';
-  const borrador = filas.some((f) => f.borrador) || ejA?.borrador || ejB?.borrador;
-  let fecha = '';
-  try { fecha = new Intl.DateTimeFormat(idiomaUI(), { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date()); } catch { /* sin Intl */ }
-  const botonAudio = (texto, code, etiqueta) => `<button class="icon-btn pd-audio" type="button" data-code="${code}" data-texto="${esc(texto)}" aria-label="${esc(etiqueta)}">${ICON.audio}</button>`;
-  const htmlFav = (fav) => `${fav ? ICON.corazonLleno : ICON.corazon}<span>${t(fav ? 'hist_guardada' : 'hist_guardar')}</span>`;
-  vista.innerHTML = `
-    <section class="pagina angosta palabra-dia">
-      <p class="sobretitulo">${t('pd_titulo')}${fecha ? ` · ${esc(fecha)}` : ''}</p>
-      <article class="pd-tarjeta">
-        <div class="tarjeta-top">
-          <span class="chip-tema"><span aria-hidden="true">${EMOJI_MEGA[c.megas[0]] ?? '🌸'}</span>${esc(tMega(c.megas[0]))}</span>
-          <span class="tipo">${c.tipos.map((x) => esc(tTipo(x))).join(' · ')}</span>
-        </div>
-        <h1 class="pd-palabra" lang="${meta}">${esc(a.texto)}</h1>
-        ${a.ipa && S.ajustes.ipa ? `<p class="ipa" lang="${meta}" title="IPA">/${esc(a.ipa)}/</p>` : ''}
-        ${b ? `<p class="pd-trad" lang="${nativo}">${esc(b.texto)}</p>` : ''}
-        ${botonAudio(a.texto, meta, t('escuchar'))}
-        ${ejA ? `<div class="pd-ejemplo">
-          <p lang="${meta}">${marcar(ejA.ejemplo)}</p>
-          ${ejB ? `<p class="suave" lang="${nativo}">${marcar(ejB.ejemplo)}</p>` : ''}
-          ${botonAudio(ejA.ejemplo.replace(/\*/g, ''), meta, t('ej_escuchar'))}
-        </div>` : ''}
-        ${borrador ? `<span class="borrador">${t('borrador')}</span>` : ''}
-      </article>
-      <div class="pd-kitty">
-        <img src="${cara('guino')}" alt="" width="80" height="64">
-        <p class="burbuja-texto">${t('pd_kitty')}</p>
-      </div>
-      ${nota ? `<p class="pd-nota">💡 ${marcar(nota)}</p>` : ''}
-      <h2 class="pd-subtitulo">${t('pd_idiomas')}</h2>
-      <ul class="pd-idiomas">
-        ${filas.map((f) => `<li class="${f.code === meta ? 'destacada' : ''}">
-          <span class="monograma pequeno" aria-hidden="true">${f.code.toUpperCase()}</span>
-          <span class="pd-idioma">${esc(nombreIdioma(f.code))}</span>
-          <strong lang="${f.code}">${f.texto ? esc(f.texto) : '—'}</strong>
-          ${f.texto ? botonAudio(f.texto, f.code, `${t('escuchar')}: ${nombreIdioma(f.code)}`) : ''}
-        </li>`).join('')}
-      </ul>
-      <div class="acciones">
-        <button class="btn primario" type="button" id="pd-fav" aria-pressed="${store.esFavorito(S, meta, id)}">${htmlFav(store.esFavorito(S, meta, id))}</button>
-        ${S.aprendiendo ? `<a class="btn" id="pd-practicar" href="#/estudiar?ids=${encodeURIComponent(id)}">${ICON.jugar}<span>${t('pd_practicar')}</span></a>` : ''}
-        <button class="btn" type="button" id="pd-compartir">${ICON.enviar}<span>${t('pd_compartir')}</span></button>
-      </div>
-      <p class="suave centro">${t('pd_manana')}</p>
-    </section>`;
-  $$('.pd-audio', vista).forEach((btn) => btn.addEventListener('click', () => {
-    if (!hablar(btn.dataset.texto, btn.dataset.code)) toast(t('sin_voz'));
-  }));
-  $('#pd-fav').addEventListener('click', (e) => {
-    const boton = e.currentTarget;
-    const ahora = store.alternarFavorito(S, meta, id); guardar();
-    boton.setAttribute('aria-pressed', String(ahora));
-    boton.innerHTML = htmlFav(ahora);
-    if (ahora) { sonido.like(); estallarCorazones(boton); }
-  });
-  $('#pd-compartir').addEventListener('click', async () => {
-    const texto = `${PD.textoCompartir(`${t('pd_titulo')} · Polykat`, filas)}\nhttps://polykat-franui.github.io`;
-    try {
-      if (navigator.share) await navigator.share({ text: texto });
-      else { await navigator.clipboard.writeText(texto); toast(t('pd_copiada')); }
-    } catch { /* la persona canceló o no hay portapapeles */ }
-  });
-}
 
 // ---------- Menú principal (estilo juego) ----------
 /** Historia del día de Kitty (como Instagram): 3 pantallas que avanzan solas; una frase nueva cada día. */
@@ -720,202 +560,6 @@ addEventListener('resize', () => { if (document.body.dataset.ruta === 'jardin') 
 function vistaInstalar(r) {
   (S.perfil.elegido ? vistaMenu : vistaInicio)(r);
   setTimeout(instalarApp, 700);
-}
-
-// ---------- ¿Qué avance conservo? ----------
-function cuentaDeMuestra() {
-  const demo = store.estadoInicial();
-  demo.tokens = 240; demo.ejercicios = 180;
-  demo.racha = { actual: 12, mejor: 15, ultimoDia: store.diaLocal(Date.now()) };
-  demo.progreso = { en: Object.fromEntries(Array.from({ length: 95 }, (_, i) => [`demo${i}`, { c: 1, d: 0, v: 1, a: 1, f: 0 }])) };
-  return demo;
-}
-
-function vistaConservar(r) {
-  const demo = r.q.get('demo') === '1';
-  const cuenta = demo ? cuentaDeMuestra() : cuentaPendiente; // avance de la cuenta de Google
-  if (!cuenta || (!demo && !store.hayConflicto(cuenta, S))) return void (location.hash = '#/aprender');
-  const linea = (est) => t('cons_linea', store.resumen(est));
-  vista.innerHTML = `
-    <section class="pagina angosta">
-      <h1 class="display">${t('cons_titulo')}</h1>
-      <p class="suave">${t('cons_texto')}</p>
-      ${demo ? `<p class="aviso">${t('cons_demo')}</p>` : ''}
-      <div class="opciones-avance">
-        <button class="opcion" data-eleccion="cuenta">${ICON.usuario}<strong>${t('cons_cuenta')}</strong><span>${esc(linea(cuenta))}</span></button>
-        <button class="opcion" data-eleccion="navegador">${ICON.libro}<strong>${t('cons_navegador')}</strong><span>${esc(linea(S))}</span></button>
-      </div>
-    </section>`;
-  $$('.opcion').forEach((b) => b.addEventListener('click', () => {
-    if (!demo) {
-      const perfil = { ...S.perfil };
-      setS(store.elegirAvance(cuenta, S, b.dataset.eleccion));
-      S.perfil = { ...S.perfil, cuenta: perfil.cuenta, elegido: true };
-      setCuentaPendiente(null);
-      aplicarAjustes(); store.guardar(S); subirYa(true);
-    }
-    else toast(`✓ ${b.querySelector('strong').textContent}`);
-    ir('#/aprender');
-  }));
-}
-
-// ---------- Idiomas ----------
-async function cargarIdiomas() {
-  if (!idiomas.length) idiomas = (await (await fetch('data/idiomas.json')).json()).idiomas;
-  return idiomas;
-}
-
-async function vistaIdiomas() {
-  await cargarIdiomas();
-  const nativo = S.ajustes.nativo;
-  const nodos = idiomas.filter((i) => i.code !== nativo).map((i) => {
-    const pronto = i.estado === 'proximamente';
-    const etiqueta = i.code === S.aprendiendo ? `<span class="tag tag-activo">${t('aprendiendo')}</span>`
-      : i.estado === 'nuevo' ? `<span class="tag tag-nuevo">${t('estado_nuevo')}</span>`
-        : pronto ? `<span class="tag tag-pronto">${t('estado_pronto')}</span>` : '';
-    return `<button type="button" class="nodo-idioma idioma ${pronto ? 'pronto' : ''} ${i.estado === 'nuevo' ? 'nuevo' : ''} ${i.code === S.aprendiendo ? 'activo' : ''}" data-code="${i.code}" ${pronto ? 'aria-disabled="true"' : ''}>
-        <span class="monograma" aria-hidden="true">${i.code.toUpperCase()}</span>
-        <span class="nodo-nombre">${esc(nombreIdioma(i.code))}</span>${etiqueta}
-      </button>`;
-  });
-  const centro = `<span class="monograma grande" aria-hidden="true">${nativo.toUpperCase()}</span><strong>${esc(nombreIdioma(nativo))}</strong><small>${t('idioma_nativo')}</small>`;
-  vista.innerHTML = `
-    <section class="pagina pagina-arana">
-      <p class="sobretitulo">${t('nav_aprender')}</p>
-      <h1 class="display">${t('idiomas_titulo')}</h1>
-      <p class="suave">${t('idiomas_sub')}</p>
-      ${htmlArana(centro, nodos)}
-    </section>`;
-  $$('.nodo-idioma').forEach((b) => b.addEventListener('click', () => {
-    if (b.getAttribute('aria-disabled') === 'true') return toast(t('estado_pronto'));
-    sonido.moneda();
-    S.aprendiendo = b.dataset.code;
-    guardar();
-    ir('#/aprender');
-  }));
-}
-
-// ---------- Temas (13 mega temas) como red de neuronas ----------
-const ICON_DIF = { todas: ICON.todas, facil: ICON.facil, medio: ICON.media, dificil: ICON.dificil };
-/** Cada tema toma uno de los 6 colores de la paleta elegida (--nodo-1…6). */
-const colorTema = (mega) => `var(--nodo-${(MEGA_TEMAS.indexOf(mega) % 6) + 1})`;
-const CARRILES = [0, 1, 2, 1]; // zigzag de la red: izquierda, centro, derecha, centro…
-
-function resumenMega(lista, mega, prog) {
-  const ids = lista.filter((c) => c.megas.includes(mega)).map((c) => c.id);
-  const vistas = ids.filter((id) => (prog[id]?.c ?? 0) >= 1).length;
-  return { ids, pct: ids.length ? Math.round((vistas / ids.length) * 100) : 0 };
-}
-
-async function vistaAprender() {
-  if (!S.aprendiendo) return vistaIdiomas();
-  const meta = S.aprendiendo, nativo = S.ajustes.nativo;
-  cargando();
-  await banco.prepararPar(meta, nativo);
-  const lista = banco.disponibles(meta, nativo);
-  const prog = store.progresoDe(S, meta);
-  const nodos = MEGA_TEMAS.map((m, i) => {
-    const { ids, pct } = resumenMega(lista, m, prog);
-    const vacio = !ids.length;
-    return `<li class="nodo carril-${CARRILES[i % 4]}" style="--c:${colorTema(m)};--i:${i + 1}">
-        <a class="neurona ${vacio ? 'vacio' : ''}" href="#/tema/${encodeURIComponent(m)}" ${vacio ? 'aria-disabled="true" tabindex="-1"' : ''}>
-          <span class="neurona-soma" role="progressbar" aria-label="${esc(tMega(m))}" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" style="--p:${pct}"><span class="neurona-pct">${pct}%</span></span>
-          <span class="neurona-txt"><strong>${esc(tMega(m))}</strong><small>${vacio ? t('traduccion_en_camino') : tn('tarjetas_n', ids.length)}</small></span>
-        </a>
-      </li>`;
-  }).join('');
-  vista.innerHTML = `
-    <section class="pagina">
-      <div class="cabecera-aprender">
-        <div>
-          <p class="sobretitulo">${t('aprendiendo')} · <span lang="${meta}">${esc(nombreIdioma(meta))}</span></p>
-          <h1 class="display">${t('temas_titulo')}</h1>
-          <p class="suave">${t('temas_sub')}</p>
-        </div>
-        ${store.esNovato(S)
-          ? `<a class="btn primario libre-btn empieza-btn" href="#/estudiar?${new URLSearchParams({ mega: MEGA_TEMAS[0], dif: 'todas' })}" id="empieza-aqui">${ICON.jugar}<span>${t('empieza_aqui')}</span></a>`
-          : `<a class="btn libre-btn" href="#/libre" id="ir-libre">${ICON.libro}<span>${t('libre_abrir')}</span></a>`}
-      </div>
-      <div class="red" id="red">
-        <svg class="red-sinapsis" aria-hidden="true"></svg>
-        <ol class="red-nodos">
-          <li class="nodo carril-1 raiz" style="--c:var(--primary);--i:0">
-            <a class="neurona" href="#/idiomas" aria-label="${t('cambiar_idioma')}">
-              <span class="neurona-soma"><span class="neurona-pct">${meta.toUpperCase()}</span></span>
-              <span class="neurona-txt"><strong lang="${meta}">${esc(nombreIdioma(meta))}</strong><small>${t('cambiar_idioma')}</small></span>
-            </a>
-          </li>
-          ${nodos}
-        </ol>
-      </div>
-    </section>`;
-  $$('.neurona.vacio').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); toast(t('traduccion_en_camino')); }));
-  dibujarSinapsis();
-}
-
-/** Une las neuronas con curvas (axones) y líneas finas (dendritas); un impulso recorre cada axón. */
-function dibujarSinapsis() {
-  const red = $('#red');
-  if (!red) return;
-  const svg = $('.red-sinapsis', red);
-  const caja = red.getBoundingClientRect();
-  const nodos = $$('.nodo', red);
-  const pts = nodos.map((n) => { const r = $('.neurona-soma', n).getBoundingClientRect(); return [r.left - caja.left + r.width / 2, r.top - caja.top + r.height / 2]; });
-  const curva = ([x1, y1], [x2, y2]) => { const my = (y1 + y2) / 2; return `M${x1.toFixed(1)} ${y1.toFixed(1)}C${x1.toFixed(1)} ${my.toFixed(1)} ${x2.toFixed(1)} ${my.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`; };
-  let html = '';
-  for (let i = 0; i + 2 < pts.length; i++) html += `<path class="dendrita" d="${curva(pts[i], pts[i + 2])}"/>`;
-  for (let i = 0; i + 1 < pts.length; i++) {
-    const c = nodos[i + 1].style.getPropertyValue('--c');
-    html += `<path class="axon" style="--c:${c}" d="${curva(pts[i], pts[i + 1])}"/><path class="impulso" style="--c:${c};--i:${i}" pathLength="100" d="${curva(pts[i], pts[i + 1])}"/>`;
-  }
-  svg.setAttribute('viewBox', `0 0 ${caja.width.toFixed(0)} ${caja.height.toFixed(0)}`);
-  svg.innerHTML = html;
-}
-let timerRed = 0;
-addEventListener('resize', () => { clearTimeout(timerRed); timerRed = setTimeout(dibujarSinapsis, 120); });
-
-// ---------- Un mega tema: dificultad y empezar (sin subtemas, decisión 2026-10-13) ----------
-async function vistaTema(r) {
-  const mega = r.args[0];
-  if (!S.aprendiendo || !MEGA_TEMAS.includes(mega)) return void (location.hash = '#/aprender');
-  const meta = S.aprendiendo, nativo = S.ajustes.nativo;
-  cargando();
-  await banco.prepararPar(meta, nativo);
-  const lista = banco.disponibles(meta, nativo);
-  const base = lista.filter((c) => c.megas.includes(mega));
-  const prog = store.progresoDe(S, meta);
-  const { pct } = resumenMega(lista, mega, prog);
-  let dif = 'todas';
-
-  const pintar = () => {
-    const sel = dif === 'todas' ? base : base.filter((c) => grupoDificultad(c) === dif);
-    const ids = ordenar(sel).map((c) => c.id);
-    const bl = bloques(ids);
-    const dominadas = ids.filter((id) => dificultad(prog[id]) === 'dominada').length;
-    $('#tema-info').textContent = ids.length
-      ? `${tn('tarjetas_n', ids.length)} · ${t('bloque_n', { n: bloqueActual(bl, prog) + 1, total: bl.length })}${dominadas ? ' · ' + t('dominadas_n', { n: dominadas }) : ''}`
-      : '—';
-    const cuenta = (d) => (d === 'todas' ? base.length : base.filter((c) => grupoDificultad(c) === d).length);
-    $('#difs').innerHTML = ['todas', 'facil', 'medio', 'dificil'].map((d) =>
-      `<button type="button" class="dif-opcion" role="radio" aria-checked="${d === dif}" data-dif="${d}" ${cuenta(d) ? '' : 'disabled'}>
-        ${ICON_DIF[d]}<span>${t('dif_' + d)}</span><small>${cuenta(d)}</small></button>`).join('');
-    $$('#difs button').forEach((b) => b.addEventListener('click', () => { dif = b.dataset.dif; pintar(); }));
-    $('#btn-empezar').disabled = !ids.length;
-  };
-
-  vista.innerHTML = `
-    <section class="pagina angosta tema-pagina" style="--c:${colorTema(mega)}">
-      <a class="volver" href="#/aprender">${ICON.atras}<span>${t('volver')}</span></a>
-      <div class="tema-cabeza">
-        <span class="neurona-soma grande" role="progressbar" aria-label="${esc(tMega(mega))}" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" style="--p:${pct}"><span class="neurona-pct">${pct}%</span></span>
-        <div><h1 class="display">${esc(tMega(mega))}</h1><p class="suave" id="tema-info"></p></div>
-      </div>
-      <p class="sobretitulo" id="lbl-dif">${t('dificultad')}</p>
-      <div class="difs" id="difs" role="radiogroup" aria-labelledby="lbl-dif"></div>
-      <div class="cta-fija"><button class="btn primario grande" id="btn-empezar">${t('empezar')}</button></div>
-    </section>`;
-  pintar();
-  $('#btn-empezar').addEventListener('click', () => { location.hash = `#/estudiar?${new URLSearchParams({ mega, dif })}`; });
 }
 
 // ---------- Estudiar: feed de tarjetas que se deslizan ----------
