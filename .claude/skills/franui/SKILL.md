@@ -101,6 +101,7 @@ encontrar uno definitivo. Kitty: el ícono de cuerpo entero que dibujó Francisc
 collar morado y cascabel), 20×16, en 14 expresiones.
 
 ## 9·. Estética editorial monocroma [DECIDIDO 2026-11-11 — reemplaza lo de abajo donde se contradice]
+- **Lema** [DECIDIDO 2026-11-12]: «Entender es el comienzo. Hablar es el viaje.» (primera frase fuerte, segunda suave). Va en la web (sobre «Nuestro objetivo»), en la bitácora y en la infografía.
 - Francisca pidió, con referencias de diseño editorial de lujo (portfolios, menús, moodboards), aplicar a **todo el
   proyecto** (app, web y bitácora) una estética **monocroma: blanco, grises y negro**.
 - **Tipografía [2026-11-11, segunda pasada]:** **Outfit** (sans geométrica de Thin a Black, como las referencias
