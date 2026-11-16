@@ -78,7 +78,8 @@ function cuentaDeMuestra() {
 }
 
 export function vistaConservar(r) {
-  const demo = r.q.get('demo') === '1';
+  // Vista de prueba: solo en el computador de desarrollo (nunca en la app publicada).
+  const demo = r.q.get('demo') === '1' && ['localhost', '127.0.0.1'].includes(location.hostname);
   const cuenta = demo ? cuentaDeMuestra() : cuentaPendiente; // avance de la cuenta de Google
   if (!cuenta || (!demo && !store.hayConflicto(cuenta, S))) return void (location.hash = '#/aprender');
   const linea = (est) => t('cons_linea', store.resumen(est));

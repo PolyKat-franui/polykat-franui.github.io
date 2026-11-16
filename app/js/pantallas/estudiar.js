@@ -16,6 +16,7 @@ import { kittyAbrir } from '../kitty-chat.js';
 import { actualizarChips, insignia, EMOJI_MEGA, hoyRevisadas, etapaHoy, srcFlor } from '../marco.js';
 import { celebrarRacha, volarMonedas, mostrarDominada, aparecerDiamante, celebrarDiamante, mostrarPremio } from '../celebraciones.js';
 import { regarJardin } from './pantalla-jardin.js';
+import { contarSesion } from '../medicion.js';
 
 export function cerrarSesion() {
   ocultarTutorial();
@@ -233,6 +234,7 @@ function terminar() {
   sesion.tokens += store.terminarSesion(S);
   sonido.fin();
   guardar();
+  contarSesion(); // medición anónima
   actualizarChips();
   const racha = store.rachaVigente(S.racha);
   $('#slide-fin').innerHTML = `

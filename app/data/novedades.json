@@ -2,6 +2,16 @@
   "_ayuda": "Lo más nuevo arriba. La app y la página web leen este mismo archivo.",
   "novedades": [
     {
+      "version": "0.15.0",
+      "fecha": "2026-11-12",
+      "titulo": "Ayúdanos a mejorar",
+      "cambios": [
+        "Polykat mide de forma anónima cuántas personas vuelven a la app al día 1, 7 y 30.",
+        "Se usa un código al azar que vive solo en tu celular: sin tu nombre, sin tu correo y sin tu cuenta.",
+        "Si prefieres no participar, apágalo en Ajustes → Sugerencias → «Ayúdanos a mejorar»."
+      ]
+    },
+    {
       "version": "0.14.0",
       "fecha": "2026-11-11",
       "titulo": "Nueva imagen: blanco, grises y negro",

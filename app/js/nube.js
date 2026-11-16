@@ -111,3 +111,20 @@ export async function borrarSugerencia(id) {
   const { fs, db } = await cargarSdk();
   await fs.deleteDoc(fs.doc(db, 'sugerencias', id));
 }
+
+// ---------- Medición anónima de uso ----------
+// uso/{código anónimo}: solo el día en que empezó, los días en que abrió la app y las sesiones terminadas.
+// Cualquiera escribe su propio documento (sin cuenta); solo la creadora lee el conjunto (firestore.rules).
+/** Suma una visita (y opcionalmente sesiones) al documento anónimo de este celular. */
+export async function registrarUso(id, { primer, dia, sesiones = 0 }) {
+  const { fs, db } = await cargarSdk();
+  await fs.setDoc(fs.doc(db, 'uso', id), {
+    primer, dias: fs.arrayUnion(dia), sesiones: fs.increment(sesiones),
+  }, { merge: true });
+}
+/** Todos los documentos de uso (solo la creadora tiene permiso). */
+export async function leerUso() {
+  const { fs, db } = await cargarSdk();
+  const snap = await fs.getDocs(fs.collection(db, 'uso'));
+  return snap.docs.map((d) => d.data());
+}

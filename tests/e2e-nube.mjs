@@ -25,14 +25,19 @@ const FAKE = {
     export const getFirestore = () => ({});
     export const doc = (db, col, id) => col + '/' + id;
     export const getDoc = async (k) => { const d = leer()[k]; return { exists: () => !!d, data: () => d }; };
-    export const setDoc = async (k, v) => { const d = leer(); d[k] = v; localStorage.setItem('__sim_docs', JSON.stringify(d)); };
+    export const arrayUnion = (...x) => ({ __union: x });
+    export const increment = (n) => ({ __inc: n });
+    const resolver = (viejo = {}, v) => Object.fromEntries(Object.entries(v).map(([c, x]) => [c,
+      x?.__union ? [...new Set([...(viejo[c] || []), ...x.__union])] : x?.__inc !== undefined ? (viejo[c] || 0) + x.__inc : x]));
+    export const setDoc = async (k, v, o) => { const d = leer(); d[k] = o?.merge ? { ...d[k], ...resolver(d[k], v) } : resolver({}, v); localStorage.setItem('__sim_docs', JSON.stringify(d)); };
     export const updateDoc = async (k, v) => { const d = leer(); d[k] = { ...d[k], ...v }; localStorage.setItem('__sim_docs', JSON.stringify(d)); };
     export const deleteDoc = async (k) => { const d = leer(); delete d[k]; localStorage.setItem('__sim_docs', JSON.stringify(d)); };
     export const collection = (db, col) => col;
     export const orderBy = (campo) => ({ campo });
     export const limit = (n) => ({ n });
     export const query = (col, ...ops) => ({ col, ops });
-    export const getDocs = async ({ col, ops }) => {
+    export const getDocs = async (q) => {
+      const { col, ops } = typeof q === 'string' ? { col: q, ops: [] } : q;
       const campo = ops.find((o) => o.campo)?.campo, n = ops.find((o) => o.n)?.n ?? 99;
       const filas = Object.entries(leer()).filter(([k]) => k.startsWith(col + '/')).map(([k, v]) => ({ id: k.slice(col.length + 1), data: () => v }));
       filas.sort((a, b) => (b.data()[campo] ?? 0) - (a.data()[campo] ?? 0));
@@ -55,6 +60,18 @@ await page.goto(`${U}#/ajustes`);
 await page.locator('dd', { hasText: 'fran@example.com' }).waitFor();
 await page.locator('#aj-salir').waitFor();
 console.log('✓ Ajustes muestra la cuenta y «Cerrar sesión»');
+// Medición anónima: código al azar guardado en el celular, una visita al día, sin correo ni nombre
+assert.ok(await page.locator('#aj-medicion').isChecked(), 'la medición viene encendida y se ve en Ajustes');
+await page.waitForFunction(() => Object.keys(JSON.parse(localStorage.getItem('__sim_docs') || '{}')).some((k) => k.startsWith('uso/')), null, { timeout: 10000 });
+const uso = await page.evaluate(() => {
+  const id = JSON.parse(localStorage.getItem('franui:medicion')).id;
+  return { id, doc: JSON.parse(localStorage.getItem('__sim_docs'))['uso/' + id] };
+});
+assert.match(uso.id, /^[0-9a-f-]{36}$/);
+assert.deepEqual(Object.keys(uso.doc).sort(), ['dias', 'primer', 'sesiones'], 'solo día de inicio, días y sesiones');
+assert.equal(uso.doc.dias.length, 1);
+assert.ok(!JSON.stringify(uso.doc).includes('@') && !JSON.stringify(uso.doc).includes('Francisca'), 'sin correo ni nombre');
+console.log('✓ Medición anónima: código al azar y visita del día en la nube');
 // estudiar 3 tarjetas → se sube a la nube
 await page.goto(`${U}#/estudiar?dif=todas`);
 await page.locator('#feed .slide .palabra').first().waitFor();
@@ -136,6 +153,10 @@ await page.goto(`${U}#/ajustes`);
 await page.locator('#aj-ranking').uncheck();
 await page.waitForFunction(() => !JSON.parse(localStorage.getItem('__sim_docs'))['ranking/u1']);
 console.log('✓ Se puede salir del ranking desde Ajustes');
+await page.locator('#aj-medicion').uncheck();
+assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('franui:medicion')).activa), false);
+await page.locator('#aj-medicion').check();
+console.log('✓ La medición se puede apagar y encender en Ajustes');
 await page.locator('#aj-salir').click();
 await page.locator('#aj-google').waitFor();
 console.log('✓ Cerrar sesión');
@@ -156,6 +177,10 @@ await page.goto(`${U}#/ajustes`);
 await page.locator('.buzon-acceso').waitFor();
 await page.locator('.buzon-acceso').click();
 await page.locator('.buzon-lista li').first().waitFor();
+await page.locator('#buzon-retorno [data-retorno=personas]').waitFor();
+assert.ok(Number(await page.locator('#buzon-retorno [data-retorno=personas]').innerText()) >= 1, 'la creadora ve cuántas personas se midieron');
+assert.match(await page.locator('#buzon-retorno').innerText(), /día 1[\s\S]*día 7[\s\S]*día 30/);
+console.log('✓ Buzón de la creadora: resumen de retorno al día 1, 7 y 30');
 assert.match(await page.locator('.buzon-lista').innerText(), /agregar japonés[\s\S]*/);
 assert.match(await page.locator('.buzon').innerText(), /1 sin leer/);
 await page.screenshot({ path: 'capturas-e2e/nube-buzon.png' });

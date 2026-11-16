@@ -4,6 +4,7 @@ import * as nube from '../nube.js';
 import { $, $$, esc, vista, toast, modal, htmlCargando, htmlVacio } from '../ui.js';
 import { S, guardarYa, conCuenta } from '../estado.js';
 import { ultimaVersion } from '../marco.js';
+import { resumenRetorno } from '../medicion.js';
 
 export const esCreadora = () => conCuenta() && S.perfil.cuenta.email?.toLowerCase() === nube.CREADORA;
 let enviando = null;
@@ -33,6 +34,22 @@ function pintarLeida(li, b, leida) {
   $('.buzon-meta .tag', li)?.toggleAttribute('hidden', leida);
 }
 /** Solo para la creadora: lee, marca y borra las sugerencias. */
+/** Resumen de la medición anónima (solo la creadora puede leerla). */
+async function pintarRetorno() {
+  const caja = $('#buzon-retorno');
+  if (!caja) return;
+  let r;
+  try { r = resumenRetorno(await nube.leerUso()); } catch { caja.innerHTML = `<h2>${t('ret_titulo')}</h2><p class="aviso">${t('ret_error')}</p>`; return; }
+  const dato = (d) => (d ? `${d.pct}% <small class="suave">(${d.volvieron}/${d.de})</small>` : `<small class="suave">${t('ret_sin')}</small>`);
+  caja.innerHTML = `<h2>${t('ret_titulo')}</h2>
+    <dl class="datos">
+      <div><dt>${t('ret_personas')}</dt><dd data-retorno="personas">${r.personas}</dd></div>
+      <div><dt>${t('ret_semana')}</dt><dd>${r.activasSemana}</dd></div>
+      <div><dt>${t('ret_sesiones')}</dt><dd>${r.sesiones}</dd></div>
+      ${[1, 7, 30].map((n) => `<div><dt>${t('ret_dia', { n })}</dt><dd data-retorno="${n}">${dato(r['d' + n])}</dd></div>`).join('')}
+    </dl>`;
+}
+
 export async function vistaBuzon() {
   if (!esCreadora()) { location.hash = '#/ajustes'; return; }
   vista.innerHTML = `<section class="pagina angosta"><h1 class="display">${t('buzon_titulo')}</h1>${htmlCargando()}</section>`;
@@ -45,6 +62,7 @@ export async function vistaBuzon() {
   vista.innerHTML = `
     <section class="pagina angosta buzon">
       <h1 class="display">${t('buzon_titulo')}</h1>
+      <div class="card retorno" id="buzon-retorno"><h2>${t('ret_titulo')}</h2>${htmlCargando()}</div>
       ${lista.length ? `<p class="suave">${tn('buzon_nuevas_n', sinLeer)}</p>` : htmlVacio(t('buzon_vacio'), 'con_sueno', 'aviso')}
       <ul class="buzon-lista">${lista.map((x) => `
         <li class="card ${x.leida ? 'leida' : 'nueva'}" data-id="${esc(x.id)}">
@@ -57,6 +75,7 @@ export async function vistaBuzon() {
           </div>
         </li>`).join('')}</ul>
     </section>`;
+  pintarRetorno();
   $$('.buzon-lista li').forEach((li) => {
     const x = lista.find((y) => y.id === li.dataset.id);
     // Se marca al instante en pantalla y se guarda en la nube; si la nube lo rechaza, se deshace y se dice por qué.

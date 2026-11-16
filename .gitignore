@@ -3,3 +3,5 @@ node_modules/
 *.log
 capturas-e2e/
 dist/
+firestore-debug.log
+firebase-debug.log

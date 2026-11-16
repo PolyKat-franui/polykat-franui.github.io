@@ -7,6 +7,7 @@
 - Flujo: Explore → Plan → Code → Commit. Un bloque a la vez (plan en `docs/RECOMENDACIONES.md`).
 - Después de cambiar algo: `npm test` y, si tocas la interfaz, `NODE_PATH=$(npm root -g) npm run test:e2e`.
   Di claramente qué no se pudo probar.
+- Si tocas la nube, el login o datos de personas: revisa la lista de `docs/SEGURIDAD.md`; si cambias `firestore.rules`, corre `NODE_PATH=$(npm root -g) npm run test:reglas`.
 - Si cambias `banco/`: `npm run build` y commitea también `app/data/banco/`.
 - No agregar ni quitar palabras de `banco/banco_palabras_ingles.tsv`.
 - Toda traducción generada va como `borrador`.
