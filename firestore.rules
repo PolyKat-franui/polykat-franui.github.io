@@ -29,11 +29,24 @@ service cloud.firestore {
     // personales): el día en que empezó, los días en que abrió la app y cuántas sesiones terminó.
     // Nadie puede leer ni borrar documentos ajenos; solo la creadora ve el conjunto para calcular el retorno.
     match /uso/{id} {
-      allow create, update: if id.matches('^[0-9a-f-]{36}$')
-        && request.resource.data.keys().hasOnly(['primer', 'dias', 'sesiones'])
-        && request.resource.data.primer is string && request.resource.data.primer.size() == 10
-        && request.resource.data.dias is list && request.resource.data.dias.size() <= 400
-        && request.resource.data.sesiones is int && request.resource.data.sesiones >= 0 && request.resource.data.sesiones < 100000;
+      function esDia(x) { return x is string && x.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$'); }
+      function forma(d) {
+        return d.keys().hasOnly(['primer', 'dias', 'sesiones']) && d.keys().hasAll(['primer', 'dias', 'sesiones'])
+          && esDia(d.primer) && d.dias is list && d.dias.size() >= 1 && d.dias.size() <= 400
+          && esDia(d.dias[d.dias.size() - 1]) && d.sesiones is int && d.sesiones >= 0 && d.sesiones < 100000;
+      }
+      // Al crear: un solo día y como máximo una sesión.
+      allow create: if id.matches('^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$')
+        && forma(request.resource.data)
+        && request.resource.data.dias.size() == 1 && request.resource.data.sesiones <= 1;
+      // Al actualizar: el día de inicio no cambia, no se borran días y se suma como máximo
+      // un día y una sesión por escritura (así nadie infla los números de golpe).
+      allow update: if forma(request.resource.data)
+        && request.resource.data.primer == resource.data.primer
+        && request.resource.data.dias[0:resource.data.dias.size()] == resource.data.dias
+        && request.resource.data.dias.size() <= resource.data.dias.size() + 1
+        && request.resource.data.sesiones >= resource.data.sesiones
+        && request.resource.data.sesiones <= resource.data.sesiones + 1;
       allow read: if esCreadora();
     }
     // Buzón de sugerencias: cualquiera envía (con o sin cuenta); solo la creadora lee, marca y borra.

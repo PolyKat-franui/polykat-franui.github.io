@@ -230,6 +230,13 @@ Todos los valores viven como variables en `app/css/tokens.css` (cambiarlos solo 
   (con audio cada una), guardar en favoritos, practicarla (`#/estudiar?ids=`) y compartir. Lleva la marca de borrador.
 - Futuro: mostrarla en los encuentros del Polykat Club como rompehielos (ver la bitácora).
 
+## 9j. Seguridad antes de publicar [DECIDIDO 2026-11-16]
+- Todo cambio que toque la nube, el inicio de sesión o datos de personas se revisa con la lista de
+  10 puntos de `docs/SEGURIDAD.md` (límite de peticiones, claves, reglas por colección, variables,
+  validación, nada abierto por defecto, rutas protegidas, errores, pantallas de prueba, registros).
+- Si se cambia `firestore.rules`: agregar casos a `tests/reglas.mjs` y correr `npm run test:reglas`
+  (emulador) **antes** de que Francisca pegue las reglas en la consola.
+
 ## 10. Pantallas de la app
 Inicio/cuenta (Entrar, Crear cuenta con usuario + contraseña ≥ 6, Google, Invitado) —
 [DECIDIDO 2026-10-09] se pide **antes de estudiar**, solo la primera vez; la sesión queda

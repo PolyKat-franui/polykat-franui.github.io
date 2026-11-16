@@ -30,7 +30,8 @@ que niegan leer sin sesión. Falta probar el login real en un celular.
    **ranking** (`ranking/{uid}`: lo ve quien inició sesión; cada uno escribe solo su fila, con nombre y números).
    También la **medición anónima** (`uso/{código}`: cualquiera escribe solo el día de inicio, los días y las
    sesiones de su código al azar; **solo la creadora lee**). Actualizado el 2026-11-12: hay que volver a pegarlas.
-   Si cambian las reglas en el repositorio, hay que volver a pegarlas aquí.
+   Si cambian las reglas en el repositorio, hay que volver a pegarlas aquí. Antes, se prueban en el
+   emulador con `npm run test:reglas` (ver `docs/SEGURIDAD.md`).
 
 6. ⚙️ **Configuración del proyecto** → *Tus apps* → ícono web `</>` → nombre `franui-polykat` → Registrar.
    Copia el objeto `firebaseConfig` que aparece.

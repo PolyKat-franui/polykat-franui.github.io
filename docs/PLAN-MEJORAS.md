@@ -26,7 +26,7 @@ mejor evaluadas», al 31 de enero de 2027).
 | 2 | **Revisión de las 24.980 traducciones**, en lotes de 500 palabras: detectar errores, género, registro y falsos amigos. Todo sigue como `borrador` hasta que una persona nativa lo confirme. | La confianza en el contenido es la base. | **Pesada** | **Fable 5.2** |
 | 3 | **Ejemplos para las ~4.000 palabras que faltan**, en los 6 idiomas (unas 24.000 oraciones), cortos y naturales. | Las personas piden saber *cuándo* usar una palabra (hallazgo H2). | **Pesada** | **Fable 5.2** |
 | 4 | ✅ **Hecho:** `main.js` dividido en un módulo por pantalla, sin cambiar lo que ve la persona (Fable 5.2, revisado y con todas las pruebas en verde). | Hace más rápido y seguro todo lo que venga. | **Pesada** | **Fable 5.2** |
-| 5 | **Auditoría de seguridad** de `firestore.rules`, del inicio de sesión y del buzón. | Antes de sumar personas y datos. | Media | **Fable 5.2** |
+| 5 | 🟡 **En curso:** lista de 10 puntos en `docs/SEGURIDAD.md` (8 cumplidos, 2 parciales) y reglas probadas en el emulador (`npm run test:reglas`). Falta App Check y restringir la clave. | Antes de sumar personas y datos. | Media | **Fable 5.2** |
 
 ### Fase 2 · Lo más llamativo (enero de 2027, según las entrevistas)
 
